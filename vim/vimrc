@@ -1,3 +1,14 @@
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-fugitive'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+
 execute pathogen#infect()
 
 " I like syntax highlighting
@@ -6,8 +17,6 @@ syntax on
 " Automatic indents
 filetype plugin indent on
 set smartindent
-set tabstop=3
-set shiftwidth=3
 
 " Clear highlighting by pressing <CR> in command mode after a search
 noremap <CR> :noh<CR><CR>
