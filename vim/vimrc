@@ -2,12 +2,21 @@ set nocompatible
 filetype off
 
 set rtp+=~/.vim/bundle/vundle/
+set background=dark
+set autoread
+set ruler
+set switchbuf=useopen
+
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-fugitive'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+Bundle 'vim-scripts/TwitVim'
+Bundle 'vim-scripts/gitignore.vim'
+Bundle 'jamessan/vim-gnupg'
+Bundle 'scrooloose/nerdtree'
 
 execute pathogen#infect()
 
@@ -20,3 +29,26 @@ set smartindent
 
 " Clear highlighting by pressing <CR> in command mode after a search
 noremap <CR> :noh<CR><CR>
+nnoremap <F12> "=strftime("%c")<CR>P
+inoremap <F12> <C-R>=strftime("%c")<CR>
+nnoremap <F5> :w<CR><CR>
+inoremap <F5> <C-R>:w<CR><CR>
+"nnoremap <F6> :wq<CR><CR>
+"inoremap <F6> <C-R>:wq<CR><CR>
+
+" GPG Section
+let g:GPGPreferArmor=1
+let g:GPGPreferSign=1
+
+augroup GnuPGExtra
+	autocmd BufReadCmd,FileReadCmd *.\(gpg\|asc\|pgp\) call SetGPGOptions()
+	" autocmd CursorHold *.\(gpg\|asc\|pgp\) quit
+augroup END
+
+function SetGPGOptions()
+	set updatetime=60000
+	set foldmethod=marker
+	set foldclose=all
+	set foldopen=insert
+endfunction
+
