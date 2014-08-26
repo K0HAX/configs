@@ -17,6 +17,7 @@ Bundle 'vim-scripts/TwitVim'
 Bundle 'vim-scripts/gitignore.vim'
 Bundle 'jamessan/vim-gnupg'
 Bundle 'scrooloose/nerdtree'
+Bundle 'zefei/vim-wintabs'
 
 execute pathogen#infect()
 
@@ -27,14 +28,35 @@ syntax on
 filetype plugin indent on
 set smartindent
 
+colorscheme torte
+set backspace=indent,eol,start
+set shiftwidth=4 tabstop=4 softtabstop=4
+set expandtab
+
 " Clear highlighting by pressing <CR> in command mode after a search
 noremap <CR> :noh<CR><CR>
 nnoremap <F12> "=strftime("%c")<CR>P
 inoremap <F12> <C-R>=strftime("%c")<CR>
 nnoremap <F5> :w<CR><CR>
 inoremap <F5> <C-R>:w<CR><CR>
+map     <C-n> :NERDTreeToggle<CR>
+map     <C-h> :tabprevious<CR>
+map     <C-l> :tabnext<CR>
 "nnoremap <F6> :wq<CR><CR>
 "inoremap <F6> <C-R>:wq<CR><CR>
+
+" Vim Wintabs
+map <C-H> <Plug>(wintabs_previous)
+map <C-L> <Plug>(wintabs_next)
+map <C-T>c <Plug>(wintabs_close)
+map <C-T>o <Plug>(wintabs_only)
+map <C-W>c <Plug>(wintabs_close_window)
+map <C-W>o <Plug>(wintabs_only_window)
+command! Tabc WintabsCloseVimtab
+command! Tabo WintabsOnlyVimtab
+
+" super sudo write
+cno w!! w !sudo tee % >/dev/null
 
 " GPG Section
 let g:GPGPreferArmor=1
