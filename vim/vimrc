@@ -2,14 +2,11 @@ set nocompatible
 filetype off
 
 set rtp+=~/.vim/bundle/vundle/
-set background=dark
-set autoread
-set ruler
-set switchbuf=useopen
 
-call vundle#rc()
+call vundle#begin()
 
 Bundle 'gmarik/vundle'
+Bundle 'tpope/vim-pathogen'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-fugitive'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -17,7 +14,15 @@ Bundle 'vim-scripts/TwitVim'
 Bundle 'vim-scripts/gitignore.vim'
 Bundle 'jamessan/vim-gnupg'
 Bundle 'scrooloose/nerdtree'
-Bundle 'zefei/vim-wintabs'
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-session'
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/gist-vim'
+Bundle 'Shougo/vimproc'
+Bundle 'Shougo/vimshell'
+Bundle 'scrooloose/syntastic'
+
+call vundle#end()
 
 execute pathogen#infect()
 
@@ -27,6 +32,10 @@ syntax on
 " Automatic indents
 filetype plugin indent on
 set smartindent
+set background=dark
+set autoread
+set ruler
+set switchbuf=useopen
 
 colorscheme torte
 set backspace=indent,eol,start
@@ -44,16 +53,6 @@ map     <C-h> :tabprevious<CR>
 map     <C-l> :tabnext<CR>
 "nnoremap <F6> :wq<CR><CR>
 "inoremap <F6> <C-R>:wq<CR><CR>
-
-" Vim Wintabs
-map <C-H> <Plug>(wintabs_previous)
-map <C-L> <Plug>(wintabs_next)
-map <C-T>c <Plug>(wintabs_close)
-map <C-T>o <Plug>(wintabs_only)
-map <C-W>c <Plug>(wintabs_close_window)
-map <C-W>o <Plug>(wintabs_only_window)
-command! Tabc WintabsCloseVimtab
-command! Tabo WintabsOnlyVimtab
 
 " super sudo write
 cno w!! w !sudo tee % >/dev/null
@@ -74,3 +73,5 @@ function SetGPGOptions()
 	set foldopen=insert
 endfunction
 
+:let g:session_autosave = 'yes'
+:let g:session_autoload = 'yes'
