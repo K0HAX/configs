@@ -21,6 +21,7 @@ Bundle 'mattn/gist-vim'
 Bundle 'Shougo/vimproc'
 Bundle 'Shougo/vimshell'
 Bundle 'scrooloose/syntastic'
+Bundle 'vim-scripts/mediawiki.vim'
 
 call vundle#end()
 
