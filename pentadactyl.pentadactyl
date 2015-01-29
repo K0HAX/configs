@@ -1,0 +1,19 @@
+"1.2pre-hg7140-default
+
+loadplugins '\.(js|penta)$'
+group user
+command! -nargs=+ go open <args>
+map -count -modes=n <C-F1> <count>:set<Space>guioptions!=m<Return>
+map -count -modes=n,v <Return> <count>:noh<Return>
+map -count -modes=n,v go <count>:open<Space>
+map -count -modes=n,v gq <count>:q<Return>
+map -count -modes=n,v gt <count>:tabopen<Space>
+map -count -modes=n,v j -builtin <count>5j
+map -count -modes=n,v J <count>:tp<Return>
+map -count -modes=n,v k -builtin <count>5k
+map -count -modes=n,v K <count>:tn<Return>
+map -count -modes=n <C-F2> <count>:set<Space>guioptions!=B<Return>
+set hintkeys=asdfghjkl
+set hlfind
+
+" vim: set ft=pentadactyl:

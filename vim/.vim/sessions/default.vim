@@ -1,6 +1,6 @@
-" ~/dev/vimrc/vim/.vim/sessions/default.vim:
+" ~/dev/configs/vim/.vim/sessions/default.vim:
 " Vim session script.
-" Created by session.vim 2.7 on 07 January 2015 at 11:36:59.
+" Created by session.vim 2.7 on 29 January 2015 at 09:40:59.
 " Open this file in Vim and run :source % to restore your session.
 
 if exists('g:syntax_on') != 1 | syntax on | endif
@@ -22,16 +22,16 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +20 \[Vundle]\ Installer
-badd +234 /tmp/vCmi7wm/84
+badd +0 \[Vundle]\ Installer
+argglobal
 silent! argdel *
+edit \[Vundle]\ Installer
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
 argglobal
-enew
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -40,6 +40,13 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
+silent! normal! zE
+let s:l = 1 - ((0 * winheight(0) + 32) / 65)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
 tabnext 1
 if exists('s:wipebuf')
 "   silent exe 'bwipe ' . s:wipebuf
