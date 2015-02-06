@@ -22,6 +22,19 @@ Bundle 'Shougo/vimproc'
 Bundle 'Shougo/vimshell'
 Bundle 'scrooloose/syntastic'
 Bundle 'vim-scripts/mediawiki.vim'
+Bundle 'daisuzu/facebook.vim'
+
+Bundle 'Lyrics'
+Bundle 'Markdown'
+Bundle 'Markdown-syntax'
+Bundle 'MarkdownFootnotes'
+Bundle 'calendar.vim'
+Bundle 'git-diff'
+Bundle 'instant-markdown'
+Bundle 'mediawiki'
+Bundle 'muttrc.vim'
+Bundle 'node.js'
+Bundle 'vim-diff'
 
 call vundle#end()
 
@@ -74,5 +87,8 @@ function SetGPGOptions()
 	set foldopen=insert
 endfunction
 
-:let g:session_autosave = 'yes'
+set autochdir
+let NERDTreeChDirMode=2
+
+:let g:session_autosave = 'no'
 :let g:session_autoload = 'yes'
