@@ -9,6 +9,7 @@ Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-pathogen'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-fugitive'
+Bundle 'plasticboy/vim-markdown'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'vim-scripts/TwitVim'
 Bundle 'vim-scripts/gitignore.vim'
@@ -23,6 +24,7 @@ Bundle 'Shougo/vimshell'
 Bundle 'scrooloose/syntastic'
 Bundle 'vim-scripts/mediawiki.vim'
 Bundle 'daisuzu/facebook.vim'
+Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 Bundle 'git-diff'
 Bundle 'mediawiki'
@@ -33,6 +35,9 @@ Bundle 'vim-diff'
 call vundle#end()
 
 execute pathogen#infect()
+
+" Make sure the status line shows up all the time.
+set laststatus=2
 
 " I like syntax highlighting
 syntax on
@@ -86,3 +91,4 @@ let NERDTreeChDirMode=2
 
 :let g:session_autosave = 'no'
 :let g:session_autoload = 'yes'
+:let g:vim_markdown_folding_disabled = 1
