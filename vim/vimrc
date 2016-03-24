@@ -25,6 +25,7 @@ Bundle 'scrooloose/syntastic'
 Bundle 'vim-scripts/mediawiki.vim'
 Bundle 'daisuzu/facebook.vim'
 Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+Bundle '7kfpun/finance.vim'
 
 Bundle 'git-diff'
 Bundle 'mediawiki'
@@ -108,4 +109,9 @@ nnoremap <F8> :FriendsTwitter<cr>
 nnoremap <S-F8> :UserTwitter<cr>
 nnoremap <A-F8> :RepliesTwitter<cr>
 nnoremap <C-F8> :DMTwitter<cr>
+
+" Begin finance.vim customization
+let g:finance_watchlist = ['SQ']
+"let g:finance_format' = '{symbol}: {LastTradePriceOnly ({Change})'
+"let g:finance_separator' = '\n'
 
