@@ -26,6 +26,7 @@ Bundle 'vim-scripts/mediawiki.vim'
 Bundle 'daisuzu/facebook.vim'
 Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 Bundle '7kfpun/finance.vim'
+Bundle 'Valloric/YouCompleteMe'
 
 Bundle 'git-diff'
 Bundle 'mediawiki'
@@ -33,6 +34,7 @@ Bundle 'muttrc.vim'
 Bundle 'node.js'
 Bundle 'vim-diff'
 Bundle 'itchyny/calendar.vim'
+Bundle 'K0HAX/vim-pastebin'
 
 " Required for Facebook
 Bundle 'facebook/fbconsole'
