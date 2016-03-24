@@ -33,6 +33,7 @@ Bundle 'muttrc.vim'
 Bundle 'node.js'
 Bundle 'vim-diff'
 Bundle 'itchyny/calendar.vim'
+Bundle 'K0HAX/vim-pastebin'
 
 " Required for Facebook
 Bundle 'facebook/fbconsole'
