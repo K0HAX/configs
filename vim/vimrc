@@ -117,3 +117,4 @@ let g:finance_watchlist = ['SQ']
 "let g:finance_format' = '{symbol}: {LastTradePriceOnly ({Change})'
 "let g:finance_separator' = '\n'
 
+let maplocalleader = ',,'
