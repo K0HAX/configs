@@ -100,7 +100,7 @@ function SetGPGOptions()
     set foldopen=insert
 endfunction
 
-set autochdir
+"set autochdir
 let NERDTreeChDirMode=2
 
 :let g:session_autosave = 'no'
