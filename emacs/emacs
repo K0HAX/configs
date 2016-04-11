@@ -1,6 +1,19 @@
+;; Automatic package install
+(setq package-list '(evil evil-leader evil-org git-commit smex ledger-mode magit magit-popup mediawiki org org-gcal powerline powerline-evil twittering-mode use-package with-editor))
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
+
+; fetch the list of packages available 
+(unless package-archive-contents
+  (package-refresh-contents))
+
+; install the missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+      (package-install package)))
+
 (require 'evil)
 (evil-mode 1)
 (setq ring-bell-function 'ignore)
