@@ -1,0 +1,46 @@
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(package-initialize)
+(require 'evil)
+(evil-mode 1)
+(setq ring-bell-function 'ignore)
+
+;; Evil Mods
+(define-key evil-motion-state-map ";" 'smex)
+(define-key evil-motion-state-map ":" 'evil-ex)
+
+;; Ledger Mode
+(use-package ledger-mode
+	     :ensure t
+	     :init
+	     (setq ledger-clear-whole-transactions 1)
+
+	     :config
+	     (add-to-list 'evil-emacs-state-modes 'ledger-report-mode)
+	     :mode "\\.dat\\'")
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (tango-dark)))
+ '(ledger-reports
+   (quote
+    (("register" "ledger ")
+     ("bal" "ledger -f %(ledger-file) bal")
+     ("reg" "ledger -f %(ledger-file) reg")
+     ("payee" "ledger -f %(ledger-file) reg @%(payee)")
+     ("account" "ledger -f %(ledger-file) reg %(account)"))))
+ '(newsticker-url-list-defaults
+   (quote
+    (("NY Times" "http://partners.userland.com/nytRss/nytHomepage.xml")
+     ("The Register" "http://www.theregister.co.uk/tonys/slashdot.rdf")
+     ("slashdot" "http://slashdot.org/index.rss" nil 3600))))
+ '(twittering-use-master-password t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
