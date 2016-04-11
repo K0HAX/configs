@@ -18,6 +18,10 @@
 (evil-mode 1)
 (setq ring-bell-function 'ignore)
 
+;; My Packages
+(require 'powerline)
+(powerline-default-theme)
+
 ;; Evil Mods
 (define-key evil-motion-state-map ";" 'smex)
 (define-key evil-motion-state-map ":" 'evil-ex)
