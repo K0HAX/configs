@@ -58,6 +58,10 @@ set background=dark
 set autoread
 set ruler
 set switchbuf=useopen
+set incsearch
+set hlsearch
+set relativenumber
+set number
 
 colorscheme torte
 set backspace=indent,eol,start
@@ -96,7 +100,7 @@ function SetGPGOptions()
     set foldopen=insert
 endfunction
 
-set autochdir
+"set autochdir
 let NERDTreeChDirMode=2
 
 :let g:session_autosave = 'no'
@@ -117,3 +121,4 @@ let g:finance_watchlist = ['SQ']
 "let g:finance_format' = '{symbol}: {LastTradePriceOnly ({Change})'
 "let g:finance_separator' = '\n'
 
+let maplocalleader = ',,'
