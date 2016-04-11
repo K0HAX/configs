@@ -9,6 +9,7 @@ Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-pathogen'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-fugitive'
+Bundle 'plasticboy/vim-markdown'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'vim-scripts/TwitVim'
 Bundle 'vim-scripts/gitignore.vim'
@@ -23,21 +24,29 @@ Bundle 'Shougo/vimshell'
 Bundle 'scrooloose/syntastic'
 Bundle 'vim-scripts/mediawiki.vim'
 Bundle 'daisuzu/facebook.vim'
+Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+Bundle '7kfpun/finance.vim'
+Bundle 'Valloric/YouCompleteMe'
 
-Bundle 'Lyrics'
-Bundle 'Markdown'
-Bundle 'Markdown-syntax'
-Bundle 'MarkdownFootnotes'
-Bundle 'calendar.vim'
 Bundle 'git-diff'
 Bundle 'mediawiki'
 Bundle 'muttrc.vim'
 Bundle 'node.js'
 Bundle 'vim-diff'
+Bundle 'itchyny/calendar.vim'
+Bundle 'K0HAX/vim-pastebin'
+
+" Required for Facebook
+Bundle 'facebook/fbconsole'
+Bundle 'tyru/open-browser.vim'
+" End required
 
 call vundle#end()
 
 execute pathogen#infect()
+
+" Make sure the status line shows up all the time.
+set laststatus=2
 
 " I like syntax highlighting
 syntax on
@@ -49,6 +58,10 @@ set background=dark
 set autoread
 set ruler
 set switchbuf=useopen
+set incsearch
+set hlsearch
+set relativenumber
+set number
 
 colorscheme torte
 set backspace=indent,eol,start
@@ -69,25 +82,43 @@ map     <C-l> :tabnext<CR>
 
 " super sudo write
 cno w!! w !sudo tee % >/dev/null
+cnoremap daycal :Calendar -split=vertical -width=37 -day
 
 " GPG Section
 let g:GPGPreferArmor=1
 let g:GPGPreferSign=1
 
 augroup GnuPGExtra
-	autocmd BufReadCmd,FileReadCmd *.\(gpg\|asc\|pgp\) call SetGPGOptions()
-	" autocmd CursorHold *.\(gpg\|asc\|pgp\) quit
+    autocmd BufReadCmd,FileReadCmd *.\(gpg\|asc\|pgp\) call SetGPGOptions()
+    " autocmd CursorHold *.\(gpg\|asc\|pgp\) quit
 augroup END
 
 function SetGPGOptions()
-	set updatetime=60000
-	set foldmethod=marker
-	set foldclose=all
-	set foldopen=insert
+    set updatetime=60000
+    set foldmethod=marker
+    set foldclose=all
+    set foldopen=insert
 endfunction
 
-set autochdir
+"set autochdir
 let NERDTreeChDirMode=2
 
 :let g:session_autosave = 'no'
 :let g:session_autoload = 'yes'
+:let g:vim_markdown_folding_disabled = 1
+
+:let g:calendar_google_calendar = 1
+:let g:calendar_google_task = 1
+
+" Begin TwitVim customizations.
+nnoremap <F8> :FriendsTwitter<cr>
+nnoremap <S-F8> :UserTwitter<cr>
+nnoremap <A-F8> :RepliesTwitter<cr>
+nnoremap <C-F8> :DMTwitter<cr>
+
+" Begin finance.vim customization
+let g:finance_watchlist = ['SQ']
+"let g:finance_format' = '{symbol}: {LastTradePriceOnly ({Change})'
+"let g:finance_separator' = '\n'
+
+let maplocalleader = ',,'
