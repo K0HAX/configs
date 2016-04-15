@@ -10,11 +10,11 @@ Bundle 'tpope/vim-pathogen'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-fugitive'
 Bundle 'plasticboy/vim-markdown'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'vim-scripts/TwitVim'
 Bundle 'vim-scripts/gitignore.vim'
 Bundle 'jamessan/vim-gnupg'
 Bundle 'scrooloose/nerdtree'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-session'
 Bundle 'mattn/webapi-vim'
@@ -22,24 +22,21 @@ Bundle 'mattn/gist-vim'
 Bundle 'Shougo/vimproc'
 Bundle 'Shougo/vimshell'
 Bundle 'scrooloose/syntastic'
-Bundle 'vim-scripts/mediawiki.vim'
-Bundle 'daisuzu/facebook.vim'
 Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 Bundle '7kfpun/finance.vim'
-Bundle 'Valloric/YouCompleteMe'
+Bundle 'ledger/vim-ledger'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
 
-Bundle 'git-diff'
+" Optional:
+Plugin 'honza/vim-snippets'
+
 Bundle 'mediawiki'
 Bundle 'muttrc.vim'
 Bundle 'node.js'
-Bundle 'vim-diff'
 Bundle 'itchyny/calendar.vim'
 Bundle 'K0HAX/vim-pastebin'
-
-" Required for Facebook
-Bundle 'facebook/fbconsole'
-Bundle 'tyru/open-browser.vim'
-" End required
 
 call vundle#end()
 
@@ -120,5 +117,9 @@ nnoremap <C-F8> :DMTwitter<cr>
 let g:finance_watchlist = ['SQ']
 "let g:finance_format' = '{symbol}: {LastTradePriceOnly ({Change})'
 "let g:finance_separator' = '\n'
+
+" Begin ledger.vim customization
+let g:ledger_fold_blanks = 1
+
 
 let maplocalleader = ',,'
