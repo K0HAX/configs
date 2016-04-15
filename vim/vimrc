@@ -14,7 +14,6 @@ Bundle 'vim-scripts/TwitVim'
 Bundle 'vim-scripts/gitignore.vim'
 Bundle 'jamessan/vim-gnupg'
 Bundle 'scrooloose/nerdtree'
-Bundle 'Valloric/YouCompleteMe'
 Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-session'
 Bundle 'mattn/webapi-vim'
@@ -25,11 +24,13 @@ Bundle 'scrooloose/syntastic'
 Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 Bundle '7kfpun/finance.vim'
 Bundle 'ledger/vim-ledger'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
 
-" Optional:
+" Autocomplete
+Bundle 'ervandew/supertab'
+Bundle 'Valloric/YouCompleteMe'
+
+" Snippets
+Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
 Bundle 'mediawiki'
@@ -121,5 +122,19 @@ let g:finance_watchlist = ['SQ']
 " Begin ledger.vim customization
 let g:ledger_fold_blanks = 1
 
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = []
+let g:ycm_key_list_previous_completion = []
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+" Snippets customization
+let g:UtiliSnipsExpandTrigger="<C-j>"
+let g:UltiSnipsJumpForwardTrigger="<C-b>"
+let g:UtiliSnipsJumpBackwardTrigger="<C-z>"
 
 let maplocalleader = ',,'
