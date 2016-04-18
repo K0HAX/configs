@@ -1,5 +1,7 @@
 ./elpa
+./elpa/*
 ./smex-items
 ./auto-save-list
+./auto-save-list/*
 *~
 
