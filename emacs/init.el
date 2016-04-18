@@ -16,6 +16,12 @@
 		     powerline-evil
 		     twittering-mode
 		     use-package
+		     erc-colorize
+		     erc-crypt
+		     erc-hl-nicks
+		     erc-image
+		     erc-social-graph
+		     erc-youtube
 		     highlight-parentheses))
 
 (require 'package)
@@ -35,11 +41,15 @@
 
 ;; My Packages
 (require 'powerline)
+(scroll-bar-mode -1)
 (powerline-default-theme)
 
+(load "~/.emacs.d/private/restart-emacs.el")
 (load "~/.emacs.d/private/highlight-parentheses.el")
 (load "~/.emacs.d/private/org-bullets.el")
 (load "~/.emacs.d/private/key-bindings.el")
+(load "~/.emacs.d/private/erc-freenode.el")
+(load "~/.emacs.d/private/twitter-mode.el")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
