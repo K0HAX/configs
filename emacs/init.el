@@ -1,28 +1,19 @@
 ;; Automatic package install
 (setq package-list '(
-		     evil
-		     evil-leader
-		     evil-org
-		     git-commit
-		     smex
-		     ledger-mode
-		     magit
-		     magit-popup
-		     mediawiki
-		     org
-		     org-gcal
-		     org-bullets
-		     powerline
-		     powerline-evil
-		     twittering-mode
-		     use-package
-		     erc-colorize
-		     erc-crypt
-		     erc-hl-nicks
-		     erc-image
-		     erc-social-graph
-		     erc-youtube
-		     highlight-parentheses))
+		     use-package))
+
+;; Load package installers
+(load "~/.emacs.d/private/installers/highlight-parentheses.el")
+(load "~/.emacs.d/private/installers/erc-mods.el")
+(load "~/.emacs.d/private/installers/twitter-mode.el")
+(load "~/.emacs.d/private/installers/powerline-evil.el")
+(load "~/.emacs.d/private/installers/org.el")
+(load "~/.emacs.d/private/installers/mediawiki.el")
+(load "~/.emacs.d/private/installers/magit.el")
+(load "~/.emacs.d/private/installers/ledger.el")
+(load "~/.emacs.d/private/installers/smex.el")
+(load "~/.emacs.d/private/installers/git.el")
+(load "~/.emacs.d/private/installers/evil.el")
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -45,11 +36,10 @@
 (powerline-default-theme)
 
 (load "~/.emacs.d/private/restart-emacs.el")
-(load "~/.emacs.d/private/highlight-parentheses.el")
 (load "~/.emacs.d/private/org-bullets.el")
-(load "~/.emacs.d/private/key-bindings.el")
 (load "~/.emacs.d/private/erc-freenode.el")
 (load "~/.emacs.d/private/twitter-mode.el")
+(load "~/.emacs.d/private/highlight-parentheses.el")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -83,6 +73,7 @@
 (evil-mode 1)
 
 ;; Evil Mods
+(load "~/.emacs.d/private/key-bindings.el")
 (define-key evil-motion-state-map ";" 'smex)
 (define-key evil-motion-state-map ":" 'evil-ex)
 
