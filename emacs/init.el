@@ -39,6 +39,7 @@
 
 (load "~/.emacs.d/private/highlight-parentheses.el")
 (load "~/.emacs.d/private/org-bullets.el")
+(load "~/.emacs.d/private/key-bindings.el")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -58,6 +59,7 @@
     (("NY Times" "http://partners.userland.com/nytRss/nytHomepage.xml")
      ("The Register" "http://www.theregister.co.uk/tonys/slashdot.rdf")
      ("slashdot" "http://slashdot.org/index.rss" nil 3600))))
+ '(org-agenda-files (quote ("~/Documents/todo.org")))
  '(twittering-use-master-password t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
