@@ -1,4 +1,5 @@
 ;; Automatic package install
+(add-to-list 'load-path "~/.emacs.d/git/orgmode-mediawiki/")
 (setq package-list '(
 		     use-package))
 
@@ -15,6 +16,8 @@
 (load "~/.emacs.d/private/installers/git.el")
 (load "~/.emacs.d/private/installers/evil.el")
 (load "~/.emacs.d/private/installers/emms.el")
+(load "~/.emacs.d/private/installers/s.el")
+(load "~/.emacs.d/private/installers/theme-solarized.el")
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -34,7 +37,6 @@
 ;; My Packages
 (require 'powerline)
 (scroll-bar-mode -1)
-(powerline-default-theme)
 
 (load "~/.emacs.d/private/restart-emacs.el")
 (load "~/.emacs.d/private/org-bullets.el")
@@ -42,13 +44,18 @@
 (load "~/.emacs.d/private/twitter-mode.el")
 (load "~/.emacs.d/private/highlight-parentheses.el")
 (load "~/.emacs.d/private/emms.el")
+(load "~/.emacs.d/private/theme-solarized.el")
+
+;; Powerline
+(powerline-default-theme)
+
+(require 'ox-mediawiki)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (tango-dark)))
  '(ledger-reports
    (quote
     (("register" "ledger ")
