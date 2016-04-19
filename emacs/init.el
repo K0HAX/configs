@@ -14,6 +14,7 @@
 (load "~/.emacs.d/private/installers/smex.el")
 (load "~/.emacs.d/private/installers/git.el")
 (load "~/.emacs.d/private/installers/evil.el")
+(load "~/.emacs.d/private/installers/emms.el")
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -40,6 +41,7 @@
 (load "~/.emacs.d/private/erc-freenode.el")
 (load "~/.emacs.d/private/twitter-mode.el")
 (load "~/.emacs.d/private/highlight-parentheses.el")
+(load "~/.emacs.d/private/emms.el")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
