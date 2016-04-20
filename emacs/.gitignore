@@ -9,5 +9,6 @@ url
 url/*
 emms
 emms/*
+private/mediawiki.el
 *~
 
