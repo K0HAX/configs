@@ -38,6 +38,8 @@
 (require 'powerline)
 (scroll-bar-mode -1)
 
+(require 'ox-mediawiki)
+
 (load "~/.emacs.d/private/restart-emacs.el")
 (load "~/.emacs.d/private/org-bullets.el")
 (load "~/.emacs.d/private/erc-freenode.el")
@@ -45,11 +47,10 @@
 (load "~/.emacs.d/private/highlight-parentheses.el")
 (load "~/.emacs.d/private/emms.el")
 (load "~/.emacs.d/private/theme-solarized.el")
+(load "~/.emacs.d/private/mediawiki.el")
 
 ;; Powerline
 (powerline-default-theme)
-
-(require 'ox-mediawiki)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
