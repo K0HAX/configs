@@ -18,6 +18,7 @@
 (load "~/.emacs.d/private/installers/emms.el")
 (load "~/.emacs.d/private/installers/s.el")
 (load "~/.emacs.d/private/installers/theme-solarized.el")
+(load "~/.emacs.d/private/installers/w3m.el")
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -46,8 +47,10 @@
 (load "~/.emacs.d/private/twitter-mode.el")
 (load "~/.emacs.d/private/highlight-parentheses.el")
 (load "~/.emacs.d/private/emms.el")
+(load "~/.emacs.d/private/w3m.el")
 (load "~/.emacs.d/private/theme-solarized.el")
 (load "~/.emacs.d/private/mediawiki.el")
+(load "~/.emacs.d/private/gnus.el")
 
 ;; Powerline
 (powerline-default-theme)
@@ -70,6 +73,8 @@
      ("The Register" "http://www.theregister.co.uk/tonys/slashdot.rdf")
      ("slashdot" "http://slashdot.org/index.rss" nil 3600))))
  '(org-agenda-files (quote ("~/Documents/todo.org")))
+ '(send-mail-function (quote smtpmail-send-it))
+ '(server-mode t)
  '(twittering-use-master-password t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
