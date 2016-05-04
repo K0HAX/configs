@@ -6,3 +6,6 @@
     path = emacs/git/orgmode-mediawiki
     url = https://github.com/tomalexander/orgmode-mediawiki.git
 
+[submodule "emacs/git/nnreddit"]
+	path = emacs/git/nnreddit
+	url = https://github.com/paul-issartel/nnreddit.git
