@@ -9,3 +9,4 @@
 [submodule "emacs/git/nnreddit"]
 	path = emacs/git/nnreddit
 	url = https://github.com/paul-issartel/nnreddit.git
+
