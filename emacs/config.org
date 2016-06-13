@@ -3,7 +3,7 @@
 #+EMAIL: michael@englehorn.com
 
 * Preamble
-This is my Emacs config, which is almost a single file thanks to [[[[http://orgmode.org/worg/org-contrib/babel/intro.html]]] [org-babel]].
+This is my Emacs config, which is almost a single file thanks to [[http://orgmode.org/worg/org-contrib/babel/intro.html][org-babel]].
 
 Although GitHub does render =.org= files nicely, I recommend viewing it in Emacs, as GitHub isn't fully compatible. Using org-mode gives a nice overview and makes it quick and easy to navigate and make changes.
 
