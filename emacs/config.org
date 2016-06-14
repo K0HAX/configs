@@ -248,7 +248,7 @@ exceptional for being very simple.
     possible. =dtrt-indent= does this and works for most mainstream languages.
 
     #+BEGIN_SRC emacs-lisp
-    (use-package dtrt-indent)
+    "(use-package dtrt-indent)"
     #+END_SRC
 
 ** Auto-update changed files
@@ -320,6 +320,15 @@ exceptional for being very simple.
     (add-hook 'minibuffer-setup-hook #'my/minibuffer-setup-hook)
     (add-hook 'minibuffer-exit-hook #'my/minibuffer-exit-hook)
     #+END_SRC
+
+** Dired customizations
+
+   - Human readable sizes in Dired
+   - Sort by size
+
+   #+BEGIN_SRC emacs-lisp
+   (setq dired-listing-switches "-alhS")
+   #+END_SRC
 
 * Custom packages
 
@@ -569,6 +578,26 @@ I keep slightly more sensitive information in a separate file so that I can easi
     #+BEGIN_SRC emacs-lisp
     (scroll-bar-mode -1)
     #+END_SRC
+
+** M-s s to SSH to a host.
+
+   I wanted to by able to easily SSH from Emacs, so I wrote some elisp.
+
+   #+BEGIN_SRC emacs-lisp
+(defun ssh-to-host (x)
+  "Ask for host."
+  (interactive "sHost: ")
+  (let* ((buffer-name (format "*SSH %s*" x))
+         (buffer (get-buffer buffer-name)))
+    (if buffer
+        (switch-to-buffer buffer)
+      (term "/bin/bash")
+      (term-send-string
+       (get-buffer-process (rename-buffer buffer-name))
+       (format "ssh %s\r" x)))))
+
+(global-set-key (kbd "M-s s") 'ssh-to-host)
+   #+END_SRC
 * Evil Mode
 
 ** Enable evil mode
