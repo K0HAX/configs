@@ -85,6 +85,7 @@ Setup general package related settings.
 
 ** No splash screen
 
+
    I prefer loading up to the scratch buffer on initial startup.
 
     #+BEGIN_SRC emacs-lisp
@@ -166,6 +167,14 @@ Setup general package related settings.
     (column-number-mode t)
     #+END_SRC
 
+** Prettify source code in org-mode
+   Org mode should have pretty highlighting for source code.
+
+   #+BEGIN_SRC emacs-lisp
+   (setq org-src-fontify-natively t)
+   (setq org-src-tab-acts-natively t)
+   (setq org-edit-src-content-indentation 0)
+   #+END_SRC
 * General settings
 
 These settings don't belong to any specific mode or package. Some packages are
@@ -234,21 +243,13 @@ exceptional for being very simple.
     (setq-default fill-column 80)
     #+END_SRC
 
-** Indent with spaces by default
-
-    Tabs are weird and can have varying lengths, so I prefer spaces.
-
-    #+BEGIN_SRC emacs-lisp
-    (setq-default indent-tabs-mode nil)
-    #+END_SRC
-
 ** Auto-detect indent settings
 
     I prefer to follow a file's indenting style instead of enforcing my own, if
     possible. =dtrt-indent= does this and works for most mainstream languages.
 
     #+BEGIN_SRC emacs-lisp
-    "(use-package dtrt-indent)"
+    (use-package dtrt-indent)
     #+END_SRC
 
 ** Auto-update changed files
@@ -572,6 +573,7 @@ I keep slightly more sensitive information in a separate file so that I can easi
     #+END_SRC
 
 ** Scroll bar settings
+
     
     Get rid of the scroll bar, it's unneccesary.
 
