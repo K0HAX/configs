@@ -652,19 +652,27 @@ I keep slightly more sensitive information in a separate file so that I can easi
     (evil-mode 1)
     #+END_SRC
 
-** Set up key-bindings, and make evil my leader.
+** Set up global key-bindings, and make evil my leader.
 
     #+BEGIN_SRC emacs-lisp
     (eval-after-load "evil"
     '(progn
-	(define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
-	(define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
-	(define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-	(define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+	(define-key evil-normal-state-map (kbd "M-h") 'evil-window-left)
+	(define-key evil-normal-state-map (kbd "M-j") 'evil-window-down)
+	(define-key evil-normal-state-map (kbd "M-k") 'evil-window-up)
+	(define-key evil-normal-state-map (kbd "M-l") 'evil-window-right)
 	(define-key evil-motion-state-map ";" 'smex)
 	(define-key evil-motion-state-map ":" 'evil-ex)))
     #+END_SRC
 
+** Set up key-bindings for ledger-mode
+
+   #+BEGIN_SRC emacs-lisp
+   (with-eval-after-load 'ledger-mode
+     (define-key ledger-mode-map (kbd "C-c n") 'ledger-add-transaction)
+     (define-key ledger-mode-map (kbd "C-c c") 'ledger-mode-clean-buffer)
+     (define-key ledger-mode-map (kbd "C-c r") 'ledger-report))
+   #+END_SRC
 ** Fix term-mode
    Term-mode shouldn't have evil bindings.
 
