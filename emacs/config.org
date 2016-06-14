@@ -46,6 +46,14 @@ Setup general package related settings.
     (setq use-package-always-ensure t)
     #+END_SRC
 
+** Emacs String Manipulation Library
+
+    This is required for some plugins.
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package s)
+    #+END_SRC
+
 * Appearance related
 
   Setup appearance early so that if something goes wrong with the init, Emacs is still looking good.
@@ -447,14 +455,6 @@ These are packages I like to use, and don't really belong anywhere else in the c
     (require 'emms-source-file)
     (require 'emms-source-playlist)
     (setq emms-source-file-default-directory "~/Music/")
-    #+END_SRC
-
-** Emacs String Manipulation Library
-
-    This is required for some plugins.
-
-    #+BEGIN_SRC emacs-lisp
-    (use-package s)
     #+END_SRC
 
 ** w3m
