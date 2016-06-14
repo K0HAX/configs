@@ -3,12 +3,15 @@ This is my Emacs config, which is almost a single file thanks to [[http://orgmod
 
 Although GitHub does render =.org= files nicely, I recommend viewing it in Emacs, as GitHub isn't fully compatible. Using org-mode gives a nice overview and makes it quick and easy to navigate and make changes.
 
+#+latex: \newpage
 * Beginning config
 ** Personal information
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Michael Englehorn")
 (setq user-mail-address "michael@englehorn.com")
 #+END_SRC
+
+#+latex: \newpage
 * Package related
 
 Setup general package related settings.
@@ -50,6 +53,7 @@ Setup general package related settings.
     (use-package s)
     #+END_SRC
 
+#+latex: \newpage
 * Appearance related
 
   Setup appearance early so that if something goes wrong with the init, Emacs is still looking good.
@@ -172,6 +176,8 @@ Setup general package related settings.
    (setq org-edit-src-content-indentation 0)
    (use-package htmlize)
    #+END_SRC
+
+#+latex: \newpage
 * General settings
 
 These settings don't belong to any specific mode or package. Some packages are
@@ -326,6 +332,7 @@ exceptional for being very simple.
     (add-hook 'minibuffer-exit-hook #'my/minibuffer-exit-hook)
     #+END_SRC
 
+#+latex: \newpage
 * Install and Set Up packages
 ** ox-mediawiki
 
@@ -483,6 +490,7 @@ exceptional for being very simple.
    (setq multi-term-program "/bin/bash")
    #+END_SRC
 
+#+latex: \newpage
 * Customizations
 ** Powerline
 
@@ -641,6 +649,7 @@ I keep slightly more sensitive information in a separate file so that I can easi
    (setq dired-listing-switches "-alhS")
    #+END_SRC
 
+#+latex: \newpage
 * Evil Mode
 ** Enable evil mode
 
