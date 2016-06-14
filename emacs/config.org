@@ -1,4 +1,3 @@
-
 * Preamble
 This is my Emacs config, which is almost a single file thanks to [[http://orgmode.org/worg/org-contrib/babel/intro.html][org-babel]].
 
@@ -327,20 +326,7 @@ exceptional for being very simple.
     (add-hook 'minibuffer-exit-hook #'my/minibuffer-exit-hook)
     #+END_SRC
 
-** Dired customizations
-
-   - Human readable sizes in Dired
-   - Sort by size
-
-   #+BEGIN_SRC emacs-lisp
-   (setq dired-listing-switches "-alhS")
-   #+END_SRC
-
-* Custom packages
-
-
-These are packages I like to use, and don't really belong anywhere else in the config.
-
+* Install and Set Up packages
 ** ox-mediawiki
 
     This allows export from orgmode into mediawiki.
@@ -497,10 +483,7 @@ These are packages I like to use, and don't really belong anywhere else in the c
    (setq multi-term-program "/bin/bash")
    #+END_SRC
 
-* Package settings
-
-Configure settings for my various packages
-
+* Customizations
 ** Powerline
 
     Initialize the Powerline.
@@ -508,6 +491,21 @@ Configure settings for my various packages
     #+BEGIN_SRC emacs-lisp
     (require 'powerline)
     #+END_SRC
+
+** Powerline theme
+
+    Set up the powerline theme
+
+    #+BEGIN_SRC emacs-lisp
+    (powerline-default-theme)
+    #+END_SRC
+** Load secrets
+
+I keep slightly more sensitive information in a separate file so that I can easily publish my main configuration.
+
+#+BEGIN_SRC emacs-lisp
+(load "~/.emacs.d/emacs-secrets.el" t)
+#+END_SRC
 
 ** Restart Emacs
 
@@ -529,23 +527,6 @@ Configure settings for my various packages
 							    #'launch-separate-emacs-under-x
 							    #'launch-separate-emacs-in-terminal)))))
 	(save-buffers-kill-emacs)))
-    #+END_SRC
-
-** Load secrets
-
-I keep slightly more sensitive information in a separate file so that I can easily publish my main configuration.
-
-#+BEGIN_SRC emacs-lisp
-(load "~/.emacs.d/emacs-secrets.el" t)
-#+END_SRC
-
-* Customizations
-** Powerline theme
-
-    Set up the powerline theme
-
-    #+BEGIN_SRC emacs-lisp
-    (powerline-default-theme)
     #+END_SRC
 ** Custom mode settings
 
@@ -651,8 +632,16 @@ I keep slightly more sensitive information in a separate file so that I can easi
      (set-buffer (find-file (concat "/sudo::" file))))
    #+END_SRC
 
-* Evil Mode
+** Dired customizations
 
+   - Human readable sizes in Dired
+   - Sort by size
+
+   #+BEGIN_SRC emacs-lisp
+   (setq dired-listing-switches "-alhS")
+   #+END_SRC
+
+* Evil Mode
 ** Enable evil mode
 
     #+BEGIN_SRC emacs-lisp
