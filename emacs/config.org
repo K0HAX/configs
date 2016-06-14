@@ -1,6 +1,3 @@
-#+TITLE: Michael's Emacs Config
-#+AUTHOR: Michael Englehorn
-#+EMAIL: michael@englehorn.com
 
 * Preamble
 This is my Emacs config, which is almost a single file thanks to [[http://orgmode.org/worg/org-contrib/babel/intro.html][org-babel]].
@@ -10,8 +7,8 @@ Although GitHub does render =.org= files nicely, I recommend viewing it in Emacs
 * Beginning config
 ** Personal information
 #+BEGIN_SRC emacs-lisp
-(setq user-full-name "Michael Englehorn"
-  user-mail-address "michael@englehorn.com")
+(setq user-full-name "Michael Englehorn")
+(setq user-mail-address "michael@englehorn.com")
 #+END_SRC
 * Package related
 
@@ -174,6 +171,7 @@ Setup general package related settings.
    (setq org-src-fontify-natively t)
    (setq org-src-tab-acts-natively t)
    (setq org-edit-src-content-indentation 0)
+   (use-package htmlize)
    #+END_SRC
 * General settings
 
@@ -196,6 +194,13 @@ exceptional for being very simple.
 
     (add-hook 'after-save-hook 'my/delete-config-el)
     #+END_SRC
+
+** Set up org-babel
+   We need to allow SH scripts to be executed by org-babel.
+  
+   #+BEGIN_SRC emacs-lisp
+   (require 'ob-sh)
+   #+END_SRC
 
 ** Start server if it isn't started
 
@@ -332,6 +337,7 @@ exceptional for being very simple.
    #+END_SRC
 
 * Custom packages
+
 
 These are packages I like to use, and don't really belong anywhere else in the config.
 
@@ -481,6 +487,16 @@ These are packages I like to use, and don't really belong anywhere else in the c
     (setq w3m-default-display-inline-images t))
     #+END_SRC
 
+** multi-term
+   
+   Multiple terminal manager for Emacs
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package multi-term)
+   (require 'multi-term)
+   (setq multi-term-program "/bin/bash")
+   #+END_SRC
+
 * Package settings
 
 Configure settings for my various packages
@@ -583,6 +599,7 @@ I keep slightly more sensitive information in a separate file so that I can easi
 
 ** M-s s to SSH to a host.
 
+
    I wanted to by able to easily SSH from Emacs, so I wrote some elisp.
 
    #+BEGIN_SRC emacs-lisp
@@ -593,13 +610,47 @@ I keep slightly more sensitive information in a separate file so that I can easi
          (buffer (get-buffer buffer-name)))
     (if buffer
         (switch-to-buffer buffer)
-      (term "/bin/bash")
+      (multi-term)
       (term-send-string
        (get-buffer-process (rename-buffer buffer-name))
        (format "ssh %s\r" x)))))
 
 (global-set-key (kbd "M-s s") 'ssh-to-host)
    #+END_SRC
+
+** Ask to open as root if I lack permission to edit
+
+   Very useful. If I try to open a file I don't have write permissions to, ask if I want to open it as root using tramp.
+
+   Note: if you're experiencing problems using this (like tramp hanging), check that you can open them "manually" in the first place, C-x C-f /sudo::/path/to/file. Check the [[http://www.emacswiki.org/emacs/TrampMode][tramp]] troubleshooting section at emacs wiki.
+
+   #+BEGIN_SRC emacs-lisp
+   (defun th-rename-tramp-buffer ()
+     (when (file-remote-p (buffer-file-name))
+       (rename-buffer
+        (format "%s:%s"
+                (file-remote-p (buffer-file-name) 'method)
+                (buffer-name)))))
+
+   (add-hook 'find-file-hook
+             'th-rename-tramp-buffer)
+
+   (defadvice find-file (around th-find-file activate)
+     "Open FILENAME using tramp's sudo method if it's read-only."
+     (if (and (not (file-writable-p (ad-get-arg 0)))
+              (not (file-remote-p default-directory))
+              (y-or-n-p (concat "File "
+                                (ad-get-arg 0)
+                                " is read-only.  Open it as root? ")))
+         (th-find-file-sudo (ad-get-arg 0))
+       ad-do-it))
+
+   (defun th-find-file-sudo (file)
+     "Opens FILE with root privileges."
+     (interactive "F")
+     (set-buffer (find-file (concat "/sudo::" file))))
+   #+END_SRC
+
 * Evil Mode
 
 ** Enable evil mode
@@ -624,3 +675,10 @@ I keep slightly more sensitive information in a separate file so that I can easi
 	(define-key evil-motion-state-map ";" 'smex)
 	(define-key evil-motion-state-map ":" 'evil-ex)))
     #+END_SRC
+
+** Fix term-mode
+   Term-mode shouldn't have evil bindings.
+
+   #+BEGIN_SRC emacs-lisp
+   (evil-set-initial-state 'term-mode 'emacs)
+   #+END_SRC
