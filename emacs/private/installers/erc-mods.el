@@ -1,6 +1,0 @@
-(add-to-list 'package-list 'erc-colorize)
-(add-to-list 'package-list 'erc-crypt)
-(add-to-list 'package-list 'erc-hl-nicks)
-(add-to-list 'package-list 'erc-image)
-(add-to-list 'package-list 'erc-social-graph)
-(add-to-list 'package-list 'erc-youtube)
