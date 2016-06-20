@@ -1,3 +1,7 @@
+#+TITLE: Michael's Emacs Config
+#+AUTHOR: Michael Englehorn
+#+EMAIL: michael@englehorn.com
+
 * Preamble
    This is my Emacs config, which is almost a single file thanks to [[http://orgmode.org/worg/org-contrib/babel/intro.html][org-babel]].
 
@@ -753,7 +757,11 @@
     (evil-set-initial-state 'term-mode 'emacs)
     #+END_SRC
 
+    #+latex: \newpage
 * Disabled Configs
 :PROPERTIES:
 :header-args: :tangle no
 :END:
+
+
+This section is where bad sections of this config can go if they break Emacs. It's only used for debugging purposes.
