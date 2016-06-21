@@ -144,7 +144,7 @@
     Specifically under the cursor
 
     #+BEGIN_SRC emacs-lisp
-     (custom-set-variables '(show-paren-delay 0.0))
+     (setq show-paren-delay 0.0)
      (show-paren-mode t)
     #+END_SRC
 
@@ -590,15 +590,6 @@
 
     #+BEGIN_SRC emacs-lisp
      (setq ring-bell-function 'ignore)
-    #+END_SRC
-
-** Scroll bar settings
-
-    
-    Get rid of the scroll bar, it's unneccesary.
-
-    #+BEGIN_SRC emacs-lisp
-     (scroll-bar-mode -1)
     #+END_SRC
 
 ** M-s s to SSH to a host.
