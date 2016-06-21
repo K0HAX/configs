@@ -119,10 +119,12 @@
      The solarized theme is pretty in my opinion.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package color-theme-solarized
-     :init
-     :config
-     (color-theme-solarized))
+     (if (display-graphic-p)
+         (use-package color-theme-solarized
+         :init
+         :config
+         (color-theme-solarized))
+     (enable-theme 'wheatgrass)
      #+END_SRC
 
 ** RainbowDelimiters
