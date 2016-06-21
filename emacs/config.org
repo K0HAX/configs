@@ -105,6 +105,7 @@
 ** Theme
 
 *** Colors
+
      I really like the having a colorized theme.
 
      #+BEGIN_SRC emacs-lisp
@@ -123,7 +124,8 @@
          (use-package color-theme-solarized
          :init
          :config
-         (color-theme-solarized)))
+         (color-theme-solarized))
+     (load-theme 'wheatgrass))
      #+END_SRC
 
 ** RainbowDelimiters
