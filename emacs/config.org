@@ -467,7 +467,6 @@
     #+END_SRC
 
 ** multi-term
-
    
     Multiple terminal manager for Emacs
 
