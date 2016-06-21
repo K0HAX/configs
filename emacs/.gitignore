@@ -1,3 +1,10 @@
+bbdb
+bookmarks
+*.html
+*.pdf
+*.tex
+tramp
+
 emacs-secrets.el
 recentf
 places
