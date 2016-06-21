@@ -123,8 +123,7 @@
          (use-package color-theme-solarized
          :init
          :config
-         (color-theme-solarized))
-     (enable-theme 'wheatgrass)
+         (color-theme-solarized)))
      #+END_SRC
 
 ** RainbowDelimiters
