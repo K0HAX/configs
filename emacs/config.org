@@ -117,7 +117,7 @@
 
 *** Solarized
 
-     The solarized theme is pretty in my opinion.
+     The solarized theme is pretty in my opinion, but if we're not in graphical mode wheatgrass is /way/ more usable.
 
      #+BEGIN_SRC emacs-lisp
      (if (display-graphic-p)
