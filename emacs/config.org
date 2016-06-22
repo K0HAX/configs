@@ -3,482 +3,482 @@
 #+EMAIL: michael@englehorn.com
 
 * Preamble
-   This is my Emacs config, which is almost a single file thanks to [[http://orgmode.org/worg/org-contrib/babel/intro.html][org-babel]].
-
-   Although GitHub does render =.org= files nicely, I recommend viewing it in Emacs, as GitHub isn't fully compatible. Using org-mode gives a nice overview and makes it quick and easy to navigate and make changes.
-
-   #+latex: \newpage
+  This is my Emacs config, which is almost a single file thanks to [[http://orgmode.org/worg/org-contrib/babel/intro.html][org-babel]].
+  
+  Although GitHub does render =.org= files nicely, I recommend viewing it in Emacs, as GitHub isn't fully compatible. Using org-mode gives a nice overview and makes it quick and easy to navigate and make changes.
+  
+  #+latex: \newpage
 * Beginning config
 ** Personal information
-    #+BEGIN_SRC emacs-lisp
- (setq user-full-name "Michael Englehorn")
- (setq user-mail-address "michael@englehorn.com")
-    #+END_SRC
-
-    #+latex: \newpage
+   #+BEGIN_SRC emacs-lisp
+   (setq user-full-name "Michael Englehorn")
+   (setq user-mail-address "michael@englehorn.com")
+   #+END_SRC
+   
+   #+latex: \newpage
 * Package related
-
-   Setup general package related settings.
-
+  
+  Setup general package related settings.
+  
 ** package.el
-
-    Initialize package.el, the built-in package manager.
-
-    #+BEGIN_SRC emacs-lisp
-     (package-initialize)
-    #+END_SRC
-
-    These are the package repositories I use:
-
-    #+BEGIN_SRC emacs-lisp
-     (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-    #+END_SRC
-
+   
+   Initialize package.el, the built-in package manager.
+   
+   #+BEGIN_SRC emacs-lisp
+   (package-initialize)
+   #+END_SRC
+   
+   These are the package repositories I use:
+   
+   #+BEGIN_SRC emacs-lisp
+   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+   #+END_SRC
+   
 ** use-package
-
-    Install/activate [[https://github.com/jwiegley/use-package][use-package]], basically a wrapper for =package.el=.
-
+   
+   Install/activate [[https://github.com/jwiegley/use-package][use-package]], basically a wrapper for =package.el=.
+   
     - makes installing and configuring other packages nicer and easier.
     - helps with autoloading packages to greatly reduce initial startup time.
-
+      
       #+BEGIN_SRC emacs-lisp
-     (unless (package-installed-p 'use-package)
-	 (package-refresh-contents)
-	 (package-install 'use-package))
-     (require 'use-package)
-     (setq use-package-always-ensure t)
+      (unless (package-installed-p 'use-package)
+	  (package-refresh-contents)
+	  (package-install 'use-package))
+      (require 'use-package)
+      (setq use-package-always-ensure t)
       #+END_SRC
-
+      
 ** Emacs String Manipulation Library
-
-    This is required for some plugins.
-
-    #+BEGIN_SRC emacs-lisp
-     (use-package s)
-    #+END_SRC
-
-    #+latex: \newpage
+   
+   This is required for some plugins.
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package s)
+   #+END_SRC
+   
+   #+latex: \newpage
 * Appearance related
-
-   Setup appearance early so that if something goes wrong with the init, Emacs is still looking good.
-
+  
+  Setup appearance early so that if something goes wrong with the init, Emacs is still looking good.
+  
 ** Maximize Emacs on startup
-
-    This snippet works in *nix and all (relevant) versions of Windows.
-
-    #+BEGIN_SRC emacs-lisp
-     (defun w32-maximize-frame ()
-     "Maximize the current frame (windows only)"
-     (interactive)
-     (w32-send-sys-command 61488))
-     (if (eq system-type 'windows-nt)
-     (progn
-	 (add-hook 'windows-setup-hook 'w32-maximize-frame t))
-     (set-frame-parameter nil 'fullscreen 'maximized))
-    #+END_SRC
-
+   
+   This snippet works in *nix and all (relevant) versions of Windows.
+   
+   #+BEGIN_SRC emacs-lisp
+   (defun w32-maximize-frame ()
+   "Maximize the current frame (windows only)"
+   (interactive)
+   (w32-send-sys-command 61488))
+   (if (eq system-type 'windows-nt)
+   (progn
+       (add-hook 'windows-setup-hook 'w32-maximize-frame t))
+   (set-frame-parameter nil 'fullscreen 'maximized))
+   #+END_SRC
+   
 ** Minimal GUI
-
-    Remove unnecessary GUI elements: menu-bar, tool-bar, and scroll-bar.
-
-    #+BEGIN_SRC emacs-lisp
-     (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-     (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-     (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-    #+END_SRC
-
+   
+   Remove unnecessary GUI elements: menu-bar, tool-bar, and scroll-bar.
+   
+   #+BEGIN_SRC emacs-lisp
+   (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+   (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+   (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+   #+END_SRC
+   
 ** No splash screen
-
-
-    I prefer loading up to the scratch buffer on initial startup.
-
-    #+BEGIN_SRC emacs-lisp
-     (setq inhibit-splash-screen t)
-    #+END_SRC
-
+   
+   
+   I prefer loading up to the scratch buffer on initial startup.
+   
+   #+BEGIN_SRC emacs-lisp
+   (setq inhibit-splash-screen t)
+   #+END_SRC
+   
 ** Initial scratch buffer message
-
-    #+BEGIN_SRC emacs-lisp
-     (setq initial-scratch-message "")
-    #+END_SRC
-
+   
+   #+BEGIN_SRC emacs-lisp
+   (setq initial-scratch-message "")
+   #+END_SRC
+   
 ** Theme
-
+   
 *** Colors
-
-     I really like the having a colorized theme.
-
-     #+BEGIN_SRC emacs-lisp
-     (use-package color-theme
-     :init
-     :config
-     )
-     #+END_SRC
-
+    
+    I really like the having a colorized theme.
+    
+    #+BEGIN_SRC emacs-lisp
+    (use-package color-theme
+    :init
+    :config
+    )
+    #+END_SRC
+    
 *** Solarized
-
-     The solarized theme is pretty in my opinion, but if we're not in graphical mode wheatgrass is /way/ more usable.
-
-     #+BEGIN_SRC emacs-lisp
-     (if (display-graphic-p)
-         (use-package color-theme-solarized
-         :init
-         :config
-         (color-theme-solarized))
-     (load-theme 'wheatgrass))
-     #+END_SRC
-
+    
+    The solarized theme is pretty in my opinion, but if we're not in graphical mode wheatgrass is /way/ more usable.
+    
+    #+BEGIN_SRC emacs-lisp
+    (if (display-graphic-p)
+	(use-package color-theme-solarized
+	:init
+	:config
+	(color-theme-solarized))
+    (load-theme 'wheatgrass))
+    #+END_SRC
+    
 ** RainbowDelimiters
-
-    Highlight matching delimiters with unique colors. It's virtually necessary with emacs-lisp.
-
-    #+BEGIN_SRC emacs-lisp
-     (use-package rainbow-delimiters
-     :commands (rainbow-delimiters-mode)
-     :init
-     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
-    #+END_SRC
-
+   
+   Highlight matching delimiters with unique colors. It's virtually necessary with emacs-lisp.
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package rainbow-delimiters
+   :commands (rainbow-delimiters-mode)
+   :init
+   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+   #+END_SRC
+   
 ** Highlight matching parenthesis
-
-    Specifically under the cursor
-
-    #+BEGIN_SRC emacs-lisp
-     (setq show-paren-delay 0.0)
-     (show-paren-mode t)
-    #+END_SRC
-
+   
+   Specifically under the cursor
+   
+   #+BEGIN_SRC emacs-lisp
+   (setq show-paren-delay 0.0)
+   (show-paren-mode t)
+   #+END_SRC
+   
 ** Highlight trailing whitespace
-
-    Trailing whitespace is really annoying, especially when pasting from certain terminals.
-
-    #+BEGIN_SRC emacs-lisp
-     (defun my/buf-show-trailing-whitespace ()
-       (interactive)
-	 (setq show-trailing-whitespace t))
-     (add-hook 'prog-mode-hook 'my/buf-show-trailing-whitespace)
-     (custom-set-faces '(trailing-whitespace ((t (:background "dim gray")))))
-    #+END_SRC
-
+   
+   Trailing whitespace is really annoying, especially when pasting from certain terminals.
+   
+   #+BEGIN_SRC emacs-lisp
+   (defun my/buf-show-trailing-whitespace ()
+     (interactive)
+       (setq show-trailing-whitespace t))
+   (add-hook 'prog-mode-hook 'my/buf-show-trailing-whitespace)
+   (custom-set-faces '(trailing-whitespace ((t (:background "dim gray")))))
+   #+END_SRC
+   
 ** Prettify symbols
-
-    Convert certain words into symbols. Prime example: =lambda= becomes =λ=.
-
-    #+BEGIN_SRC emacs-lisp
-     (global-prettify-symbols-mode)
-    #+END_SRC
-
+   
+   Convert certain words into symbols. Prime example: =lambda= becomes =λ=.
+   
+   #+BEGIN_SRC emacs-lisp
+   (global-prettify-symbols-mode)
+   #+END_SRC
+   
 ** Show column number in modeline
-
-    #+BEGIN_SRC emacs-lisp
-     (column-number-mode t)
-    #+END_SRC
-
+   
+   #+BEGIN_SRC emacs-lisp
+   (column-number-mode t)
+   #+END_SRC
+   
 ** Prettify source code in org-mode
-    Org mode should have pretty highlighting for source code.
-
-    #+BEGIN_SRC emacs-lisp
-    (setq org-src-fontify-natively t)
-    (setq org-src-tab-acts-natively t)
-    (setq org-edit-src-content-indentation 0)
-    (use-package htmlize)
-    #+END_SRC
-
-    #+latex: \newpage
+   Org mode should have pretty highlighting for source code.
+   
+   #+BEGIN_SRC emacs-lisp
+   (setq org-src-fontify-natively t)
+   (setq org-src-tab-acts-natively t)
+   (setq org-edit-src-content-indentation 0)
+   (use-package htmlize)
+   #+END_SRC
+   
+   #+latex: \newpage
 * General settings
-
-   These settings don't belong to any specific mode or package. Some packages are
-   exceptional for being very simple.
-
+  
+  These settings don't belong to any specific mode or package. Some packages are
+  exceptional for being very simple.
+  
 ** Optimize org-babel config for faster startup
+   
+   Running =org-babel-load-file= increases startup time, so only do it when there
+   are changes to update. Only run it when =config.el= is missing, and delete
+   =config.el= when =config.org= changes. (see [[file:init.el::%3B%3B%20`org-babel-load-file`%20increases%20startup%20time,%20so%20only%20do%20it%20if%20necessary.][init.el]])
+   
+   #+BEGIN_SRC emacs-lisp
+   (defun my/delete-config-el ()
+       "Delete ~/.emacs.d/config.el when the current buffer is ~/.emacs.d/config.org"
+       (setq configel "~/git/dotfiles/configs/emacs/config.el")
+       (if (s-suffix? "emacs/config.org" buffer-file-name)
+	   (if (file-exists-p configel)
+	       (delete-file "~/git/dotfiles/configs/emacs/config.el"))))
 
-    Running =org-babel-load-file= increases startup time, so only do it when there
-    are changes to update. Only run it when =config.el= is missing, and delete
-    =config.el= when =config.org= changes. (see [[file:init.el::%3B%3B%20`org-babel-load-file`%20increases%20startup%20time,%20so%20only%20do%20it%20if%20necessary.][init.el]])
-
-    #+BEGIN_SRC emacs-lisp
-     (defun my/delete-config-el ()
-	 "Delete ~/.emacs.d/config.el when the current buffer is ~/.emacs.d/config.org"
-	 (setq configel "~/git/dotfiles/configs/emacs/config.el")
-	 (if (s-suffix? "emacs/config.org" buffer-file-name)
-	     (if (file-exists-p configel)
-		 (delete-file "~/git/dotfiles/configs/emacs/config.el"))))
-
-     (add-hook 'after-save-hook 'my/delete-config-el)
-    #+END_SRC
-
+   (add-hook 'after-save-hook 'my/delete-config-el)
+   #+END_SRC
+   
 ** Set up org-babel
-    We need to allow SH scripts to be executed by org-babel.
-
-    #+BEGIN_SRC emacs-lisp
-    (require 'ob-sh)
-    #+END_SRC
-
+   We need to allow SH scripts to be executed by org-babel.
+   
+   #+BEGIN_SRC emacs-lisp
+   (require 'ob-sh)
+   #+END_SRC
+   
 ** Start server if it isn't started
-
-    Turn the first Emacs process into a server, which allows reuse of a that process
-    through the shell command =emacsclient=.
-
-    #+BEGIN_SRC emacs-lisp
-     (require 'server)
-     (if (not (server-running-p)) (server-start))
-    #+END_SRC
-
+   
+   Turn the first Emacs process into a server, which allows reuse of a that process
+   through the shell command =emacsclient=.
+   
+   #+BEGIN_SRC emacs-lisp
+   (require 'server)
+   (if (not (server-running-p)) (server-start))
+   #+END_SRC
+   
 ** Backup & auto-save files in one place
-
-    These files are useful if something goes wrong, but they're also annoying in how
-    they clutter directories. Put them in =~/.emacs.d/tmp= to remedy this.
-
-    #+BEGIN_SRC emacs-lisp
-     (setq backup-directory-alist `((".*" . "~/.emacs.d/tmp"))
-	     auto-save-file-name-transforms `((".*" , "~/.emacs.d/tmp" t)))
-    #+END_SRC
-
+   
+   These files are useful if something goes wrong, but they're also annoying in how
+   they clutter directories. Put them in =~/.emacs.d/tmp= to remedy this.
+   
+   #+BEGIN_SRC emacs-lisp
+   (setq backup-directory-alist `((".*" . "~/.emacs.d/tmp"))
+	   auto-save-file-name-transforms `((".*" , "~/.emacs.d/tmp" t)))
+   #+END_SRC
+   
 ** Scroll smoothly
-
-    #+BEGIN_SRC emacs-lisp
-     (setq scroll-margin 0)
-     (setq scroll-conservatively 10000)
-     (setq scroll-preserve-screen-position t)
-    #+END_SRC
-
+   
+   #+BEGIN_SRC emacs-lisp
+   (setq scroll-margin 0)
+   (setq scroll-conservatively 10000)
+   (setq scroll-preserve-screen-position t)
+   #+END_SRC
+   
 ** Sentences end with a single period
-
-    #+BEGIN_SRC emacs-lisp
-     (setq sentence-end-double-space nil)
-    #+END_SRC
-
+   
+   #+BEGIN_SRC emacs-lisp
+   (setq sentence-end-double-space nil)
+   #+END_SRC
+   
 ** y/n instead of yes/no
-
-    #+BEGIN_SRC emacs-lisp
-     (fset 'yes-or-no-p 'y-or-n-p)
-    #+END_SRC
-
+   
+   #+BEGIN_SRC emacs-lisp
+   (fset 'yes-or-no-p 'y-or-n-p)
+   #+END_SRC
+   
 ** Wrap text at 80 characters
-
-    #+BEGIN_SRC emacs-lisp
-     (setq-default fill-column 80)
-    #+END_SRC
-
+   
+   #+BEGIN_SRC emacs-lisp
+   (setq-default fill-column 80)
+   #+END_SRC
+   
 ** Auto-detect indent settings
-
-    I prefer to follow a file's indenting style instead of enforcing my own, if
-    possible. =dtrt-indent= does this and works for most mainstream languages.
-
-    #+BEGIN_SRC emacs-lisp
-     (use-package dtrt-indent)
-    #+END_SRC
-
+   
+   I prefer to follow a file's indenting style instead of enforcing my own, if
+   possible. =dtrt-indent= does this and works for most mainstream languages.
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package dtrt-indent)
+   #+END_SRC
+   
 ** Auto-update changed files
-
-    If a file is changed outside of Emacs, automatically load those changes.
-
-    #+BEGIN_SRC emacs-lisp
-     (global-auto-revert-mode t)
-    #+END_SRC
-
+   
+   If a file is changed outside of Emacs, automatically load those changes.
+   
+   #+BEGIN_SRC emacs-lisp
+   (global-auto-revert-mode t)
+   #+END_SRC
+   
 ** Auto-executable scripts in *nix
-
-    When saving a file that starts with =#!=, make it executable.
-
-    #+BEGIN_SRC emacs-lisp
-     (add-hook 'after-save-hook
-	     'executable-make-buffer-file-executable-if-script-p)
-    #+END_SRC
-
+   
+   When saving a file that starts with =#!=, make it executable.
+   
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'after-save-hook
+	   'executable-make-buffer-file-executable-if-script-p)
+   #+END_SRC
+   
 ** Enable HideShow in programming modes
-
-    Useful for getting an overview of the code. It works better in some
-    languages and layouts than others.
-
-    #+BEGIN_SRC emacs-lisp
-     (defun my/enable-hideshow ()
-	 (interactive)
-	 (hs-minor-mode t))
-     (add-hook 'prog-mode-hook 'my/enable-hideshow)
-    #+END_SRC
-
+   
+   Useful for getting an overview of the code. It works better in some
+   languages and layouts than others.
+   
+   #+BEGIN_SRC emacs-lisp
+   (defun my/enable-hideshow ()
+       (interactive)
+       (hs-minor-mode t))
+   (add-hook 'prog-mode-hook 'my/enable-hideshow)
+   #+END_SRC
+   
 ** Recent Files
-
-    Enable =recentf-mode= and remember a lot of files.
-
-    #+BEGIN_SRC emacs-lisp
-     (recentf-mode 1)
-     (setq recentf-max-saved-items 200)
-    #+END_SRC
-
+   
+   Enable =recentf-mode= and remember a lot of files.
+   
+   #+BEGIN_SRC emacs-lisp
+   (recentf-mode 1)
+   (setq recentf-max-saved-items 200)
+   #+END_SRC
+   
 ** Better same-name buffer distinction
-
-    When two buffers are open with the same name, this makes it easier to tell them
-    apart.
-
-    #+BEGIN_SRC emacs-lisp
-     (require 'uniquify)
-     (setq uniquify-buffer-name-style 'forward)
-    #+END_SRC
-
+   
+   When two buffers are open with the same name, this makes it easier to tell them
+   apart.
+   
+   #+BEGIN_SRC emacs-lisp
+   (require 'uniquify)
+   (setq uniquify-buffer-name-style 'forward)
+   #+END_SRC
+   
 *** Remember last position for reopened files
-
+    
     #+BEGIN_SRC emacs-lisp
-     (if (version< emacs-version "25.0")
-	 (progn (require 'saveplace)
-	     (setq-default save-place t))
-     (save-place-mode 1))
+    (if (version< emacs-version "25.0")
+	(progn (require 'saveplace)
+	    (setq-default save-place t))
+    (save-place-mode 1))
     #+END_SRC
-
+    
 *** Disable garbage collection in minibuffer
-
+    
     See [[http://tiny.cc/7wd7ay][this article]] for more info.
-
+    
     #+BEGIN_SRC emacs-lisp
-     (defun my/minibuffer-setup-hook ()
-     (setq gc-cons-threshold most-positive-fixnum))
-     (defun my/minibuffer-exit-hook ()
-     (setq gc-cons-threshold 800000))
-     (add-hook 'minibuffer-setup-hook #'my/minibuffer-setup-hook)
-     (add-hook 'minibuffer-exit-hook #'my/minibuffer-exit-hook)
+    (defun my/minibuffer-setup-hook ()
+    (setq gc-cons-threshold most-positive-fixnum))
+    (defun my/minibuffer-exit-hook ()
+    (setq gc-cons-threshold 800000))
+    (add-hook 'minibuffer-setup-hook #'my/minibuffer-setup-hook)
+    (add-hook 'minibuffer-exit-hook #'my/minibuffer-exit-hook)
     #+END_SRC
-
+    
     #+latex: \newpage
 * Install and Set Up packages
 ** BBDB
-
-    Install the Big Brother Database
-
-    #+BEGIN_SRC emacs-lisp
-    (use-package bbdb
-      :init
-      (require 'bbdb)
-      (bbdb-initialize 'gnus 'message))
-    #+END_SRC
-** ERC IRC Client
-
-    IRC Client for Emacs
-
-    #+BEGIN_SRC emacs-lisp
-     (use-package erc-colorize)
-     (use-package erc-crypt)
-     (use-package erc-hl-nicks)
-     (use-package erc-image)
-     (use-package erc-social-graph)
-     (use-package erc-youtube)
-     (require 'tls)
-    #+END_SRC
-
-** Twitter Mode
-
-    Browse Twitter from Emacs
-
-    #+BEGIN_SRC emacs-lisp
-     (use-package twittering-mode)
-     (eval-after-load 'twittering-mode
-     '(progn
-	 (if (executable-find "convert")
-	 (setq twittering-convert-fix-size 32))
-	 (if (executable-find "gzip")
-	 (setq twittering-use-icon-storage t))))
-    #+END_SRC
-
-** Evil Powerline
-
-    Powerline for Evil mode
-
-    #+BEGIN_SRC emacs-lisp
-     (use-package powerline)
-     (use-package powerline-evil)
-    #+END_SRC
-
-** Magit
-
-    Easy Git management
-
-    #+BEGIN_SRC emacs-lisp
-     (use-package magit)
-     (use-package magit-popup)
-    #+END_SRC
-
-** Ledger Mode
-
-    I use ledger-cli for my personal finances, here I make it evil friendly.
-
-    #+BEGIN_SRC emacs-lisp
-     (use-package ledger-mode
-		 :ensure t
-		 :init
-		 (setq ledger-clear-whole-transactions 1)
-
-		 :config
-		 (add-to-list 'evil-emacs-state-modes 'ledger-report-mode)
-		 :mode "\\.ldg\\'")
-    #+END_SRC
-
-** Smex
-
-    Smart M-x for Emacs
-
-    #+BEGIN_SRC emacs-lisp
-     (use-package smex)
-    #+END_SRC
-
-** Git Commit Mode
-
-    Mode for Git Commits
-
-    #+BEGIN_SRC emacs-lisp
-     (use-package git-commit)
-    #+END_SRC
-
-** EMMS
-
-    Emacs Multimedia System
-
-    #+BEGIN_SRC emacs-lisp
-     (use-package emms)
-     (use-package emms-info-mediainfo)
-
-     (require 'emms-setup)
-     (emms-standard)
-     (emms-default-players)
-
-     ;; After loaded
-     ;(require 'emms-info-mediainfo)
-     ;(add-to-list 'emms-info-functions 'emms-info-mediainfo)
-     (require 'emms-info-metaflac)
-     (add-to-list 'emms-info-functions 'emms-info-metaflac)
-
-     (require 'emms-player-simple)
-     (require 'emms-source-file)
-     (require 'emms-source-playlist)
-     (setq emms-source-file-default-directory "~/Music/")
-    #+END_SRC
-
-** w3m
-
-    Web browser for Emacs
-
-    #+BEGIN_SRC emacs-lisp
-     (use-package w3m
-     :ensure t
+   
+   Install the Big Brother Database
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package bbdb
      :init
-     (autoload 'w3m-browse-url "w3m")
-     (global-set-key "\C-xm" 'browse-url-at-point)
-     (setq w3m-use-cookies t)
-     (setq w3m-default-display-inline-images t))
-    #+END_SRC
+     (require 'bbdb)
+     (bbdb-initialize 'gnus 'message))
+   #+END_SRC
+** ERC IRC Client
+   
+   IRC Client for Emacs
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package erc-colorize)
+   (use-package erc-crypt)
+   (use-package erc-hl-nicks)
+   (use-package erc-image)
+   (use-package erc-social-graph)
+   (use-package erc-youtube)
+   (require 'tls)
+   #+END_SRC
+   
+** Twitter Mode
+   
+   Browse Twitter from Emacs
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package twittering-mode)
+   (eval-after-load 'twittering-mode
+   '(progn
+       (if (executable-find "convert")
+       (setq twittering-convert-fix-size 32))
+       (if (executable-find "gzip")
+       (setq twittering-use-icon-storage t))))
+   #+END_SRC
+   
+** Evil Powerline
+   
+   Powerline for Evil mode
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package powerline)
+   (use-package powerline-evil)
+   #+END_SRC
+   
+** Magit
+   
+   Easy Git management
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package magit)
+   (use-package magit-popup)
+   #+END_SRC
+   
+** Ledger Mode
+   
+   I use ledger-cli for my personal finances, here I make it evil friendly.
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package ledger-mode
+	       :ensure t
+	       :init
+	       (setq ledger-clear-whole-transactions 1)
 
+	       :config
+	       (add-to-list 'evil-emacs-state-modes 'ledger-report-mode)
+	       :mode "\\.ldg\\'")
+   #+END_SRC
+   
+** Smex
+   
+   Smart M-x for Emacs
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package smex)
+   #+END_SRC
+   
+** Git Commit Mode
+   
+   Mode for Git Commits
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package git-commit)
+   #+END_SRC
+   
+** EMMS
+   
+   Emacs Multimedia System
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package emms)
+   (use-package emms-info-mediainfo)
+
+   (require 'emms-setup)
+   (emms-standard)
+   (emms-default-players)
+
+   ;; After loaded
+   ;(require 'emms-info-mediainfo)
+   ;(add-to-list 'emms-info-functions 'emms-info-mediainfo)
+   (require 'emms-info-metaflac)
+   (add-to-list 'emms-info-functions 'emms-info-metaflac)
+
+   (require 'emms-player-simple)
+   (require 'emms-source-file)
+   (require 'emms-source-playlist)
+   (setq emms-source-file-default-directory "~/Music/")
+   #+END_SRC
+   
+** w3m
+   
+   Web browser for Emacs
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package w3m
+   :ensure t
+   :init
+   (autoload 'w3m-browse-url "w3m")
+   (global-set-key "\C-xm" 'browse-url-at-point)
+   (setq w3m-use-cookies t)
+   (setq w3m-default-display-inline-images t))
+   #+END_SRC
+   
 ** multi-term
    
-    Multiple terminal manager for Emacs
-
-    #+BEGIN_SRC emacs-lisp
-    (use-package multi-term)
-    (require 'multi-term)
-    (setq multi-term-program "/bin/bash")
-    #+END_SRC
+   Multiple terminal manager for Emacs
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package multi-term)
+   (require 'multi-term)
+   (setq multi-term-program "/bin/bash")
+   #+END_SRC
 ** web-mode
-
+   
    web-mode.el is an emacs major mode for editing web templates aka HTML files embedding parts (CSS/JavaScript) and blocks (pre rendered by client/server side engines).
-
+   
    #+BEGIN_SRC emacs-lisp
    (use-package web-mode
      :init
@@ -494,51 +494,51 @@
    #+END_SRC
 ** Hydra
    I'm just going to install Hydra here. Configuration comes later.
-
+   
    #+BEGIN_SRC emacs-lisp
    (use-package hydra)
    #+END_SRC
-#+latex: \newpage
+   #+latex: \newpage
 * =Org-mode=
 ** Install org-mode
-
-    #+BEGIN_SRC emacs-lisp
-    (use-package org)
-    #+END_SRC
-
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package org)
+   #+END_SRC
+   
 ** =Org-bullets=
    I don't see a reason why you /wouldn't/ want this.
-
+   
    #+BEGIN_SRC emacs-lisp
-    (use-package org-bullets
-      :commands (org-bullets-mode)
-      :init
-        (setq org-bullets-bullet-list '("●"))
-        (add-hook 'org-mode-hook 'org-bullets-mode))
+   (use-package org-bullets
+     :commands (org-bullets-mode)
+     :init
+       (setq org-bullets-bullet-list '("●"))
+       (add-hook 'org-mode-hook 'org-bullets-mode))
    #+END_SRC
-
+   
 ** Set up notes and todos
-
+   
    =Org-mode= is great for project management, and I use it quite a bit for that.
-
+   
    #+BEGIN_SRC emacs-lisp
    (setq org-default-notes-file "~/ownCloud/clientsync/org-mode/todo.org")
 
     ;; Org-Mode Capture Templates
     (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/ownCloud/clientsync/org-mode/todo.org" "Tasks")
-             "* TODO %?\n  %i\n  %a")
-        ("j" "Journal" entry (file+datetree "~/ownCloud/clientsync/org-mode/journal.org")
-             "* %?\nEntered on %U\n  %i\n  %a")))
+	     "* TODO %?\n  %i\n  %a")
+	("j" "Journal" entry (file+datetree "~/ownCloud/clientsync/org-mode/journal.org")
+	     "* %?\nEntered on %U\n  %i\n  %a")))
 
     (global-set-key (kbd "C-c c") 'org-capture)
     (setq org-log-done 'time)
-    #+END_SRC
-
+   #+END_SRC
+   
 ** =calfw=
-
+   
    Let's use a pretty calendar while we're at it.
-
+   
    #+BEGIN_SRC emacs-lisp
    (use-package calfw
      :init
@@ -743,30 +743,30 @@
    (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
    #+END_SRC
 ** Autofill for Mail
-    #+BEGIN_SRC emacs-lisp
-    (add-hook 'mail-mode-hook 'turn-on-auto-fill)
-    #+END_SRC
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'mail-mode-hook 'turn-on-auto-fill)
+   #+END_SRC
 ** Replace C-x # with C-x k
-    #+BEGIN_SRC emacs-lisp
-    (defun my-mail-mode-hook ()
-      (auto-fill-mode 1)
-      (abbrev-mode 1)
-      (local-set-key "\C-Xk" 'server-edit))
-    (add-hook 'mail-mode-hook 'my-mail-mode-hook)
-    #+END_SRC
-#+latex: \newpage
+   #+BEGIN_SRC emacs-lisp
+   (defun my-mail-mode-hook ()
+     (auto-fill-mode 1)
+     (abbrev-mode 1)
+     (local-set-key "\C-Xk" 'server-edit))
+   (add-hook 'mail-mode-hook 'my-mail-mode-hook)
+   #+END_SRC
+   #+latex: \newpage
 * Hydra
-Hydra can get so big that it deserves its own section.
-
+  Hydra can get so big that it deserves its own section.
+  
 ** Buffer Menu
    Add a hydra for the buffer-menu.
-
+   
    #+BEGIN_SRC emacs-lisp
    (require 'hydra)
    (eval-after-load "hydra"
      '(progn
    (defhydra hydra-buffer-menu (:color pink
-                                :hint nil)
+				:hint nil)
      "
    ^Mark^             ^Unmark^           ^Actions^          ^Search
    ^^^^^^^^-----------------------------------------------------------------
@@ -797,114 +797,114 @@ Hydra can get so big that it deserves its own section.
 
    (define-key Buffer-menu-mode-map "." 'hydra-buffer-menu/body)))
    #+END_SRC
-#+latex: \newpage
+   #+latex: \newpage
 * Evil Mode
 ** Enable evil mode
-
-    #+BEGIN_SRC emacs-lisp
-     (use-package evil)
-     (use-package evil-leader)
-     (use-package evil-org)
-     (require 'evil)
-     (evil-mode 1)
-    #+END_SRC
-
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package evil)
+   (use-package evil-leader)
+   (use-package evil-org)
+   (require 'evil)
+   (evil-mode 1)
+   #+END_SRC
+   
 ** Set up global key-bindings, and make evil my leader.
-
-    #+BEGIN_SRC emacs-lisp
-     (eval-after-load "evil"
-     '(progn
-	 (define-key evil-normal-state-map (kbd "M-h") 'evil-window-left)
-	 (define-key evil-normal-state-map (kbd "M-j") 'evil-window-down)
-	 (define-key evil-normal-state-map (kbd "M-k") 'evil-window-up)
-	 (define-key evil-normal-state-map (kbd "M-l") 'evil-window-right)
-	 (define-key evil-motion-state-map ";" 'smex)
-	 (define-key evil-motion-state-map ":" 'evil-ex)))
-    #+END_SRC
-
+   
+   #+BEGIN_SRC emacs-lisp
+   (eval-after-load "evil"
+   '(progn
+       (define-key evil-normal-state-map (kbd "M-h") 'evil-window-left)
+       (define-key evil-normal-state-map (kbd "M-j") 'evil-window-down)
+       (define-key evil-normal-state-map (kbd "M-k") 'evil-window-up)
+       (define-key evil-normal-state-map (kbd "M-l") 'evil-window-right)
+       (define-key evil-motion-state-map ";" 'smex)
+       (define-key evil-motion-state-map ":" 'evil-ex)))
+   #+END_SRC
+   
 ** Set up key-bindings for ledger-mode
-
-    #+BEGIN_SRC emacs-lisp
-    (with-eval-after-load 'ledger-mode
-      (define-key ledger-mode-map (kbd "C-c n") 'ledger-add-transaction)
-      (define-key ledger-mode-map (kbd "C-c c") 'ledger-mode-clean-buffer)
-      (define-key ledger-mode-map (kbd "C-c r") 'ledger-report))
-    #+END_SRC
-
+   
+   #+BEGIN_SRC emacs-lisp
+   (with-eval-after-load 'ledger-mode
+     (define-key ledger-mode-map (kbd "C-c n") 'ledger-add-transaction)
+     (define-key ledger-mode-map (kbd "C-c c") 'ledger-mode-clean-buffer)
+     (define-key ledger-mode-map (kbd "C-c r") 'ledger-report))
+   #+END_SRC
+   
 ** Set up key-bindings for BBDB
+   
+   Set up the Key Bindings for the Big Brother Database.
+   This code was pulled from [[https://github.com/tarleb/evil-rebellion/blob/master/evil-bbdb-rebellion.el][github/tarleb]]
+   
+   #+BEGIN_SRC emacs-lisp
+   (evil-define-key 'motion bbdb-mode-map
+     "\C-k"       'bbdb-delete-field-or-record
+     "\C-x\C-s"   'bbdb-save
+     "\C-x\C-t"   'bbdb-transpose-fields
+     "\d"         'bbdb-prev-field ; DEL
+     "\M-d"       'bbdb-dial
+     "\t"         'bbdb-next-field ; TAB
+     "+"          'bbdb-append-display
+     "*"          'bbdb-do-all-records
+     ";"          'bbdb-edit-foo
+     "?"          'bbdb-help
+     "!"          'bbdb-search-invert
+     "="          'delete-other-windows
+     "a"          'bbdb-add-mail-alias
+     "A"          'bbdb-mail-aliases
+     "C"          'bbdb-copy-records-as-kill
+     "c"          'bbdb-create
+     "d"          'bbdb-delete-field-or-record
+     "e"          'bbdb-edit-field
+     "h"          'bbdb-info
+     "i"          'bbdb-insert-field
+     "J"          'bbdb-next-field
+     "j"          'bbdb-next-record
+     "K"          'bbdb-prev-field
+     "k"          'bbdb-prev-record
+     "m"          'bbdb-mail
+     "M"          'bbdb-mail-address
+     "N"          'bbdb-next-field
+     "n"          'bbdb-next-record
+     "o"          'bbdb-omit-record
+     "P"          'bbdb-prev-field
+     "p"          'bbdb-prev-record
+     "s"          'bbdb-save
+     "T"          'bbdb-display-records-completely
+     "t"          'bbdb-toggle-records-layout
+     "u"          'bbdb-browse-url
 
-    Set up the Key Bindings for the Big Brother Database.
-    This code was pulled from [[https://github.com/tarleb/evil-rebellion/blob/master/evil-bbdb-rebellion.el][github/tarleb]]
+     ;; Search keys
+     "b"          'bbdb
+     "/1"         'bbdb-display-records
+     "/n"         'bbdb-search-name
+     "/o"         'bbdb-search-organization
+     "/p"         'bbdb-search-phone
+     "/a"         'bbdb-search-address
+     "/m"         'bbdb-search-mail
+     "/N"         'bbdb-search-xfields
+     "/x"         'bbdb-search-xfields
+     "/c"         'bbdb-search-changed
+     "/d"         'bbdb-search-duplicates
+     "\C-xnw"     'bbdb-display-all-records
+     "\C-xnd"     'bbdb-display-current-record
+     )
 
-    #+BEGIN_SRC emacs-lisp
-    (evil-define-key 'motion bbdb-mode-map
-      "\C-k"       'bbdb-delete-field-or-record
-      "\C-x\C-s"   'bbdb-save
-      "\C-x\C-t"   'bbdb-transpose-fields
-      "\d"         'bbdb-prev-field ; DEL
-      "\M-d"       'bbdb-dial
-      "\t"         'bbdb-next-field ; TAB
-      "+"          'bbdb-append-display
-      "*"          'bbdb-do-all-records
-      ";"          'bbdb-edit-foo
-      "?"          'bbdb-help
-      "!"          'bbdb-search-invert
-      "="          'delete-other-windows
-      "a"          'bbdb-add-mail-alias
-      "A"          'bbdb-mail-aliases
-      "C"          'bbdb-copy-records-as-kill
-      "c"          'bbdb-create
-      "d"          'bbdb-delete-field-or-record
-      "e"          'bbdb-edit-field
-      "h"          'bbdb-info
-      "i"          'bbdb-insert-field
-      "J"          'bbdb-next-field
-      "j"          'bbdb-next-record
-      "K"          'bbdb-prev-field
-      "k"          'bbdb-prev-record
-      "m"          'bbdb-mail
-      "M"          'bbdb-mail-address
-      "N"          'bbdb-next-field
-      "n"          'bbdb-next-record
-      "o"          'bbdb-omit-record
-      "P"          'bbdb-prev-field
-      "p"          'bbdb-prev-record
-      "s"          'bbdb-save
-      "T"          'bbdb-display-records-completely
-      "t"          'bbdb-toggle-records-layout
-      "u"          'bbdb-browse-url
-
-      ;; Search keys
-      "b"          'bbdb
-      "/1"         'bbdb-display-records
-      "/n"         'bbdb-search-name
-      "/o"         'bbdb-search-organization
-      "/p"         'bbdb-search-phone
-      "/a"         'bbdb-search-address
-      "/m"         'bbdb-search-mail
-      "/N"         'bbdb-search-xfields
-      "/x"         'bbdb-search-xfields
-      "/c"         'bbdb-search-changed
-      "/d"         'bbdb-search-duplicates
-      "\C-xnw"     'bbdb-display-all-records
-      "\C-xnd"     'bbdb-display-current-record
-      )
-
-    (evil-set-initial-state 'bbdb-mode 'motion)
-    #+END_SRC
-
+   (evil-set-initial-state 'bbdb-mode 'motion)
+   #+END_SRC
+   
 ** Fix term-mode
-    Term-mode shouldn't have evil bindings.
-
-    #+BEGIN_SRC emacs-lisp
-    (evil-set-initial-state 'term-mode 'emacs)
-    #+END_SRC
-
-    #+latex: \newpage
+   Term-mode shouldn't have evil bindings.
+   
+   #+BEGIN_SRC emacs-lisp
+   (evil-set-initial-state 'term-mode 'emacs)
+   #+END_SRC
+   
+   #+latex: \newpage
 * Disabled Configs
-:PROPERTIES:
-:header-args: :tangle no
-:END:
-
-
-This section is where bad sections of this config can go if they break Emacs. It's only used for debugging purposes.
+  :PROPERTIES: 
+  :header-args: :tangle no
+  :END:      
+  
+  
+  This section is where bad sections of this config can go if they break Emacs. It's only used for debugging purposes.
