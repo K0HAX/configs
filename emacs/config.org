@@ -144,7 +144,7 @@
     Specifically under the cursor
 
     #+BEGIN_SRC emacs-lisp
-     (custom-set-variables '(show-paren-delay 0.0))
+     (setq show-paren-delay 0.0)
      (show-paren-mode t)
     #+END_SRC
 
@@ -475,7 +475,23 @@
     (require 'multi-term)
     (setq multi-term-program "/bin/bash")
     #+END_SRC
+** web-mode
 
+   web-mode.el is an emacs major mode for editing web templates aka HTML files embedding parts (CSS/JavaScript) and blocks (pre rendered by client/server side engines).
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package web-mode
+     :init
+       (require 'web-mode)
+       (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+       (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode)))
+   #+END_SRC
 ** Hydra
    I'm just going to install Hydra here. Configuration comes later.
 
@@ -635,15 +651,6 @@
 
     #+BEGIN_SRC emacs-lisp
      (setq ring-bell-function 'ignore)
-    #+END_SRC
-
-** Scroll bar settings
-
-    
-    Get rid of the scroll bar, it's unneccesary.
-
-    #+BEGIN_SRC emacs-lisp
-     (scroll-bar-mode -1)
     #+END_SRC
 
 ** M-s s to SSH to a host.
