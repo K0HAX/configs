@@ -482,45 +482,90 @@
    #+BEGIN_SRC emacs-lisp
    (use-package hydra)
    #+END_SRC
-** Org-mode
-
-    Set up org-mode
+#+latex: \newpage
+* =Org-mode=
+** Install org-mode
 
     #+BEGIN_SRC emacs-lisp
     (use-package org)
+    #+END_SRC
 
+** =Org-bullets=
+   I don't see a reason why you /wouldn't/ want this.
+
+   #+BEGIN_SRC emacs-lisp
     (use-package org-bullets
       :commands (org-bullets-mode)
       :init
         (setq org-bullets-bullet-list '("●"))
         (add-hook 'org-mode-hook 'org-bullets-mode))
+   #+END_SRC
 
-    (setq org-default-notes-file "~/ownCloud/clientsync/org-mode/todo.org")
+** Set up notes and todos
 
-     (use-package calfw
-       :init
-	 (require 'calfw)
-	 (require 'calfw-org))
+   =Org-mode= is great for project management, and I use it quite a bit for that.
 
-     (defun my-open-calendar ()
-       (interactive)
-       (cfw:open-calendar-buffer
-	 :contents-sources
-	 (list
-	   (cfw:org-create-source "Green"))))
+   #+BEGIN_SRC emacs-lisp
+   (setq org-default-notes-file "~/ownCloud/clientsync/org-mode/todo.org")
 
-     ;; Org-Mode Capture Templates
-     (setq org-capture-templates
-       '(("t" "Todo" entry (file+headline "~/ownCloud/clientsync/org-mode/todo.org" "Tasks")
-	      "* TODO %?\n  %i\n  %a")
-	 ("j" "Journal" entry (file+datetree "~/ownCloud/clientsync/org-mode/journal.org")
-	      "* %?\nEntered on %U\n  %i\n  %a")))
+    ;; Org-Mode Capture Templates
+    (setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "~/ownCloud/clientsync/org-mode/todo.org" "Tasks")
+             "* TODO %?\n  %i\n  %a")
+        ("j" "Journal" entry (file+datetree "~/ownCloud/clientsync/org-mode/journal.org")
+             "* %?\nEntered on %U\n  %i\n  %a")))
 
-     (global-set-key (kbd "C-c c") 'org-capture)
-     (setq org-log-done 'time)
+    (global-set-key (kbd "C-c c") 'org-capture)
+    (setq org-log-done 'time)
     #+END_SRC
 
-    #+latex: \newpage
+** =calfw=
+
+   Let's use a pretty calendar while we're at it.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package calfw
+     :init
+       (require 'calfw)
+       (require 'calfw-org))
+
+   (defun my-open-calendar ()
+     (interactive)
+     (cfw:open-calendar-buffer
+       :contents-sources
+       (list
+         (cfw:org-create-source "Green"))))
+    #+END_SRC
+
+** =ox-twbs=
+
+   =Twitter Bootstrap= or just =Bootstrap= is prettier than out of the box =Org-mode=.
+   Let's get it installed!
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package ox-twbs)
+   #+END_SRC
+** org-publish
+   #+BEGIN_SRC emacs-lisp
+   (setq org-publish-project-alist
+         '(
+           ("org-notes"
+            :base-directory "~/org/"
+            :base-extension "org"
+            :publishing-directory "/root@webserver.productionservers.net:/var/sites/michael.englehorn.com/"
+            :recursive t
+            :publishing-function org-twbs-publish-to-html
+            :headline-levels 4
+            :auto-preamble t)
+           ("org-static"
+            :base-directory "~/org/"
+            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|txt\\|asc"
+            :publishing-directory "/root@webserver.productionservers.net:/var/sites/michael.englehorn.com/"
+            :recursive t
+            :publishing-function org-publish-attachment)
+           ("org" :components ("org-notes" "org-static"))))
+   #+END_SRC
+#+latex: \newpage
 * Customizations
 ** Powerline
 
