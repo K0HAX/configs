@@ -672,6 +672,24 @@
     #+END_SRC
 
     #+latex: \newpage
+* Mutt
+** Emacs as external editor
+   #+BEGIN_SRC emacs-lisp
+   (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
+   #+END_SRC
+** Autofill for Mail
+    #+BEGIN_SRC emacs-lisp
+    (add-hook 'mail-mode-hook 'turn-on-auto-fill)
+    #+END_SRC
+** Replace C-x # with C-x k
+    #+BEGIN_SRC emacs-lisp
+    (defun my-mail-mode-hook ()
+      (auto-fill-mode 1)
+      (abbrev-mode 1)
+      (local-set-key "\C-Xk" 'server-edit))
+    (add-hook 'mail-mode-hook 'my-mail-mode-hook)
+    #+END_SRC
+#+latex: \newpage
 * Hydra
 Hydra can get so big that it deserves its own section.
 
