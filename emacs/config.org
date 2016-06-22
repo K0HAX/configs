@@ -550,172 +550,192 @@
      (cfw:open-calendar-buffer
        :contents-sources
        (list
-         (cfw:org-create-source "Green"))))
-    #+END_SRC
-
+	 (cfw:org-create-source "Green"))))
+   #+END_SRC
+   
 ** =ox-twbs=
-
+   
+   
    =Twitter Bootstrap= or just =Bootstrap= is prettier than out of the box =Org-mode=.
    Let's get it installed!
-
+   
    #+BEGIN_SRC emacs-lisp
    (use-package ox-twbs)
    #+END_SRC
+** =ox-latex=
+   
+   =ox-latex= allows syntax highlighted output. Just make sure to run the following code.
+   
+   #+BEGIN_SRC sh
+   sudo pip install pygments
+   #+END_SRC
+   
+   And set up =ox-latex=
+   #+BEGIN_SRC emacs-lisp
+   (require 'ox-latex)
+   (add-to-list 'org-latex-packages-alist '("" "minted"))
+   (setq org-latex-listings 'minted)
+   (setq org-latex-pdf-process
+	 '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+   #+END_SRC
+
 ** org-publish
+   I have a website to publish!
+
    #+BEGIN_SRC emacs-lisp
    (setq org-publish-project-alist
-         '(
-           ("org-notes"
-            :base-directory "~/org/"
-            :base-extension "org"
-            :publishing-directory "/root@webserver.productionservers.net:/var/sites/michael.englehorn.com/"
-            :recursive t
-            :publishing-function org-twbs-publish-to-html
-            :headline-levels 4
-            :auto-preamble t)
-           ("org-static"
-            :base-directory "~/org/"
-            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|txt\\|asc"
-            :publishing-directory "/root@webserver.productionservers.net:/var/sites/michael.englehorn.com/"
-            :recursive t
-            :publishing-function org-publish-attachment)
-           ("org" :components ("org-notes" "org-static"))))
+	 '(
+	   ("org-notes"
+	    :base-directory "~/org/"
+	    :base-extension "org"
+	    :publishing-directory "/root@webserver.productionservers.net:/var/sites/michael.englehorn.com/"
+	    :recursive t
+	    :publishing-function org-twbs-publish-to-html
+	    :headline-levels 4
+	    :auto-preamble t)
+	   ("org-static"
+	    :base-directory "~/org/"
+	    :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|txt\\|asc"
+	    :publishing-directory "/root@webserver.productionservers.net:/var/sites/michael.englehorn.com/"
+	    :recursive t
+	    :publishing-function org-publish-attachment)
+	   ("org" :components ("org-notes" "org-static"))))
    #+END_SRC
-#+latex: \newpage
+   #+latex: \newpage
 * Customizations
 ** Powerline
-
-    Initialize the Powerline.
-
-    #+BEGIN_SRC emacs-lisp
-     (require 'powerline)
-    #+END_SRC
-
+   
+   Initialize the Powerline.
+   
+   #+BEGIN_SRC emacs-lisp
+   (require 'powerline)
+   #+END_SRC
+   
 ** Powerline theme
-
-    Set up the powerline theme
-
-    #+BEGIN_SRC emacs-lisp
-     (powerline-default-theme)
-    #+END_SRC
+   
+   Set up the powerline theme
+   
+   #+BEGIN_SRC emacs-lisp
+   (powerline-default-theme)
+   #+END_SRC
 ** Load secrets
-
-    I keep slightly more sensitive information in a separate file so that I can easily publish my main configuration.
-
-    #+BEGIN_SRC emacs-lisp
- (load "~/.emacs.d/emacs-secrets.el" t)
-    #+END_SRC
-
+   
+   I keep slightly more sensitive information in a separate file so that I can easily publish my main configuration.
+   
+   #+BEGIN_SRC emacs-lisp
+   (load "~/.emacs.d/emacs-secrets.el" t)
+   #+END_SRC
+   
 ** Restart Emacs
-
-    It's useful to be able to restart emacs from inside emacs.
-    Configure restart-emacs to allow this.
-
-    #+BEGIN_SRC emacs-lisp
-     (use-package restart-emacs)
-    #+END_SRC
+   
+   It's useful to be able to restart emacs from inside emacs.
+   Configure restart-emacs to allow this.
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package restart-emacs)
+   #+END_SRC
 ** Custom mode settings
-
-    Load values stored by custom-set-variables
-
-    #+BEGIN_SRC emacs-lisp
-     (custom-set-variables
-     ;; custom-set-variables was added by Custom.
-     ;; If you edit it by hand, you could mess it up, so be careful.
-     ;; Your init file should contain only one such instance.
-     ;; If there is more than one, they won't work right.
-     '(ledger-reports
-     (quote
-	 (("register" "ledger ")
-	 ("bal" "ledger -f %(ledger-file) bal")
-	 ("reg" "ledger -f %(ledger-file) reg")
-	 ("payee" "ledger -f %(ledger-file) reg @%(payee)")
-	 ("account" "ledger -f %(ledger-file) reg %(account)"))))
-     '(newsticker-url-list-defaults
-     (quote
-	 (("NY Times" "http://partners.userland.com/nytRss/nytHomepage.xml")
-	 ("The Register" "http://www.theregister.co.uk/tonys/slashdot.rdf")
-	 ("slashdot" "http://slashdot.org/index.rss" nil 3600))))
-     '(send-mail-function (quote smtpmail-send-it))
-     '(twittering-use-master-password t))
-     (custom-set-faces
-     ;; custom-set-faces was added by Custom.
-     ;; If you edit it by hand, you could mess it up, so be careful.
-     ;; Your init file should contain only one such instance.
-     ;; If there is more than one, they won't work right.
-     )
-    #+END_SRC
-
+   
+   Load values stored by custom-set-variables
+   
+   #+BEGIN_SRC emacs-lisp
+   (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(ledger-reports
+   (quote
+       (("register" "ledger ")
+       ("bal" "ledger -f %(ledger-file) bal")
+       ("reg" "ledger -f %(ledger-file) reg")
+       ("payee" "ledger -f %(ledger-file) reg @%(payee)")
+       ("account" "ledger -f %(ledger-file) reg %(account)"))))
+   '(newsticker-url-list-defaults
+   (quote
+       (("NY Times" "http://partners.userland.com/nytRss/nytHomepage.xml")
+       ("The Register" "http://www.theregister.co.uk/tonys/slashdot.rdf")
+       ("slashdot" "http://slashdot.org/index.rss" nil 3600))))
+   '(send-mail-function (quote smtpmail-send-it))
+   '(twittering-use-master-password t))
+   (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   )
+   #+END_SRC
+   
 ** Disable blinking and flashing
-    Disable the annoying bell
-
-    #+BEGIN_SRC emacs-lisp
-     (setq ring-bell-function 'ignore)
-    #+END_SRC
-
+   Disable the annoying bell
+   
+   #+BEGIN_SRC emacs-lisp
+   (setq ring-bell-function 'ignore)
+   #+END_SRC
+   
 ** M-s s to SSH to a host.
+   
+   
+   I wanted to by able to easily SSH from Emacs, so I wrote some elisp.
+   
+   #+BEGIN_SRC emacs-lisp
+   (defun ssh-to-host (x)
+     "Ask for host."
+     (interactive "sHost: ")
+     (let* ((buffer-name (format "*SSH %s*" x))
+	    (buffer (get-buffer buffer-name)))
+       (if buffer
+	   (switch-to-buffer buffer)
+	 (multi-term)
+	 (term-send-string
+	  (get-buffer-process (rename-buffer buffer-name))
+	  (format "ssh %s\r" x)))))
 
-
-    I wanted to by able to easily SSH from Emacs, so I wrote some elisp.
-
-    #+BEGIN_SRC emacs-lisp
-    (defun ssh-to-host (x)
-      "Ask for host."
-      (interactive "sHost: ")
-      (let* ((buffer-name (format "*SSH %s*" x))
-	     (buffer (get-buffer buffer-name)))
-	(if buffer
-	    (switch-to-buffer buffer)
-	  (multi-term)
-	  (term-send-string
-	   (get-buffer-process (rename-buffer buffer-name))
-	   (format "ssh %s\r" x)))))
-
-    (global-set-key (kbd "M-s s") 'ssh-to-host)
-    #+END_SRC
-
+   (global-set-key (kbd "M-s s") 'ssh-to-host)
+   #+END_SRC
+   
 ** Ask to open as root if I lack permission to edit
+   
+   Very useful. If I try to open a file I don't have write permissions to, ask if I want to open it as root using tramp.
+   
+   Note: if you're experiencing problems using this (like tramp hanging), check that you can open them "manually" in the first place, C-x C-f /sudo::/path/to/file. Check the [[http://www.emacswiki.org/emacs/TrampMode][tramp]] troubleshooting section at emacs wiki.
+   
+   #+BEGIN_SRC emacs-lisp
+   (defun th-rename-tramp-buffer ()
+     (when (file-remote-p (buffer-file-name))
+       (rename-buffer
+	(format "%s:%s"
+		(file-remote-p (buffer-file-name) 'method)
+		(buffer-name)))))
 
-    Very useful. If I try to open a file I don't have write permissions to, ask if I want to open it as root using tramp.
+   (add-hook 'find-file-hook
+	     'th-rename-tramp-buffer)
 
-    Note: if you're experiencing problems using this (like tramp hanging), check that you can open them "manually" in the first place, C-x C-f /sudo::/path/to/file. Check the [[http://www.emacswiki.org/emacs/TrampMode][tramp]] troubleshooting section at emacs wiki.
+   (defadvice find-file (around th-find-file activate)
+     "Open FILENAME using tramp's sudo method if it's read-only."
+     (if (and (not (file-writable-p (ad-get-arg 0)))
+	      (not (file-remote-p default-directory))
+	      (y-or-n-p (concat "File "
+				(ad-get-arg 0)
+				" is read-only.  Open it as root? ")))
+	 (th-find-file-sudo (ad-get-arg 0))
+       ad-do-it))
 
-    #+BEGIN_SRC emacs-lisp
-    (defun th-rename-tramp-buffer ()
-      (when (file-remote-p (buffer-file-name))
-	(rename-buffer
-	 (format "%s:%s"
-		 (file-remote-p (buffer-file-name) 'method)
-		 (buffer-name)))))
-
-    (add-hook 'find-file-hook
-	      'th-rename-tramp-buffer)
-
-    (defadvice find-file (around th-find-file activate)
-      "Open FILENAME using tramp's sudo method if it's read-only."
-      (if (and (not (file-writable-p (ad-get-arg 0)))
-	       (not (file-remote-p default-directory))
-	       (y-or-n-p (concat "File "
-				 (ad-get-arg 0)
-				 " is read-only.  Open it as root? ")))
-	  (th-find-file-sudo (ad-get-arg 0))
-	ad-do-it))
-
-    (defun th-find-file-sudo (file)
-      "Opens FILE with root privileges."
-      (interactive "F")
-      (set-buffer (find-file (concat "/sudo::" file))))
-    #+END_SRC
-
+   (defun th-find-file-sudo (file)
+     "Opens FILE with root privileges."
+     (interactive "F")
+     (set-buffer (find-file (concat "/sudo::" file))))
+   #+END_SRC
+   
 ** Dired customizations
-
+   
     - Human readable sizes in Dired
     - Sort by size
-
+      
     #+BEGIN_SRC emacs-lisp
     (setq dired-listing-switches "-alh")
     #+END_SRC
-
+    
     #+latex: \newpage
 * Mutt
 ** Emacs as external editor
