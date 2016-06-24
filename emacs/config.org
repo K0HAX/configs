@@ -541,7 +541,7 @@
 
    #+BEGIN_SRC emacs-lisp
    (eval-after-load "git-load"
-   (git-load "https://github.com/pschorf/helm-spotify.git" "helm-spotify"))
+     (git-load "https://github.com/pschorf/helm-spotify.git" "helm-spotify"))
    #+END_SRC
 
 #+latex: \newpage
