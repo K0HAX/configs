@@ -351,6 +351,12 @@
      (require 'bbdb)
      (bbdb-initialize 'gnus 'message))
    #+END_SRC
+** =git=
+   An Elisp API for programmatically using Git.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package git)
+   #+END_SRC
 ** ERC IRC Client
    
    IRC Client for Emacs
@@ -519,11 +525,21 @@
    #+END_SRC
 ** =helm-spotify=
    A simple Emacs interface for Spotify that makes good use of helm.
+   Get the [[https://github.com/pschorf/helm-spotify][repo]] from =github/pschorf= and install it in =~/.emacs.d/git/helm-spotify= if we don't have it, then load it.
+   Otherwise, just load it.
 
    #+BEGIN_SRC emacs-lisp
-   (add-to-list 'load-path "~/.emacs.d/git/helm-spotify")
-   (load "helm-spotify")
+   (if (git-repo? "~/.emacs.d/git/helm-spotify")
+       (progn
+         (add-to-list 'load-path "~/.emacs.d/git/helm-spotify")
+         (load "helm-spotify"))
+     (progn
+       (let ((git-repo "~/.emacs.d/git/"))
+         (git-clone "https://github.com/pschorf/helm-spotify.git"))
+       (add-to-list 'load-path "~/.emacs.d/git/helm-spotify")
+       (load "helm-spotify")))
    #+END_SRC
+
 #+latex: \newpage
 * =Org-mode=
 ** Install org-mode
