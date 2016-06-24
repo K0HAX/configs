@@ -357,6 +357,20 @@
    #+BEGIN_SRC emacs-lisp
    (use-package git)
    #+END_SRC
+** =git-load=
+   An Elisp API for dynamically loading repositories from Git.
+
+   #+BEGIN_SRC emacs-lisp
+   (if (git-repo? "~/.emacs.d/git/git-load")
+       (progn
+         (let ((git-repo "~/.emacs.d/git/"))
+           (git-clone "https://github.com/k0hax/git-load.git"))
+         (add-to-list 'load-path "~/.emacs.d/git/git-load")
+         (load "git-load"))
+     (progn
+       (add-to-list 'load-path "~/.emacs.d/git/git-load")
+       (load "git-load")))
+   #+END_SRC
 ** ERC IRC Client
    
    IRC Client for Emacs
@@ -529,15 +543,7 @@
    Otherwise, just load it.
 
    #+BEGIN_SRC emacs-lisp
-   (if (git-repo? "~/.emacs.d/git/helm-spotify")
-       (progn
-         (add-to-list 'load-path "~/.emacs.d/git/helm-spotify")
-         (load "helm-spotify"))
-     (progn
-       (let ((git-repo "~/.emacs.d/git/"))
-         (git-clone "https://github.com/pschorf/helm-spotify.git"))
-       (add-to-list 'load-path "~/.emacs.d/git/helm-spotify")
-       (load "helm-spotify")))
+   (git-load "https://github.com/pschorf/helm-spotify.git" "helm-spotify")
    #+END_SRC
 
 #+latex: \newpage
