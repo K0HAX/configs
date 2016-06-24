@@ -542,15 +542,18 @@
    #+BEGIN_SRC emacs-lisp
    (use-package calfw
      :init
-       (require 'calfw)
-       (require 'calfw-org))
+     (require 'calfw)
+     (require 'calfw-org)
+     (require 'calfw-ical))
 
    (defun my-open-calendar ()
      (interactive)
      (cfw:open-calendar-buffer
-       :contents-sources
-       (list
-	 (cfw:org-create-source "Green"))))
+      :contents-sources
+      (list
+       (cfw:org-create-source "Green")
+       (cfw:ical-create-source "voyant-michael" "https://calendar.google.com/calendar/ical/michael.englehorn%40voyant.com/private-5c99cf7b72fbd7469161b0ee6e1ba9dc/basic.ics" "Blue")
+       (cfw:ical-create-source "voyant-OoO" "https://calendar.google.com/calendar/ical/zayoenterprise.com_1f3beugfp1slojrq2qfqloi3go%40group.calendar.google.com/public/basic.ics" "Red"))))
    #+END_SRC
    
 ** =ox-twbs=
@@ -577,6 +580,23 @@
    (setq org-latex-listings 'minted)
    (setq org-latex-pdf-process
 	 '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+   #+END_SRC
+
+** =org-caldav=
+
+   =org-caldav= Sync Caldav with my Horde server.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package org-caldav)
+
+   (setq org-caldav-save-directory "~/ownCloud/clientsync/org-mode/")
+
+   (setq org-caldav-url "https://horde.productionservers.net/rpc.php/calendars/michael@englehorn.com")
+
+   (setq org-caldav-calendars
+         '((:calendar-id "calendar~qlViFGoLoIvqZGCBqcX2Mqn" :files ("~/ownCloud/clientsync/org-mode/home.org")
+                         :inbox "~/ownCloud/clientsync/org-mode/home.org"
+                         :org-Icalendar-timezone "America/Chicago")))
    #+END_SRC
 
 ** org-publish
