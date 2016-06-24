@@ -361,15 +361,12 @@
    An Elisp API for dynamically loading repositories from Git.
 
    #+BEGIN_SRC emacs-lisp
-   (if (git-repo? "~/.emacs.d/git/git-load")
-       (progn
-         (let ((git-repo "~/.emacs.d/git/"))
-           (git-clone "https://github.com/k0hax/git-load.git"))
-         (add-to-list 'load-path "~/.emacs.d/git/git-load")
-         (load "git-load"))
+   (unless (git-repo? "~/.emacs.d/git/git-load")
      (progn
-       (add-to-list 'load-path "~/.emacs.d/git/git-load")
-       (load "git-load")))
+       (let ((git-repo "~/.emacs.d/git/"))
+         (git-clone "https://github.com/k0hax/git-load.git"))))
+   (add-to-list 'load-path "~/.emacs.d/git/git-load")
+   (load "git-load")
    #+END_SRC
 ** ERC IRC Client
    
@@ -543,7 +540,8 @@
    Otherwise, just load it.
 
    #+BEGIN_SRC emacs-lisp
-   (git-load "https://github.com/pschorf/helm-spotify.git" "helm-spotify")
+   (eval-after-load "git-load"
+   (git-load "https://github.com/pschorf/helm-spotify.git" "helm-spotify"))
    #+END_SRC
 
 #+latex: \newpage
