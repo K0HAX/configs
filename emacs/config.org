@@ -48,7 +48,13 @@
       (require 'use-package)
       (setq use-package-always-ensure t)
       #+END_SRC
-      
+
+** Custom Git folder
+   I have a few packages that aren't good enough in MELPA to use. I pull them from Git instead.
+
+   #+BEGIN_SRC emacs-lisp
+   (add-to-list 'load-path "~/.emacs.d/git/")
+   #+END_SRC
 ** Emacs String Manipulation Library
    
    This is required for some plugins.
@@ -498,6 +504,17 @@
    #+BEGIN_SRC emacs-lisp
    (use-package hydra)
    #+END_SRC
+** =helm=
+   =Helm= is an Emacs framework for incremental completions and narrowing selections. It helps to rapidly complete file names, buffer names, or any other Emacs interactions requiring selecting an item from a list of possible choices.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package helm
+     :init
+     (progn
+       (require 'helm-config)
+       (setq helm-candidate-number-limit 100)
+       (helm-mode)))
+   #+END_SRC
 ** =Company-mode=
    Company is a text completion framework for Emacs.
    The name stands for "complete anything". It uses pluggable back-ends and front-ends to retrieve and display completion candidates.
@@ -505,6 +522,12 @@
    (use-package company
      :init
      (add-hook 'after-init-hook 'global-company-mode))
+   #+END_SRC
+** =helm-spotify=
+   A simple Emacs interface for Spotify that makes good use of helm.
+
+   #+BEGIN_SRC emacs-lisp
+   (load "helm-spotify")
    #+END_SRC
 #+latex: \newpage
 * =Org-mode=
