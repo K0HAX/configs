@@ -540,6 +540,7 @@
    Otherwise, just load it.
 
    #+BEGIN_SRC emacs-lisp
+   (use-package multi)
    (eval-after-load "git-load"
      (git-load "https://github.com/pschorf/helm-spotify.git" "helm-spotify"))
    #+END_SRC
@@ -591,15 +592,6 @@
      (require 'calfw)
      (require 'calfw-org)
      (require 'calfw-ical))
-
-   (defun my-open-calendar ()
-     (interactive)
-     (cfw:open-calendar-buffer
-      :contents-sources
-      (list
-       (cfw:org-create-source "Green")
-       (cfw:ical-create-source "voyant-michael" "https://calendar.google.com/calendar/ical/michael.englehorn%40voyant.com/private-5c99cf7b72fbd7469161b0ee6e1ba9dc/basic.ics" "Blue")
-       (cfw:ical-create-source "voyant-OoO" "https://calendar.google.com/calendar/ical/zayoenterprise.com_1f3beugfp1slojrq2qfqloi3go%40group.calendar.google.com/public/basic.ics" "Red"))))
    #+END_SRC
    
 ** =ox-twbs=
