@@ -2,11 +2,6 @@
 	path = vim/.vim/bundle/vundle
 	url = https://github.com/gmarik/vundle.git
 
-[submodule "emacs/git/orgmode-mediawiki"]
-    path = emacs/git/orgmode-mediawiki
-    url = https://github.com/tomalexander/orgmode-mediawiki.git
-
-[submodule "emacs/git/nnreddit"]
-	path = emacs/git/nnreddit
-	url = https://github.com/paul-issartel/nnreddit.git
-
+[submodule "emacs/git/git-load"]
+    path = emacs/git/git-load
+    url = https://github.com/K0HAX/git-load.git
