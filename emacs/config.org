@@ -14,7 +14,11 @@
    (setq user-full-name "Michael Englehorn")
    (setq user-mail-address "michael@englehorn.com")
    #+END_SRC
-   
+** Compile =.emacs.d= 
+   #+BEGIN_SRC emacs-lisp
+   (if (file-newer-than-file-p "~/.emacs.d/config.el" "~/.emacs.d/config.elc")
+     (byte-compile-file "~/.emacs.d/config.el"))
+   #+END_SRC
    #+latex: \newpage
 * Package related
   
@@ -364,8 +368,9 @@
    (unless (git-repo? "~/.emacs.d/git/git-load")
      (progn
        (let ((git-repo "~/.emacs.d/git/"))
-         (git-clone "https://github.com/k0hax/git-load.git"))))
+          (git-clone "https://github.com/k0hax/git-load.git"))))
    (add-to-list 'load-path "~/.emacs.d/git/git-load")
+   (byte-recompile-directory (expand-file-name "~/.emacs.d/git/") 0)
    (load "git-load")
    #+END_SRC
 ** ERC IRC Client
