@@ -435,6 +435,7 @@
    
    #+BEGIN_SRC emacs-lisp
    (use-package smex)
+   (global-set-key (kbd "M-x") 'smex)
    #+END_SRC
    
 ** Git Commit Mode
@@ -582,6 +583,12 @@
     (setq org-log-done 'time)
    #+END_SRC
    
+** =ob-dot=
+   Let's set up capacity to create pretty diagrams
+
+   #+BEGIN_SRC emacs-lisp
+   (require 'ob-dot)
+   #+END_SRC
 ** =calfw=
    
    Let's use a pretty calendar while we're at it.
@@ -681,7 +688,9 @@
    I keep slightly more sensitive information in a separate file so that I can easily publish my main configuration.
    
    #+BEGIN_SRC emacs-lisp
-   (load "~/.emacs.d/emacs-secrets.el" t)
+   ;; (load "~/.emacs.d/emacs-secrets.el" t)
+   (eval-after-load "git-load"
+     (git-load "git@redmine.xcelor8.com:menglehorn-emacs-secret.git" "menglehorn-emacs-secret"))
    #+END_SRC
    
 ** Restart Emacs
