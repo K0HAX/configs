@@ -3,6 +3,7 @@ bookmarks
 *.html
 *.pdf
 *.tex
+*.elc
 tramp
 
 emacs-secrets.el
