@@ -321,29 +321,36 @@
    (setq uniquify-buffer-name-style 'forward)
    #+END_SRC
    
-*** Remember last position for reopened files
+** Remember last position for reopened files
     
-    #+BEGIN_SRC emacs-lisp
-    (if (version< emacs-version "25.0")
-	(progn (require 'saveplace)
-	    (setq-default save-place t))
-    (save-place-mode 1))
-    #+END_SRC
+   #+BEGIN_SRC emacs-lisp
+   (if (version< emacs-version "25.0")
+       (progn (require 'saveplace)
+	   (setq-default save-place t))
+   (save-place-mode 1))
+   #+END_SRC
     
-*** Disable garbage collection in minibuffer
+** Disable garbage collection in minibuffer
     
-    See [[http://tiny.cc/7wd7ay][this article]] for more info.
+   See [[http://tiny.cc/7wd7ay][this article]] for more info.
     
-    #+BEGIN_SRC emacs-lisp
-    (defun my/minibuffer-setup-hook ()
-    (setq gc-cons-threshold most-positive-fixnum))
-    (defun my/minibuffer-exit-hook ()
-    (setq gc-cons-threshold 800000))
-    (add-hook 'minibuffer-setup-hook #'my/minibuffer-setup-hook)
-    (add-hook 'minibuffer-exit-hook #'my/minibuffer-exit-hook)
-    #+END_SRC
-    
-    #+latex: \newpage
+   #+BEGIN_SRC emacs-lisp
+   (defun my/minibuffer-setup-hook ()
+   (setq gc-cons-threshold most-positive-fixnum))
+   (defun my/minibuffer-exit-hook ()
+   (setq gc-cons-threshold 800000))
+   (add-hook 'minibuffer-setup-hook #'my/minibuffer-setup-hook)
+   (add-hook 'minibuffer-exit-hook #'my/minibuffer-exit-hook)
+   #+END_SRC
+** Configure default web browser    
+   I use Firefox as my default browser.
+
+   #+BEGIN_SRC emacs-lisp
+   (setq browse-url-browser-function 'browse-url-generic
+         browse-url-generic-program "firefox")
+   #+END_SRC
+
+   #+latex: \newpage
 * Install and Set Up packages
 ** BBDB
    
