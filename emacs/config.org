@@ -205,8 +205,9 @@
        "Delete ~/.emacs.d/config.el when the current buffer is ~/.emacs.d/config.org"
        (setq configel "~/git/dotfiles/configs/emacs/config.el")
        (if (s-suffix? "emacs/config.org" buffer-file-name)
-	   (if (file-exists-p configel)
-	       (delete-file "~/git/dotfiles/configs/emacs/config.el"))))
+           (if (file-exists-p configel)
+               (progn (delete-file "~/git/dotfiles/configs/emacs/config.el")
+                      (delete-file "~/git/dotfiles/configs/emacs/config.elc")))))
 
    (add-hook 'after-save-hook 'my/delete-config-el)
    #+END_SRC
@@ -521,6 +522,16 @@
        (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
        (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
        (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode)))
+   #+END_SRC
+** =exec-path-from-shell=
+   This is used to grab envirtonment variables from the shell.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package exec-path-from-shell
+     :init
+     (require 'exec-path-from-shell)
+     (exec-path-from-shell-copy-env "SSH_AGENT_PID")
+     (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
    #+END_SRC
 ** Hydra
    I'm just going to install Hydra here. Configuration comes later.
