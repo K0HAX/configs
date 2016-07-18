@@ -674,7 +674,7 @@
    (setq org-publish-project-alist
 	 '(
 	   ("org-notes"
-	    :base-directory "~/org/"
+	    :base-directory "~/ownCloud/clientsync/org/"
 	    :base-extension "org"
 	    :publishing-directory "/root@webserver.productionservers.net:/var/sites/michael.englehorn.com/"
 	    :recursive t
@@ -682,7 +682,7 @@
 	    :headline-levels 4
 	    :auto-preamble t)
 	   ("org-static"
-	    :base-directory "~/org/"
+	    :base-directory "~/ownCloud/clientsync/org/"
 	    :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|txt\\|asc"
 	    :publishing-directory "/root@webserver.productionservers.net:/var/sites/michael.englehorn.com/"
 	    :recursive t
