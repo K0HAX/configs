@@ -148,6 +148,7 @@
    Specifically under the cursor
    
    #+BEGIN_SRC emacs-lisp
+   (defvar show-paren-delay)
    (setq show-paren-delay 0.0)
    (show-paren-mode t)
    #+END_SRC
@@ -203,9 +204,10 @@
    #+BEGIN_SRC emacs-lisp
    (defun my/delete-config-el ()
        "Delete ~/.emacs.d/config.el when the current buffer is ~/.emacs.d/config.org"
-       (setq configel "~/git/dotfiles/configs/emacs/config.el")
+       (defvar my-configel)
+       (setq my-configel "~/git/dotfiles/configs/emacs/config.el")
        (if (s-suffix? "emacs/config.org" buffer-file-name)
-           (if (file-exists-p configel)
+           (if (file-exists-p my-configel)
                (progn (delete-file "~/git/dotfiles/configs/emacs/config.el")
                       (delete-file "~/git/dotfiles/configs/emacs/config.elc")))))
 
@@ -309,6 +311,7 @@
    
    #+BEGIN_SRC emacs-lisp
    (recentf-mode 1)
+   (defvar recentf-max-saved-items)
    (setq recentf-max-saved-items 200)
    #+END_SRC
    
@@ -343,10 +346,11 @@
    (add-hook 'minibuffer-setup-hook #'my/minibuffer-setup-hook)
    (add-hook 'minibuffer-exit-hook #'my/minibuffer-exit-hook)
    #+END_SRC
-** Configure default web browser    
+** Configure default web browser
    I use Firefox as my default browser.
 
    #+BEGIN_SRC emacs-lisp
+   (defvar browse-url-generic-program)
    (setq browse-url-browser-function 'browse-url-generic
          browse-url-generic-program "firefox")
    #+END_SRC
@@ -595,15 +599,16 @@
    #+BEGIN_SRC emacs-lisp
    (setq org-default-notes-file "~/ownCloud/clientsync/org-mode/todo.org")
 
-    ;; Org-Mode Capture Templates
-    (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/ownCloud/clientsync/org-mode/todo.org" "Tasks")
-	     "* TODO %?\n  %i\n  %a")
-	("j" "Journal" entry (file+datetree "~/ownCloud/clientsync/org-mode/journal.org")
-	     "* %?\nEntered on %U\n  %i\n  %a")))
+   ;; Org-Mode Capture Templates
+   (defvar org-capture-templates)
+   (setq org-capture-templates
+         '(("t" "Todo" entry (file+headline "~/ownCloud/clientsync/org-mode/todo.org" "Tasks")
+            "* TODO %?\n  %i\n  %a")
+           ("j" "Journal" entry (file+datetree "~/ownCloud/clientsync/org-mode/journal.org")
+            "* %?\nEntered on %U\n  %i\n  %a")))
 
-    (global-set-key (kbd "C-c c") 'org-capture)
-    (setq org-log-done 'time)
+   (global-set-key (kbd "C-c c") 'org-capture)
+   (setq org-log-done 'time)
    #+END_SRC
    
 ** =ob-dot=
@@ -665,6 +670,15 @@
          '((:calendar-id "calendar~qlViFGoLoIvqZGCBqcX2Mqn" :files ("~/ownCloud/clientsync/org-mode/home.org")
                          :inbox "~/ownCloud/clientsync/org-mode/home.org"
                          :org-Icalendar-timezone "America/Chicago")))
+   #+END_SRC
+** =ob-sql=
+   =ob-sql= allows me to add MySQL queries to org-mode and execute them.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package sql
+     :init
+     (require 'sql))
+   (require 'ob-sql)
    #+END_SRC
 
 ** org-publish
