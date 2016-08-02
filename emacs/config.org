@@ -580,7 +580,89 @@
    #+BEGIN_SRC emacs-lisp
    (use-package org)
    #+END_SRC
-   
+
+** Todo Keywords  
+   Here are my =TODO= states and color settings.
+
+   #+BEGIN_SRC emacs-lisp
+   (setq org-todo-keywords
+         (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+                 (sequence "WAITING(W@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
+
+   (setq org-todo-keyword-faces
+         (quote (("TODO" :foreground "red" :weight bold)
+                 ("NEXT" :foreground "blue" :weight bold)
+                 ("DONE" :foreground "forest green" :weight bold)
+                 ("WAITING" :foreground "orange" :weight bold)
+                 ("HOLD" :foreground "magenta" :weight bold)
+                 ("CANCELLED" :foreground "forest green" :weight bold)
+                 ("MEETING" :foreground "forest green" :weight bold)
+                 ("PHONE" :foreground "forest green" :weight bold))))
+   #+END_SRC
+** Todo Selection
+   #+BEGIN_SRC emacs-lisp
+   (setq org-use-fast-todo-selection t)
+   #+END_SRC
+   Changing a task state is done with =C-c C-t KEY=
+** Todo State Triggers
+   Trigger breakdown
+   - Moving a task to =CANCELLED= adds a =CANCELLED= tag
+   - Moving a task to =WAITING= adds a =WAITING= tag
+   - Moving a task to =HOLD= adds =WAITING= and =HOLD= tags
+   - Moving a task to a done state removes =WAITING= and =HOLD= tags
+   - Moving a task to =TODO= removes =WAITING=, =CANCELLED=, and =HOLD= tags
+   - Moving a task to =NEXT= removes =WAITING=, =CANCELLED=, and =HOLD= tags
+   - Moving a task to =DONE= removes =WAITING=, =CANCELLED=, and =HOLD= tags
+
+   #+BEGIN_SRC emacs-lisp
+   (setq org-todo-state-tags-triggers
+         (quote (("CANCELLED" ("CANCELLED" . t))
+                 ("WAITING" ("WAITING" . t))
+                 ("HOLD" ("WAITING") ("HOLD" . t))
+                 (done ("WAITING") ("HOLD"))
+                 ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
+                 ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
+                 ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
+   #+END_SRC
+** Remove empty =LOGBOOK= drawers
+   #+BEGIN_SRC emacs-lisp
+   ;; Remove empty LOGBOOK drawers on clock out
+   (defun bh/remove-empty-drawer-on-clock-out ()
+     (interactive)
+     (save-excursion
+       (beginning-of-line 0)
+       (org-remove-empty-drawer-at "LOGBOOK" (point))))
+
+   (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
+   #+END_SRC
+** Agenda Files
+   #+BEGIN_SRC emacs-lisp
+   (setq org-agenda-files (quote ("~/ownCloud/clientsync/org-mode")))
+   #+END_SRC
+** Refile captured
+   Any file in =org-agenda-files= are valid refile targets.
+
+   #+BEGIN_SRC emacs-lisp
+   ; Targets include any file contributing to the agenda - up to 9 levels deep
+   (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 9))))
+
+   ; Use full outline paths for refile targets - we file directly with IDO
+   (setq org-refile-use-outline-path t)
+
+   ; Targets complete directly with IDO
+   (setq org-outline-path-complete-in-steps nil)
+
+   ; Allow refile to create parent tasks with confirmation
+   (setq org-refile-allow-creating-parent-nodes (quote confirm))
+
+   ;;;; Refile settings
+   ; Exclude DONE state tasks from refile targets
+   (defun bh/verify-refile-target ()
+     "Exclude todo keywords with a done state from refile targets"
+     (not (member (nth 2 (org-heading-components)) org-done-keywords)))
+
+   (setq org-refile-target-verify-function 'bh/verify-refile-target)
+   #+END_SRC
 ** =Org-bullets=
    I don't see a reason why you /wouldn't/ want this.
    
@@ -602,10 +684,16 @@
    ;; Org-Mode Capture Templates
    (defvar org-capture-templates)
    (setq org-capture-templates
-         '(("t" "Todo" entry (file+headline "~/ownCloud/clientsync/org-mode/todo.org" "Tasks")
-            "* TODO %?\n  %i\n  %a")
+         '(("t" "Todo" entry (file+headline "~/ownCloud/clientsync/org-mode/refile.org" "Tasks")
+            "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+           ("r" "Respond" entry (file "~/ownCloud/clientsync/org-mode/refile.org")
+            "* NEXT Respond to %:from %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
            ("j" "Journal" entry (file+datetree "~/ownCloud/clientsync/org-mode/journal.org")
-            "* %?\nEntered on %U\n  %i\n  %a")))
+            "* %? %?\n%U\n" :clock-in t :clock-resume t)
+           ("m" "Meeting" entry (file "~/ownCloud/clientsync/org-mode/refile.org")
+            "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
+           ("p" "Phone call" entry (file "~/ownCloud/clientsync/org-mode/refile.org")
+            "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)))
 
    (global-set-key (kbd "C-c c") 'org-capture)
    (setq org-log-done 'time)
@@ -840,7 +928,26 @@
     (setq dired-listing-switches "-alh")
     #+END_SRC
     
+** Key bindings
+   Set up custom global key bindings.
+   #+BEGIN_SRC emacs-lisp
+   (global-set-key (kbd "<f12>") 'org-agenda)
+   (global-set-key (kbd "<f8>") 'org-cycle-agenda-files)
+   (global-set-key (kbd "<f9> b") 'bbdb)
+   (global-set-key (kbd "<f9> c") 'my-open-calendar)
+   (global-set-key (kbd "<f9> g") 'gnus)
+   (global-set-key (kbd "<f11>") 'org-clock-goto)
+   (global-set-key (kbd "C-c c") 'org-capture)
+   #+END_SRC
     #+latex: \newpage
+* =BBDB=
+** Automatically add people to the =bbdb=
+   #+BEGIN_SRC emacs-lisp
+   (bbdb-initialize 'gnus 'message)
+   (bbdb-mua-auto-update-init 'message)
+   (setq bbdb-mua-auto-update-p 'query)
+   #+END_SRC
+#+latex: \newpage
 * Mutt
 ** Emacs as external editor
    #+BEGIN_SRC emacs-lisp
