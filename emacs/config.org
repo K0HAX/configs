@@ -808,16 +808,6 @@
    #+BEGIN_SRC emacs-lisp
    (powerline-default-theme)
    #+END_SRC
-** Load secrets
-   
-   I keep slightly more sensitive information in a separate file so that I can easily publish my main configuration.
-   
-   #+BEGIN_SRC emacs-lisp
-   ;; (load "~/.emacs.d/emacs-secrets.el" t)
-   (eval-after-load "git-load"
-     (git-load "git@redmine.xcelor8.com:menglehorn-emacs-secret.git" "menglehorn-emacs-secret"))
-   #+END_SRC
-   
 ** Restart Emacs
    
    It's useful to be able to restart emacs from inside emacs.
