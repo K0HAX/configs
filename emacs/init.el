@@ -7,6 +7,12 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+(if (file-newer-than-file-p "~/.emacs.d/config.el" "~/.emacs.d/config.elc")
+    (byte-compile-file "~/.emacs.d/config.el"))
+
 (if (file-exists-p "~/.emacs.d/config.el")
-    (load-file "~/.emacs.d/config.el")
-    (org-babel-load-file "~/.emacs.d/config.org"))
+    (progn
+      (if (file-newer-than-file-p "~/.emacs.d/config.el" "~/.emacs.d/config.elc")
+	  (byte-compile-file "~/.emacs.d/config.el"))
+      (load-file "~/.emacs.d/config.elc"))
+  (org-babel-load-file "~/.emacs.d/config.org"))
