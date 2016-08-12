@@ -20,6 +20,7 @@ newsticker/*
 _minted-config
 url
 url/*
+git/*
 emms
 emms/*
 private/mediawiki.el
