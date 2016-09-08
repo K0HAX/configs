@@ -462,7 +462,13 @@
    #+BEGIN_SRC emacs-lisp
    (use-package git-commit)
    #+END_SRC
-   
+
+** JSON Formatter   
+   Command to clean up and prettify json.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package json-mode)
+   #+END_SRC
 ** EMMS
    
    Emacs Multimedia System
