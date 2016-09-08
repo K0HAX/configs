@@ -14,11 +14,6 @@
    (setq user-full-name "Michael Englehorn")
    (setq user-mail-address "michael@englehorn.com")
    #+END_SRC
-** Compile =.emacs.d= 
-   #+BEGIN_SRC emacs-lisp
-   (if (file-newer-than-file-p "~/.emacs.d/config.el" "~/.emacs.d/config.elc")
-     (byte-compile-file "~/.emacs.d/config.el"))
-   #+END_SRC
    #+latex: \newpage
 * Package related
   
