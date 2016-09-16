@@ -117,24 +117,18 @@
 *** Hook =make-frame= to detect if we're in a TTY or GUI
     #+BEGIN_SRC emacs-lisp
     ;; last t is for NO-ENABLE
-    (use-package color-theme-solarized)
-    (load-theme 'wheatgrass t t)
-    (load-theme 'solarized t t)
-    (defun me/pick-color-theme (frame)
-      (select-frame frame)
-      (if (window-system frame)
-          (progn
-            (disable-theme 'wheatgrass) ; in case it was active
-            (enable-theme 'solarized))
-        (progn
-          (disable-theme 'solarized)
-          (enable-theme 'wheatgrass))))
-
-    (add-hook 'after-make-frame-functions 'me/pick-color-theme)
-
-    (if window-system
-        (enable-theme 'solarized)
-      (enable-theme 'wheatgrass))
+    (color-theme-initialize)
+    ;(use-package color-theme-solarized)
+    ;(load-theme 'wheatgrass t t)
+    ;(load-theme 'solarized t t)
+    ;(setq color-theme-is-global nil)
+    ;(defun me/pick-color-theme (frame)
+    ;  (let ((mode (if (display-graphic-p frame) 'light 'dark)))
+    ;    (set-frame-parameter frame 'background-mode mode)
+    ;    (set-terminal-parameter frame 'background-mode mode))
+    ;  (enable-theme 'solarized))
+    ;
+    ;(add-hook 'after-make-frame-functions 'me/pick-color-theme)
     #+END_SRC
 ** RainbowDelimiters
    
