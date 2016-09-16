@@ -114,19 +114,28 @@
     )
     #+END_SRC
     
-*** Solarized
-    
-    The solarized theme is pretty in my opinion, but if we're not in graphical mode wheatgrass is /way/ more usable.
-    
+*** Hook =make-frame= to detect if we're in a TTY or GUI
     #+BEGIN_SRC emacs-lisp
-    (if (display-graphic-p)
-	(use-package color-theme-solarized
-	:init
-	:config
-	(color-theme-solarized))
-    (load-theme 'wheatgrass))
+    ;; last t is for NO-ENABLE
+    (use-package color-theme-solarized)
+    (load-theme 'wheatgrass t t)
+    (load-theme 'solarized t t)
+    (defun me/pick-color-theme (frame)
+      (select-frame frame)
+      (if (window-system frame)
+          (progn
+            (disable-theme 'wheatgrass) ; in case it was active
+            (enable-theme 'solarized))
+        (progn
+          (disable-theme 'solarized)
+          (enable-theme 'wheatgrass))))
+
+    (add-hook 'after-make-frame-functions 'me/pick-color-theme)
+
+    (if window-system
+        (enable-theme 'solarized)
+      (enable-theme 'wheatgrass))
     #+END_SRC
-    
 ** RainbowDelimiters
    
    Highlight matching delimiters with unique colors. It's virtually necessary with emacs-lisp.
