@@ -839,7 +839,8 @@
    '(ledger-reports
    (quote
        (("register" "ledger ")
-       ("bal" "ledger -f %(ledger-file) bal")
+       ("bal" "ledger -f %(ledger-file) bal Assets Liabilities")
+       ("bigbal" "ledger -f %(ledger-file) bal")
        ("reg" "ledger -f %(ledger-file) reg")
        ("payee" "ledger -f %(ledger-file) reg @%(payee)")
        ("account" "ledger -f %(ledger-file) reg %(account)"))))
