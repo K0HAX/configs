@@ -27,7 +27,6 @@ Bundle 'ledger/vim-ledger'
 
 " Autocomplete
 Bundle 'ervandew/supertab'
-Bundle 'Valloric/YouCompleteMe'
 
 " Snippets
 Plugin 'SirVer/ultisnips'
@@ -58,8 +57,6 @@ set ruler
 set switchbuf=useopen
 set incsearch
 set hlsearch
-set relativenumber
-set number
 
 colorscheme torte
 set backspace=indent,eol,start
