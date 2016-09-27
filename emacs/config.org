@@ -110,6 +110,7 @@
     #+BEGIN_SRC emacs-lisp
     (use-package color-theme
     :init
+    (color-theme-initialize)
     :config
     )
     #+END_SRC
@@ -117,7 +118,7 @@
 *** Hook =make-frame= to detect if we're in a TTY or GUI
     #+BEGIN_SRC emacs-lisp
     ;; last t is for NO-ENABLE
-    (color-theme-initialize)
+    ;(color-theme-initialize)
     ;(use-package color-theme-solarized)
     ;(load-theme 'wheatgrass t t)
     ;(load-theme 'solarized t t)
