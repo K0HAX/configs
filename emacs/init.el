@@ -36,7 +36,7 @@
      ("slashdot" "http://slashdot.org/index.rss" nil 3600))))
  '(package-selected-packages
    (quote
-    (evil-org evil-leader restart-emacs ox-twbs calfw org-bullets multi company helm hydra exec-path-from-shell web-mode multi-term w3m emms-info-mediainfo emms json-mode smex ledger-mode magit powerline-evil powerline twittering-mode erc-youtube erc-social-graph erc-image erc-hl-nicks erc-crypt erc-colorize git bbdb dtrt-indent htmlize rainbow-delimiters color-theme-solarized color-theme s use-package)))
+    (web-mode w3m use-package twittering-mode smex rainbow-delimiters powerline-evil ox-twbs org-bullets multi-term magit ledger-mode json-mode htmlize git exec-path-from-shell erc-youtube erc-social-graph erc-image erc-hl-nicks erc-crypt erc-colorize emms-info-mediainfo dtrt-indent company color-theme calfw bbdb)))
  '(send-mail-function (quote smtpmail-send-it))
  '(twittering-use-master-password t))
 (custom-set-faces
