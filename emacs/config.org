@@ -118,6 +118,8 @@
     #+BEGIN_SRC emacs-lisp
     ;; last t is for NO-ENABLE
     (color-theme-initialize)
+    (load-theme 'wheatgrass t)
+    (enable-theme 'wheatgrass)
     ;(use-package color-theme-solarized)
     ;(load-theme 'wheatgrass t t)
     ;(load-theme 'solarized t t)
