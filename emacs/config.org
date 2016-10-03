@@ -14,11 +14,6 @@
    (setq user-full-name "Michael Englehorn")
    (setq user-mail-address "michael@englehorn.com")
    #+END_SRC
-** Compile =.emacs.d= 
-   #+BEGIN_SRC emacs-lisp
-   (if (file-newer-than-file-p "~/.emacs.d/config.el" "~/.emacs.d/config.elc")
-     (byte-compile-file "~/.emacs.d/config.el"))
-   #+END_SRC
    #+latex: \newpage
 * Package related
   
@@ -119,19 +114,24 @@
     )
     #+END_SRC
     
-*** Solarized
-    
-    The solarized theme is pretty in my opinion, but if we're not in graphical mode wheatgrass is /way/ more usable.
-    
+*** Hook =make-frame= to detect if we're in a TTY or GUI
     #+BEGIN_SRC emacs-lisp
-    (if (display-graphic-p)
-	(use-package color-theme-solarized
-	:init
-	:config
-	(color-theme-solarized))
-    (load-theme 'wheatgrass))
+    ;; last t is for NO-ENABLE
+    (color-theme-initialize)
+    (load-theme 'wheatgrass t)
+    (enable-theme 'wheatgrass)
+    ;(use-package color-theme-solarized)
+    ;(load-theme 'wheatgrass t t)
+    ;(load-theme 'solarized t t)
+    ;(setq color-theme-is-global nil)
+    ;(defun me/pick-color-theme (frame)
+    ;  (let ((mode (if (display-graphic-p frame) 'light 'dark)))
+    ;    (set-frame-parameter frame 'background-mode mode)
+    ;    (set-terminal-parameter frame 'background-mode mode))
+    ;  (enable-theme 'solarized))
+    ;
+    ;(add-hook 'after-make-frame-functions 'me/pick-color-theme)
     #+END_SRC
-    
 ** RainbowDelimiters
    
    Highlight matching delimiters with unique colors. It's virtually necessary with emacs-lisp.
@@ -462,7 +462,13 @@
    #+BEGIN_SRC emacs-lisp
    (use-package git-commit)
    #+END_SRC
-   
+
+** JSON Formatter   
+   Command to clean up and prettify json.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package json-mode)
+   #+END_SRC
 ** EMMS
    
    Emacs Multimedia System
@@ -537,23 +543,6 @@
      (exec-path-from-shell-copy-env "SSH_AGENT_PID")
      (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
    #+END_SRC
-** Hydra
-   I'm just going to install Hydra here. Configuration comes later.
-   
-   #+BEGIN_SRC emacs-lisp
-   (use-package hydra)
-   #+END_SRC
-** =helm=
-   =Helm= is an Emacs framework for incremental completions and narrowing selections. It helps to rapidly complete file names, buffer names, or any other Emacs interactions requiring selecting an item from a list of possible choices.
-
-   #+BEGIN_SRC emacs-lisp
-   (use-package helm
-     :init
-     (progn
-       (require 'helm-config)
-       (setq helm-candidate-number-limit 100)
-       (helm-mode)))
-   #+END_SRC
 ** =Company-mode=
    Company is a text completion framework for Emacs.
    The name stands for "complete anything". It uses pluggable back-ends and front-ends to retrieve and display completion candidates.
@@ -562,17 +551,6 @@
      :init
      (add-hook 'after-init-hook 'global-company-mode))
    #+END_SRC
-** =helm-spotify=
-   A simple Emacs interface for Spotify that makes good use of helm.
-   Get the [[https://github.com/pschorf/helm-spotify][repo]] from =github/pschorf= and install it in =~/.emacs.d/git/helm-spotify= if we don't have it, then load it.
-   Otherwise, just load it.
-
-   #+BEGIN_SRC emacs-lisp
-   (use-package multi)
-   (eval-after-load "git-load"
-     (git-load "https://github.com/pschorf/helm-spotify.git" "helm-spotify"))
-   #+END_SRC
-
 #+latex: \newpage
 * =Org-mode=
 ** Install org-mode
@@ -743,22 +721,6 @@
 	 '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
    #+END_SRC
 
-** =org-caldav=
-
-   =org-caldav= Sync Caldav with my Horde server.
-
-   #+BEGIN_SRC emacs-lisp
-   (use-package org-caldav)
-
-   (setq org-caldav-save-directory "~/ownCloud/clientsync/org-mode/")
-
-   (setq org-caldav-url "https://horde.productionservers.net/rpc.php/calendars/michael@englehorn.com")
-
-   (setq org-caldav-calendars
-         '((:calendar-id "calendar~qlViFGoLoIvqZGCBqcX2Mqn" :files ("~/ownCloud/clientsync/org-mode/home.org")
-                         :inbox "~/ownCloud/clientsync/org-mode/home.org"
-                         :org-Icalendar-timezone "America/Chicago")))
-   #+END_SRC
 ** =ob-sql=
    =ob-sql= allows me to add MySQL queries to org-mode and execute them.
 
@@ -808,6 +770,17 @@
    #+BEGIN_SRC emacs-lisp
    (powerline-default-theme)
    #+END_SRC
+
+** Load secrets
+   
+   I keep slightly more sensitive information in a separate file so that I can easily publish my main configuration.
+   
+   #+BEGIN_SRC emacs-lisp
+   ;; (load "~/.emacs.d/emacs-secrets.el" t)
+   (eval-after-load "git-load"
+     (git-load "git@github.com:K0HAX/menglehorn-emacs-secret.git" "menglehorn-emacs-secret"))
+   #+END_SRC
+   
 ** Restart Emacs
    
    It's useful to be able to restart emacs from inside emacs.
@@ -829,7 +802,8 @@
    '(ledger-reports
    (quote
        (("register" "ledger ")
-       ("bal" "ledger -f %(ledger-file) bal")
+       ("bal" "ledger -f %(ledger-file) bal Assets Liabilities")
+       ("bigbal" "ledger -f %(ledger-file) bal")
        ("reg" "ledger -f %(ledger-file) reg")
        ("payee" "ledger -f %(ledger-file) reg @%(payee)")
        ("account" "ledger -f %(ledger-file) reg %(account)"))))
@@ -956,49 +930,6 @@
    (add-hook 'mail-mode-hook 'my-mail-mode-hook)
    #+END_SRC
    #+latex: \newpage
-* Hydra
-  Hydra can get so big that it deserves its own section.
-  
-** Buffer Menu
-   Add a hydra for the buffer-menu.
-   
-   #+BEGIN_SRC emacs-lisp
-   (require 'hydra)
-   (eval-after-load "hydra"
-     '(progn
-   (defhydra hydra-buffer-menu (:color pink
-				:hint nil)
-     "
-   ^Mark^             ^Unmark^           ^Actions^          ^Search
-   ^^^^^^^^-----------------------------------------------------------------
-   _m_: mark          _u_: unmark        _x_: execute       _R_: re-isearch
-   _s_: save          _U_: unmark up     _b_: bury          _I_: isearch
-   _d_: delete        ^ ^                _g_: refresh       _O_: multi-occur
-   _D_: delete up     ^ ^                _T_: files only: % -28`Buffer-menu-files-only
-   _~_: modified
-   "
-     ("m" Buffer-menu-mark)
-     ("u" Buffer-menu-unmark)
-     ("U" Buffer-menu-backup-unmark)
-     ("d" Buffer-menu-delete)
-     ("D" Buffer-menu-delete-backwards)
-     ("s" Buffer-menu-save)
-     ("~" Buffer-menu-not-modified)
-     ("x" Buffer-menu-execute)
-     ("b" Buffer-menu-bury)
-     ("g" revert-buffer)
-     ("T" Buffer-menu-toggle-files-only)
-     ("O" Buffer-menu-multi-occur :color blue)
-     ("I" Buffer-menu-isearch-buffers :color blue)
-     ("R" Buffer-menu-isearch-buffers-regexp :color blue)
-     ("c" nil "cancel")
-     ("v" Buffer-menu-select "select" :color blue)
-     ("o" Buffer-menu-other-window "other-window" :color blue)
-     ("q" quit-window "quit" :color blue))
-
-   (define-key Buffer-menu-mode-map "." 'hydra-buffer-menu/body)))
-   #+END_SRC
-   #+latex: \newpage
 * Evil Mode
 ** Enable evil mode
    
@@ -1109,3 +1040,4 @@
   
   
   This section is where bad sections of this config can go if they break Emacs. It's only used for debugging purposes.
+
