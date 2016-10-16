@@ -765,7 +765,7 @@
    #+BEGIN_SRC emacs-lisp
    ;; (load "~/.emacs.d/emacs-secrets.el" t)
    (eval-after-load "git-load"
-     (git-load "~/ownCloud/Dropbox/git/menglehorn-emacs-secret.git" "menglehorn-emacs-secret"))
+     (git-load "git@github.com:K0HAX/menglehorn-emacs-secret.git" "menglehorn-emacs-secret"))
    #+END_SRC
    
 ** Restart Emacs
