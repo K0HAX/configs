@@ -116,19 +116,9 @@
     
 *** Hook =make-frame= to detect if we're in a TTY or GUI
     #+BEGIN_SRC emacs-lisp
-    ;; last t is for NO-ENABLE
     (color-theme-initialize)
-    ;(use-package color-theme-solarized)
-    ;(load-theme 'wheatgrass t t)
-    ;(load-theme 'solarized t t)
-    ;(setq color-theme-is-global nil)
-    ;(defun me/pick-color-theme (frame)
-    ;  (let ((mode (if (display-graphic-p frame) 'light 'dark)))
-    ;    (set-frame-parameter frame 'background-mode mode)
-    ;    (set-terminal-parameter frame 'background-mode mode))
-    ;  (enable-theme 'solarized))
-    ;
-    ;(add-hook 'after-make-frame-functions 'me/pick-color-theme)
+    (load-theme 'wheatgrass t)
+    (enable-theme 'wheatgrass)
     #+END_SRC
 ** RainbowDelimiters
    
@@ -738,7 +728,7 @@
 	   ("org-notes"
 	    :base-directory "~/ownCloud/clientsync/org/"
 	    :base-extension "org"
-	    :publishing-directory "/root@webserver.productionservers.net:/var/sites/michael.englehorn.com/"
+	    :publishing-directory "/root@websites01.lan.productionservers.net:/var/www/michael.englehorn.com/public_html/"
 	    :recursive t
 	    :publishing-function org-twbs-publish-to-html
 	    :headline-levels 4
@@ -746,7 +736,7 @@
 	   ("org-static"
 	    :base-directory "~/ownCloud/clientsync/org/"
 	    :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|txt\\|asc"
-	    :publishing-directory "/root@webserver.productionservers.net:/var/sites/michael.englehorn.com/"
+	    :publishing-directory "/root@websites01.lan.productionservers.net:/var/www/michael.englehorn.com/public_html/"
 	    :recursive t
 	    :publishing-function org-publish-attachment)
 	   ("org" :components ("org-notes" "org-static"))))
