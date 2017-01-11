@@ -539,6 +539,14 @@
      :init
      (add-hook 'after-init-hook 'global-company-mode))
    #+END_SRC
+** =nnreddit=
+   A Reddit backend for the Gnus newsreader.
+
+   #+BEGIN_SRC emacs-lisp
+   (eval-after-load "git-load"
+     (git-load "https://github.com/paul-issartel/nnreddit.git" "nnreddit"))
+   (add-to-list 'gnus-secondary-select-methods '(nnreddit ""))
+   #+END_SRC
 #+latex: \newpage
 * =Org-mode=
 ** Install org-mode
