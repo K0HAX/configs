@@ -501,6 +501,8 @@
    (use-package w3m
    :ensure t
    :init
+   (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+   (setq exec-path (append exec-path '("/usr/local/bin")))
    (autoload 'w3m-browse-url "w3m")
    (global-set-key "\C-xm" 'browse-url-at-point)
    (setq w3m-use-cookies t)
