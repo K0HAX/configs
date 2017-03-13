@@ -549,6 +549,14 @@
      (git-load "https://github.com/paul-issartel/nnreddit.git" "nnreddit"))
    (add-to-list 'gnus-secondary-select-methods '(nnreddit ""))
    #+END_SRC
+** Matrix Integration
+   A Matrix Chat client.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package matrix-client)
+   (require 'matrix-client)
+   (setq matrix-homeserver-base-url "https://matrix.productionservers.net")
+   #+END_SRC
 #+latex: \newpage
 * =Org-mode=
 ** Install org-mode
