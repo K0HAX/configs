@@ -1,2 +1,4 @@
 vim/.vim/bundle/*
 emacs/private/gnus.el
+emacs/#*
+emacs/session*
