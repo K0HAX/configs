@@ -531,6 +531,7 @@
      :init
      (require 'exec-path-from-shell)
      (exec-path-from-shell-copy-env "SSH_AGENT_PID")
+     (exec-path-from-shell-copy-env "PATH")
      (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
    #+END_SRC
 ** =Company-mode=
@@ -556,6 +557,12 @@
    (use-package matrix-client)
    (require 'matrix-client)
    (setq matrix-homeserver-base-url "https://matrix.productionservers.net")
+   #+END_SRC
+** =govc= VMware Integration
+   A VMware integration script
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package govc)
    #+END_SRC
 #+latex: \newpage
 * =Org-mode=
@@ -1047,7 +1054,13 @@
    #+BEGIN_SRC emacs-lisp
    (evil-set-initial-state 'term-mode 'emacs)
    #+END_SRC
-   
+** Fix govc-mode
+   Govc shouldn't have evil bindings.
+
+   #+BEGIN_SRC emacs-lisp
+   (evil-set-initial-state 'govc-mode 'emacs)
+   (evil-set-initial-state 'govc-mode-major-mode 'emacs)
+   #+END_SRC
    #+latex: \newpage
 * Disabled Configs
   :PROPERTIES: 
