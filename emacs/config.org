@@ -795,39 +795,49 @@
    #+BEGIN_SRC emacs-lisp
    (use-package restart-emacs)
    #+END_SRC
-** Custom mode settings
-   
-   Load values stored by custom-set-variables
-   
+** Ledger Reports
+
+   Some custom and shorter keywords for ledger reports (C-r r in ledger-mode)
+
    #+BEGIN_SRC emacs-lisp
-   (custom-set-variables
-   ;; custom-set-variables was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(ledger-reports
-   (quote
-       (("register" "ledger ")
-       ("bal" "ledger -f %(ledger-file) bal Assets Liabilities")
-       ("bigbal" "ledger -f %(ledger-file) bal")
-       ("reg" "ledger -f %(ledger-file) reg")
-       ("payee" "ledger -f %(ledger-file) reg @%(payee)")
-       ("account" "ledger -f %(ledger-file) reg %(account)"))))
-   '(newsticker-url-list-defaults
+   (setq ledger-reports
+         (quote
+          (("register" "ledger ")
+           ("bal" "ledger -f %(ledger-file) bal Assets Liabilities")
+           ("bigbal" "ledger -f %(ledger-file) bal")
+           ("reg" "ledger -f %(ledger-file) reg")
+           ("payee" "ledger -f %(ledger-file) reg @%(payee)")
+           ("account" "ledger -f %(ledger-file) reg %(account)"))))
+   #+END_SRC
+** Newsticker List
+   Set up RSS feeds
+
+   #+BEGIN_SRC emacs-lisp
+   (setq newsticker-url-list-defaults
    (quote
        (("NY Times" "http://partners.userland.com/nytRss/nytHomepage.xml")
        ("The Register" "http://www.theregister.co.uk/tonys/slashdot.rdf")
        ("slashdot" "http://slashdot.org/index.rss" nil 3600))))
-   '(send-mail-function (quote smtpmail-send-it))
-   '(twittering-use-master-password t))
-   (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   )
    #+END_SRC
-   
+** Mail Processing
+   Set up the mail sending function
+
+   #+BEGIN_SRC emacs-lisp
+   (setq send-mail-function 'smtpmail-send-it)
+   #+END_SRC
+** Twittering Mode Settings
+   We want to encrypt the Oauth credentials for =twittering-mode=
+
+   #+BEGIN_SRC emacs-lisp
+   (setq twittering-use-master-password t)
+   #+END_SRC
+** Customizations file
+   Move the customizations file out from init.el so we don't break the Git repo.
+  
+   #+BEGIN_SRC emacs-lisp
+   (setq custom-file "~/.emacs.d/emacs-custom.el")
+   (load custom-file)
+   #+END_SRC
 ** Disable blinking and flashing
    Disable the annoying bell
    
