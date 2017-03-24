@@ -1061,6 +1061,25 @@
    (evil-set-initial-state 'govc-mode 'emacs)
    (evil-set-initial-state 'govc-mode-major-mode 'emacs)
    #+END_SRC
+** Fix twittering-mode
+   Twittering should have some evil bindings.
+
+   #+BEGIN_SRC emacs-lisp
+   (eval-after-load 'twittering-mode
+     '(progn
+        (evil-define-key 'motion twittering-mode-map
+                                     "g" nil
+                                     "g g" 'twittering-goto-first-status
+                                     "c" 'twittering-current-timeline
+                                     "C-u" 'twittering-scroll-down
+                                     "/" 'evil-search-forward
+                                     "?" 'evil-search-backward
+                                     "n" 'evil-search-next
+                                     "N" 'evil-search-previous
+                                     [escape] 'twittering-edit-cancel-status
+                                     "<tab>" 'twittering-goto-next-uri)
+        (evil-set-initial-state 'twittering-mode 'motion)))
+   #+END_SRC
    #+latex: \newpage
 * Disabled Configs
   :PROPERTIES: 
