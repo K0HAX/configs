@@ -10,12 +10,11 @@
 (if (file-newer-than-file-p "~/.emacs.d/config.el" "~/.emacs.d/config.elc")
     (byte-compile-file "~/.emacs.d/config.el"))
 
-(if (file-exists-p "~/.emacs.d/config.el")
-    (progn
-      (if (file-newer-than-file-p "~/.emacs.d/config.el" "~/.emacs.d/config.elc")
-	  (byte-compile-file "~/.emacs.d/config.el"))
-      (load-file "~/.emacs.d/config.elc"))
-  (org-babel-load-file "~/.emacs.d/config.org"))
+(if (file-exists-p "~/.emacs.d/config.elc")
+    (load-file "~/.emacs.d/config.elc")
+  (progn
+    (org-babel-load-file "~/.emacs.d/config.org")
+    (byte-compile-file "~/.emacs.d/config.el")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

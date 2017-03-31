@@ -66,14 +66,14 @@
    This snippet works in *nix and all (relevant) versions of Windows.
    
    #+BEGIN_SRC emacs-lisp
-   (defun w32-maximize-frame ()
-   "Maximize the current frame (windows only)"
-   (interactive)
-   (w32-send-sys-command 61488))
    (if (eq system-type 'windows-nt)
-   (progn
-       (add-hook 'windows-setup-hook 'w32-maximize-frame t))
-   (set-frame-parameter nil 'fullscreen 'maximized))
+       (with-no-warnings
+         (defun w32-maximize-frame ()
+           "Maximize the current frame (windows only)"
+           (interactive)
+           (w32-send-sys-command 61488))
+         (add-hook 'windows-setup-hook 'w32-maximize-frame t))
+     (set-frame-parameter nil 'fullscreen 'maximized))
    #+END_SRC
    
 ** Minimal GUI
@@ -365,7 +365,10 @@
    I use this to grab arbitrary lisp from github.
 
    #+BEGIN_SRC emacs-lisp
+   (add-to-list 'load-path "~/.emacs.d/el-get")
    (use-package el-get)
+   (require 'el-get)
+
    #+END_SRC
 ** ERC IRC Client
    
@@ -540,9 +543,9 @@
    A Reddit backend for the Gnus newsreader.
 
    #+BEGIN_SRC emacs-lisp
-   (el-get-bundle nnredit
-     :url "https://github.com/paul-issartel/nnreddit.git"
-     :features nnreddit)
+   ;(el-get-bundle nnredit
+   ;  :url "https://github.com/paul-issartel/nnreddit.git"
+   ;  (add-to-list 'gnus-secondary-select-methods '(nnreddit "")))
    #+END_SRC
 ** Matrix Integration
    A Matrix Chat client.
@@ -784,9 +787,11 @@
    
    #+BEGIN_SRC emacs-lisp
    (el-get-bundle menglehorn-emacs-secret
-     :url "git@github.com:K0HAX/menglehorn-emacs-secret.git")
+     :url "git@github.com:K0HAX/menglehorn-emacs-secret.git"
+     :feature "menglehorn-emacs-secret"
+     (load-file "~/.emacs.d/el-get/menglehorn-emacs-secret/menglehorn-emacs-secret.elc"))
    #+END_SRC
-   
+ 
 ** Restart Emacs
    
    It's useful to be able to restart emacs from inside emacs.
