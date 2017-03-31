@@ -193,11 +193,11 @@
    (defun my/delete-config-el ()
        "Delete ~/.emacs.d/config.el when the current buffer is ~/.emacs.d/config.org"
        (defvar my-configel)
-       (setq my-configel "~/git/dotfiles/configs/emacs/config.el")
+       (setq my-configel "~/git/menglehorn-linux-dotfiles/configs/emacs/config.el")
        (if (s-suffix? "emacs/config.org" buffer-file-name)
            (if (file-exists-p my-configel)
-               (progn (delete-file "~/git/dotfiles/configs/emacs/config.el")
-                      (delete-file "~/git/dotfiles/configs/emacs/config.elc")))))
+               (progn (delete-file "~/git/menglehorn-linux-dotfiles/configs/emacs/config.el")
+                      (delete-file "~/git/menglehorn-linux-dotfiles/configs/emacs/config.elc")))))
 
    (add-hook 'after-save-hook 'my/delete-config-el)
    #+END_SRC
