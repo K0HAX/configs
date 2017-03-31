@@ -12,6 +12,8 @@ places
 config.el
 elpa
 elpa/*
+el-get
+el-get/*
 smex-items
 auto-save-list
 auto-save-list/*
@@ -27,4 +29,3 @@ private/mediawiki.el
 .org-id-locations
 *.bak
 *~
-
