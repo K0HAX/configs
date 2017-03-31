@@ -361,17 +361,11 @@
    #+BEGIN_SRC emacs-lisp
    (use-package git)
    #+END_SRC
-** =git-load=
-   An Elisp API for dynamically loading repositories from Git.
+** =el-get=
+   I use this to grab arbitrary lisp from github.
 
    #+BEGIN_SRC emacs-lisp
-   (unless (git-repo? "~/.emacs.d/git/git-load")
-     (progn
-       (let ((git-repo "~/.emacs.d/git/"))
-          (git-clone "https://github.com/k0hax/git-load.git"))))
-   (add-to-list 'load-path "~/.emacs.d/git/git-load")
-   (byte-recompile-directory (expand-file-name "~/.emacs.d/git/") 0)
-   (load "git-load")
+   (use-package el-get)
    #+END_SRC
 ** ERC IRC Client
    
@@ -451,7 +445,7 @@
    (use-package git-commit)
    #+END_SRC
 
-** JSON Formatter   
+** JSON Formatter
    Command to clean up and prettify json.
 
    #+BEGIN_SRC emacs-lisp
@@ -546,9 +540,9 @@
    A Reddit backend for the Gnus newsreader.
 
    #+BEGIN_SRC emacs-lisp
-   (eval-after-load "git-load"
-     (git-load "https://github.com/paul-issartel/nnreddit.git" "nnreddit"))
-   (add-to-list 'gnus-secondary-select-methods '(nnreddit ""))
+   (el-get-bundle nnredit
+     :url "https://github.com/paul-issartel/nnreddit.git"
+     :features nnreddit)
    #+END_SRC
 ** Matrix Integration
    A Matrix Chat client.
@@ -789,9 +783,8 @@
    I keep slightly more sensitive information in a separate file so that I can easily publish my main configuration.
    
    #+BEGIN_SRC emacs-lisp
-   ;; (load "~/.emacs.d/emacs-secrets.el" t)
-   (eval-after-load "git-load"
-     (git-load "git@github.com:K0HAX/menglehorn-emacs-secret.git" "menglehorn-emacs-secret"))
+   (el-get-bundle menglehorn-emacs-secret
+     :url "git@github.com:K0HAX/menglehorn-emacs-secret.git")
    #+END_SRC
    
 ** Restart Emacs
