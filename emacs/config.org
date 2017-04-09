@@ -355,6 +355,12 @@
      (require 'bbdb)
      (bbdb-initialize 'gnus 'message))
    #+END_SRC
+** =request.el=
+   This is an HTTP library for emacs.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package request)
+   #+END_SRC
 ** =git=
    An Elisp API for programmatically using Git.
 
@@ -571,6 +577,16 @@
      (global-set-key (kbd "C-c s s") 'helm-spotify-plus)
      (global-set-key (kbd "C-c s p") 'helm-spotify-plus-play)
      (global-set-key (kbd "C-c s g") 'helm-spotify-plus-pause))
+   #+END_SRC
+** =homeassistant-mode=
+   A bit of elisp to allow me to control my home lighting from inside emacs.
+
+   #+BEGIN_SRC emacs-lisp
+   (el-get-bundle homeassistant-mode
+     :url "https://github.com/K0HAX/homeassistant-mode.git"
+     (load-file "~/.emacs.d/el-get/homeassistant-mode/homeassistant-mode.elc")
+     (setq mje/homeassistant-url "http://home-assistant.lan.productionservers.net:8123")
+     (global-set-key (kbd "C-c s h") 'helm-homeassistant))
    #+END_SRC
 #+latex: \newpage
 * =Org-mode=
@@ -836,6 +852,7 @@
        ("slashdot" "http://slashdot.org/index.rss" nil 3600))))
    #+END_SRC
 ** Mail Processing
+
    Set up the mail sending function
 
    #+BEGIN_SRC emacs-lisp
@@ -862,7 +879,6 @@
    #+END_SRC
    
 ** M-s s to SSH to a host.
-   
    
    I wanted to by able to easily SSH from Emacs, so I wrote some elisp.
    
