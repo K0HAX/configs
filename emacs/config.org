@@ -339,8 +339,12 @@
 
    #+BEGIN_SRC emacs-lisp
    (defvar browse-url-generic-program)
-   (setq browse-url-browser-function 'browse-url-generic
-         browse-url-generic-program "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
+   (if (eq system-type 'darwin)
+       (setq browse-url-browser-function 'browse-url-generic
+             browse-url-generic-program "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"))
+   (if (eq system-type 'gnu/linux)
+       (setq browse-url-browser-function 'browse-url-generic
+             browse-url-generic-program "google-chrome"))
    #+END_SRC
    
    #+latex: \newpage
