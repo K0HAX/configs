@@ -558,9 +558,9 @@
    A Matrix Chat client.
 
    #+BEGIN_SRC emacs-lisp
-   (use-package matrix-client
-     :init
-     (setq matrix-homeserver-base-url "https://matrix.productionservers.net"))
+   ;(use-package matrix-client)
+   ;(require 'matrix-client)
+   ;(setq matrix-homeserver-base-url "https://matrix.productionservers.net")
    #+END_SRC
 ** =govc= VMware Integration
    A VMware integration script
@@ -650,10 +650,6 @@
 
    (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
    #+END_SRC
-** Agenda Files
-   #+BEGIN_SRC emacs-lisp
-   (setq org-agenda-files (quote ("~/ownCloud/clientsync/org-mode")))
-   #+END_SRC
 ** Refile captured
    Any file in =org-agenda-files= are valid refile targets.
 
@@ -694,23 +690,25 @@
    =Org-mode= is great for project management, and I use it quite a bit for that.
    
    #+BEGIN_SRC emacs-lisp
-   (setq org-default-notes-file "~/ownCloud/clientsync/org-mode/todo.org")
+   (setq org-default-notes-file "~/ownCloud/org-mode/work.org")
 
    ;; Org-Mode Capture Templates
    (defvar org-capture-templates)
    (setq org-capture-templates
-         '(("t" "Todo" entry (file+headline "~/ownCloud/clientsync/org-mode/refile.org" "Tasks")
+         '(("t" "Todo" entry (file+headline "~/ownCloud/org-mode/refile.org" "Tasks")
             "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-           ("r" "Respond" entry (file "~/ownCloud/clientsync/org-mode/refile.org")
+           ("r" "Respond" entry (file "~/ownCloud/org-mode/refile.org")
             "* NEXT Respond to %:from %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
-           ("j" "Journal" entry (file+datetree "~/ownCloud/clientsync/org-mode/journal.org")
+           ("j" "Journal" entry (file+datetree "~/ownCloud/org-mode/journal.org")
             "* %? %?\n%U\n" :clock-in t :clock-resume t)
-           ("m" "Meeting" entry (file "~/ownCloud/clientsync/org-mode/refile.org")
+           ("m" "Meeting" entry (file "~/ownCloud/org-mode/refile.org")
             "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-           ("p" "Phone call" entry (file "~/ownCloud/clientsync/org-mode/refile.org")
+           ("p" "Phone call" entry (file "~/ownCloud/org-mode/refile.org")
             "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)))
 
    (global-set-key (kbd "C-c c") 'org-capture)
+   (global-set-key (kbd "C-c a") 'org-agenda)
+   (global-set-key (kbd "C-c l") 'org-store-link)
    (setq org-log-done 'time)
    #+END_SRC
    
@@ -775,7 +773,7 @@
    (setq org-publish-project-alist
 	 '(
 	   ("org-notes"
-	    :base-directory "~/ownCloud/clientsync/org/"
+	    :base-directory "~/ownCloud/org/"
 	    :base-extension "org"
 	    :publishing-directory "/root@websites01.lan.productionservers.net:/var/www/michael.englehorn.com/public_html/"
 	    :recursive t
@@ -783,7 +781,7 @@
 	    :headline-levels 4
 	    :auto-preamble t)
 	   ("org-static"
-	    :base-directory "~/ownCloud/clientsync/org/"
+	    :base-directory "~/ownCloud/org/"
 	    :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|txt\\|asc"
 	    :publishing-directory "/root@websites01.lan.productionservers.net:/var/www/michael.englehorn.com/public_html/"
 	    :recursive t
