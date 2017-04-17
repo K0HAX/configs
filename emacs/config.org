@@ -335,14 +335,14 @@
    (add-hook 'minibuffer-exit-hook #'my/minibuffer-exit-hook)
    #+END_SRC
 ** Configure default web browser
-   I use Firefox as my default browser.
+   I use Chrome as my default browser.
 
    #+BEGIN_SRC emacs-lisp
    (defvar browse-url-generic-program)
    (setq browse-url-browser-function 'browse-url-generic
-         browse-url-generic-program "firefox")
+         browse-url-generic-program "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
    #+END_SRC
-
+   
    #+latex: \newpage
 * Install and Set Up packages
 ** BBDB
@@ -862,7 +862,7 @@
    We want to encrypt the Oauth credentials for =twittering-mode=
 
    #+BEGIN_SRC emacs-lisp
-   (setq twittering-use-master-password t)
+   ;(setq twittering-use-master-password nil)
    #+END_SRC
 ** Customizations file
    Move the customizations file out from init.el so we don't break the Git repo.
