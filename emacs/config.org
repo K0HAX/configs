@@ -355,6 +355,12 @@
      (require 'bbdb)
      (bbdb-initialize 'gnus 'message))
    #+END_SRC
+** =request.el=
+   This is an HTTP library for emacs.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package request)
+   #+END_SRC
 ** =git=
    An Elisp API for programmatically using Git.
 
@@ -389,13 +395,12 @@
    Browse Twitter from Emacs
    
    #+BEGIN_SRC emacs-lisp
-   (use-package twittering-mode)
-   (eval-after-load 'twittering-mode
-   '(progn
-       (if (executable-find "convert")
-       (setq twittering-convert-fix-size 32))
-       (if (executable-find "gzip")
-       (setq twittering-use-icon-storage t))))
+   (use-package twittering-mode
+     :init
+     (if (executable-find "convert")
+         (setq twittering-convert-fix-size 32))
+     (if (executable-find "gzip")
+         (setq twittering-use-icon-storage t)))
    #+END_SRC
    
 ** Evil Powerline
@@ -422,13 +427,13 @@
    
    #+BEGIN_SRC emacs-lisp
    (use-package ledger-mode
-	       :ensure t
-	       :init
-	       (setq ledger-clear-whole-transactions 1)
+     :ensure t
+     :init
+     (setq ledger-clear-whole-transactions 1)
 
-	       :config
-	       (add-to-list 'evil-emacs-state-modes 'ledger-report-mode)
-	       :mode "\\.ldg\\'")
+     :config
+     (add-to-list 'evil-emacs-state-modes 'ledger-report-mode)
+     :mode "\\.ldg\\'")
    #+END_SRC
    
 ** Smex
@@ -436,8 +441,9 @@
    Smart M-x for Emacs
    
    #+BEGIN_SRC emacs-lisp
-   (use-package smex)
-   (global-set-key (kbd "M-x") 'smex)
+   (use-package smex
+     :init
+     (global-set-key (kbd "M-x") 'smex))
    #+END_SRC
    
 ** Git Commit Mode
@@ -455,6 +461,7 @@
    (use-package json-mode)
    #+END_SRC
 ** EMMS
+
    
    Emacs Multimedia System
    
@@ -484,14 +491,14 @@
    
    #+BEGIN_SRC emacs-lisp
    (use-package w3m
-   :ensure t
-   :init
-   (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-   (setq exec-path (append exec-path '("/usr/local/bin")))
-   (autoload 'w3m-browse-url "w3m")
-   (global-set-key "\C-xm" 'browse-url-at-point)
-   (setq w3m-use-cookies t)
-   (setq w3m-default-display-inline-images t))
+     :ensure t
+     :init
+     (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+     (setq exec-path (append exec-path '("/usr/local/bin")))
+     (autoload 'w3m-browse-url "w3m")
+     (global-set-key "\C-xm" 'browse-url-at-point)
+     (setq w3m-use-cookies t)
+     (setq w3m-default-display-inline-images t))
    #+END_SRC
    
 ** multi-term
@@ -499,9 +506,9 @@
    Multiple terminal manager for Emacs
    
    #+BEGIN_SRC emacs-lisp
-   (use-package multi-term)
-   (require 'multi-term)
-   (setq multi-term-program "/bin/bash")
+   (use-package multi-term
+     :init
+     (setq multi-term-program "/bin/bash"))
    #+END_SRC
 ** web-mode
    
@@ -560,6 +567,26 @@
 
    #+BEGIN_SRC emacs-lisp
    (use-package govc)
+   #+END_SRC
+** =helm-spotify-plus=
+   I enjoy listening to spotify, bonus points for emacs integration.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package helm-spotify-plus
+     :init
+     (global-set-key (kbd "C-c s s") 'helm-spotify-plus)
+     (global-set-key (kbd "C-c s p") 'helm-spotify-plus-play)
+     (global-set-key (kbd "C-c s g") 'helm-spotify-plus-pause))
+   #+END_SRC
+** =homeassistant-mode=
+   A bit of elisp to allow me to control my home lighting from inside emacs.
+
+   #+BEGIN_SRC emacs-lisp
+   (el-get-bundle homeassistant-mode
+     :url "https://github.com/K0HAX/homeassistant-mode.git"
+     (load-file "~/.emacs.d/el-get/homeassistant-mode/homeassistant-mode.elc")
+     (setq mje/homeassistant-url "http://home-assistant.lan.productionservers.net:8123")
+     (global-set-key (kbd "C-c s h") 'helm-homeassistant))
    #+END_SRC
 #+latex: \newpage
 * =Org-mode=
@@ -823,6 +850,7 @@
        ("slashdot" "http://slashdot.org/index.rss" nil 3600))))
    #+END_SRC
 ** Mail Processing
+
    Set up the mail sending function
 
    #+BEGIN_SRC emacs-lisp
@@ -849,7 +877,6 @@
    #+END_SRC
    
 ** M-s s to SSH to a host.
-   
    
    I wanted to by able to easily SSH from Emacs, so I wrote some elisp.
    
