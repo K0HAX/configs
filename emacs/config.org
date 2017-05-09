@@ -1,6 +1,11 @@
 #+TITLE: Michael's Emacs Config
 #+AUTHOR: Michael Englehorn
 #+EMAIL: michael@englehorn.com
+#+HTML_HEAD: <style type="text/css">pre.src {background-color: #303030; color: #e5e5e5;}</style>
+#+HTML_HEAD: <link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+#+HTML_HEAD: <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+#+HTML_HEAD: <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 
 * Preamble
   This is my Emacs config, which is almost a single file thanks to [[http://orgmode.org/worg/org-contrib/babel/intro.html][org-babel]].
@@ -700,14 +705,14 @@
    (defvar org-capture-templates)
    (setq org-capture-templates
          '(("t" "Todo" entry (file+headline "~/ownCloud/org-mode/refile.org" "Tasks")
-            "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+            "* TODO %?\n%U\n%a\n" :clock-in nil :clock-resume nil)
            ("r" "Respond" entry (file "~/ownCloud/org-mode/refile.org")
             "* NEXT Respond to %:from %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
            ("j" "Journal" entry (file+datetree "~/ownCloud/org-mode/journal.org")
             "* %? %?\n%U\n" :clock-in t :clock-resume t)
            ("m" "Meeting" entry (file "~/ownCloud/org-mode/refile.org")
             "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-           ("p" "Phone call" entry (file "~/ownCloud/org-mode/refile.org")
+           ("p" "Phone call" entry (file "~/ownCloud/org-mode/calls.org")
             "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)))
 
    (global-set-key (kbd "C-c c") 'org-capture)
