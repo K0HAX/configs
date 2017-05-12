@@ -1,6 +1,11 @@
 #+TITLE: Michael's Emacs Config
 #+AUTHOR: Michael Englehorn
 #+EMAIL: michael@englehorn.com
+#+HTML_HEAD: <style type="text/css">pre.src {background-color: #303030; color: #e5e5e5;}</style>
+#+HTML_HEAD: <link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+#+HTML_HEAD: <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+#+HTML_HEAD: <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 
 * Preamble
   This is my Emacs config, which is almost a single file thanks to [[http://orgmode.org/worg/org-contrib/babel/intro.html][org-babel]].
@@ -66,14 +71,14 @@
    This snippet works in *nix and all (relevant) versions of Windows.
    
    #+BEGIN_SRC emacs-lisp
-   (defun w32-maximize-frame ()
-   "Maximize the current frame (windows only)"
-   (interactive)
-   (w32-send-sys-command 61488))
    (if (eq system-type 'windows-nt)
-   (progn
-       (add-hook 'windows-setup-hook 'w32-maximize-frame t))
-   (set-frame-parameter nil 'fullscreen 'maximized))
+       (with-no-warnings
+         (defun w32-maximize-frame ()
+           "Maximize the current frame (windows only)"
+           (interactive)
+           (w32-send-sys-command 61488))
+         (add-hook 'windows-setup-hook 'w32-maximize-frame t))
+     (set-frame-parameter nil 'fullscreen 'maximized))
    #+END_SRC
    
 ** Minimal GUI
@@ -193,11 +198,11 @@
    (defun my/delete-config-el ()
        "Delete ~/.emacs.d/config.el when the current buffer is ~/.emacs.d/config.org"
        (defvar my-configel)
-       (setq my-configel "~/git/dotfiles/configs/emacs/config.el")
+       (setq my-configel "~/git/menglehorn-linux-dotfiles/configs/emacs/config.el")
        (if (s-suffix? "emacs/config.org" buffer-file-name)
            (if (file-exists-p my-configel)
-               (progn (delete-file "~/git/dotfiles/configs/emacs/config.el")
-                      (delete-file "~/git/dotfiles/configs/emacs/config.elc")))))
+               (progn (delete-file "~/git/menglehorn-linux-dotfiles/configs/emacs/config.el")
+                      (delete-file "~/git/menglehorn-linux-dotfiles/configs/emacs/config.elc")))))
 
    (add-hook 'after-save-hook 'my/delete-config-el)
    #+END_SRC
@@ -335,14 +340,18 @@
    (add-hook 'minibuffer-exit-hook #'my/minibuffer-exit-hook)
    #+END_SRC
 ** Configure default web browser
-   I use Firefox as my default browser.
+   I use Chrome as my default browser.
 
    #+BEGIN_SRC emacs-lisp
    (defvar browse-url-generic-program)
-   (setq browse-url-browser-function 'browse-url-generic
-         browse-url-generic-program "firefox")
+   (if (eq system-type 'darwin)
+       (setq browse-url-browser-function 'browse-url-generic
+             browse-url-generic-program "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"))
+   (if (eq system-type 'gnu/linux)
+       (setq browse-url-browser-function 'browse-url-generic
+             browse-url-generic-program "google-chrome"))
    #+END_SRC
-
+   
    #+latex: \newpage
 * Install and Set Up packages
 ** BBDB
@@ -355,23 +364,26 @@
      (require 'bbdb)
      (bbdb-initialize 'gnus 'message))
    #+END_SRC
+** =request.el=
+   This is an HTTP library for emacs.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package request)
+   #+END_SRC
 ** =git=
    An Elisp API for programmatically using Git.
 
    #+BEGIN_SRC emacs-lisp
    (use-package git)
    #+END_SRC
-** =git-load=
-   An Elisp API for dynamically loading repositories from Git.
+** =el-get=
+   I use this to grab arbitrary lisp from github.
 
    #+BEGIN_SRC emacs-lisp
-   (unless (git-repo? "~/.emacs.d/git/git-load")
-     (progn
-       (let ((git-repo "~/.emacs.d/git/"))
-          (git-clone "https://github.com/k0hax/git-load.git"))))
-   (add-to-list 'load-path "~/.emacs.d/git/git-load")
-   (byte-recompile-directory (expand-file-name "~/.emacs.d/git/") 0)
-   (load "git-load")
+   (add-to-list 'load-path "~/.emacs.d/el-get")
+   (use-package el-get)
+   (require 'el-get)
+
    #+END_SRC
 ** ERC IRC Client
    
@@ -392,13 +404,12 @@
    Browse Twitter from Emacs
    
    #+BEGIN_SRC emacs-lisp
-   (use-package twittering-mode)
-   (eval-after-load 'twittering-mode
-   '(progn
-       (if (executable-find "convert")
-       (setq twittering-convert-fix-size 32))
-       (if (executable-find "gzip")
-       (setq twittering-use-icon-storage t))))
+   (use-package twittering-mode
+     :init
+     (if (executable-find "convert")
+         (setq twittering-convert-fix-size 32))
+     (if (executable-find "gzip")
+         (setq twittering-use-icon-storage t)))
    #+END_SRC
    
 ** Evil Powerline
@@ -425,13 +436,13 @@
    
    #+BEGIN_SRC emacs-lisp
    (use-package ledger-mode
-	       :ensure t
-	       :init
-	       (setq ledger-clear-whole-transactions 1)
+     :ensure t
+     :init
+     (setq ledger-clear-whole-transactions 1)
 
-	       :config
-	       (add-to-list 'evil-emacs-state-modes 'ledger-report-mode)
-	       :mode "\\.ldg\\'")
+     :config
+     (add-to-list 'evil-emacs-state-modes 'ledger-report-mode)
+     :mode "\\.ldg\\'")
    #+END_SRC
    
 ** Smex
@@ -439,8 +450,9 @@
    Smart M-x for Emacs
    
    #+BEGIN_SRC emacs-lisp
-   (use-package smex)
-   (global-set-key (kbd "M-x") 'smex)
+   (use-package smex
+     :init
+     (global-set-key (kbd "M-x") 'smex))
    #+END_SRC
    
 ** Git Commit Mode
@@ -451,13 +463,14 @@
    (use-package git-commit)
    #+END_SRC
 
-** JSON Formatter   
+** JSON Formatter
    Command to clean up and prettify json.
 
    #+BEGIN_SRC emacs-lisp
    (use-package json-mode)
    #+END_SRC
 ** EMMS
+
    
    Emacs Multimedia System
    
@@ -487,14 +500,14 @@
    
    #+BEGIN_SRC emacs-lisp
    (use-package w3m
-   :ensure t
-   :init
-   (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-   (setq exec-path (append exec-path '("/usr/local/bin")))
-   (autoload 'w3m-browse-url "w3m")
-   (global-set-key "\C-xm" 'browse-url-at-point)
-   (setq w3m-use-cookies t)
-   (setq w3m-default-display-inline-images t))
+     :ensure t
+     :init
+     (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+     (setq exec-path (append exec-path '("/usr/local/bin")))
+     (autoload 'w3m-browse-url "w3m")
+     (global-set-key "\C-xm" 'browse-url-at-point)
+     (setq w3m-use-cookies t)
+     (setq w3m-default-display-inline-images t))
    #+END_SRC
    
 ** multi-term
@@ -502,9 +515,9 @@
    Multiple terminal manager for Emacs
    
    #+BEGIN_SRC emacs-lisp
-   (use-package multi-term)
-   (require 'multi-term)
-   (setq multi-term-program "/bin/bash")
+   (use-package multi-term
+     :init
+     (setq multi-term-program "/bin/bash"))
    #+END_SRC
 ** web-mode
    
@@ -531,6 +544,7 @@
      :init
      (require 'exec-path-from-shell)
      (exec-path-from-shell-copy-env "SSH_AGENT_PID")
+     (exec-path-from-shell-copy-env "PATH")
      (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
    #+END_SRC
 ** =Company-mode=
@@ -545,9 +559,43 @@
    A Reddit backend for the Gnus newsreader.
 
    #+BEGIN_SRC emacs-lisp
-   (eval-after-load "git-load"
-     (git-load "https://github.com/paul-issartel/nnreddit.git" "nnreddit"))
-   (add-to-list 'gnus-secondary-select-methods '(nnreddit ""))
+   ;(el-get-bundle nnredit
+   ;  :url "https://github.com/paul-issartel/nnreddit.git"
+   ;  (add-to-list 'gnus-secondary-select-methods '(nnreddit "")))
+   #+END_SRC
+** Matrix Integration
+   A Matrix Chat client.
+
+   #+BEGIN_SRC emacs-lisp
+   ;(use-package matrix-client)
+   ;(require 'matrix-client)
+   ;(setq matrix-homeserver-base-url "https://matrix.productionservers.net")
+   #+END_SRC
+** =govc= VMware Integration
+   A VMware integration script
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package govc)
+   #+END_SRC
+** =helm-spotify-plus=
+   I enjoy listening to spotify, bonus points for emacs integration.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package helm-spotify-plus
+     :init
+     (global-set-key (kbd "C-c s s") 'helm-spotify-plus)
+     (global-set-key (kbd "C-c s p") 'helm-spotify-plus-play)
+     (global-set-key (kbd "C-c s g") 'helm-spotify-plus-pause))
+   #+END_SRC
+** =homeassistant-mode=
+   A bit of elisp to allow me to control my home lighting from inside emacs.
+
+   #+BEGIN_SRC emacs-lisp
+   (el-get-bundle homeassistant-mode
+     :url "https://github.com/K0HAX/homeassistant-mode.git"
+     (load-file "~/.emacs.d/el-get/homeassistant-mode/homeassistant-mode.elc")
+     (setq mje/homeassistant-url "http://home-assistant.lan.productionservers.net:8123")
+     (global-set-key (kbd "C-c s h") 'helm-homeassistant))
    #+END_SRC
 #+latex: \newpage
 * =Org-mode=
@@ -611,10 +659,6 @@
 
    (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
    #+END_SRC
-** Agenda Files
-   #+BEGIN_SRC emacs-lisp
-   (setq org-agenda-files (quote ("~/ownCloud/clientsync/org-mode")))
-   #+END_SRC
 ** Refile captured
    Any file in =org-agenda-files= are valid refile targets.
 
@@ -655,23 +699,25 @@
    =Org-mode= is great for project management, and I use it quite a bit for that.
    
    #+BEGIN_SRC emacs-lisp
-   (setq org-default-notes-file "~/ownCloud/clientsync/org-mode/todo.org")
+   (setq org-default-notes-file "~/ownCloud/org-mode/work.org")
 
    ;; Org-Mode Capture Templates
    (defvar org-capture-templates)
    (setq org-capture-templates
-         '(("t" "Todo" entry (file+headline "~/ownCloud/clientsync/org-mode/refile.org" "Tasks")
-            "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-           ("r" "Respond" entry (file "~/ownCloud/clientsync/org-mode/refile.org")
+         '(("t" "Todo" entry (file+headline "~/ownCloud/org-mode/refile.org" "Tasks")
+            "* TODO %?\n%U\n%a\n" :clock-in nil :clock-resume nil)
+           ("r" "Respond" entry (file "~/ownCloud/org-mode/refile.org")
             "* NEXT Respond to %:from %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
-           ("j" "Journal" entry (file+datetree "~/ownCloud/clientsync/org-mode/journal.org")
+           ("j" "Journal" entry (file+datetree "~/ownCloud/org-mode/journal.org")
             "* %? %?\n%U\n" :clock-in t :clock-resume t)
-           ("m" "Meeting" entry (file "~/ownCloud/clientsync/org-mode/refile.org")
+           ("m" "Meeting" entry (file "~/ownCloud/org-mode/refile.org")
             "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-           ("p" "Phone call" entry (file "~/ownCloud/clientsync/org-mode/refile.org")
+           ("p" "Phone call" entry (file "~/ownCloud/org-mode/calls.org")
             "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)))
 
    (global-set-key (kbd "C-c c") 'org-capture)
+   (global-set-key (kbd "C-c a") 'org-agenda)
+   (global-set-key (kbd "C-c l") 'org-store-link)
    (setq org-log-done 'time)
    #+END_SRC
    
@@ -736,7 +782,7 @@
    (setq org-publish-project-alist
 	 '(
 	   ("org-notes"
-	    :base-directory "~/ownCloud/clientsync/org/"
+	    :base-directory "~/ownCloud/org/"
 	    :base-extension "org"
 	    :publishing-directory "/root@websites01.lan.productionservers.net:/var/www/michael.englehorn.com/public_html/"
 	    :recursive t
@@ -744,7 +790,7 @@
 	    :headline-levels 4
 	    :auto-preamble t)
 	   ("org-static"
-	    :base-directory "~/ownCloud/clientsync/org/"
+	    :base-directory "~/ownCloud/org/"
 	    :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|txt\\|asc"
 	    :publishing-directory "/root@websites01.lan.productionservers.net:/var/www/michael.englehorn.com/public_html/"
 	    :recursive t
@@ -774,11 +820,12 @@
    I keep slightly more sensitive information in a separate file so that I can easily publish my main configuration.
    
    #+BEGIN_SRC emacs-lisp
-   ;; (load "~/.emacs.d/emacs-secrets.el" t)
-   (eval-after-load "git-load"
-     (git-load "git@github.com:K0HAX/menglehorn-emacs-secret.git" "menglehorn-emacs-secret"))
+   (el-get-bundle menglehorn-emacs-secret
+     :url "git@github.com:K0HAX/menglehorn-emacs-secret.git"
+     :feature "menglehorn-emacs-secret"
+     (load-file "~/.emacs.d/el-get/menglehorn-emacs-secret/menglehorn-emacs-secret.elc"))
    #+END_SRC
-   
+ 
 ** Restart Emacs
    
    It's useful to be able to restart emacs from inside emacs.
@@ -787,39 +834,50 @@
    #+BEGIN_SRC emacs-lisp
    (use-package restart-emacs)
    #+END_SRC
-** Custom mode settings
-   
-   Load values stored by custom-set-variables
-   
+** Ledger Reports
+
+   Some custom and shorter keywords for ledger reports (C-r r in ledger-mode)
+
    #+BEGIN_SRC emacs-lisp
-   (custom-set-variables
-   ;; custom-set-variables was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(ledger-reports
-   (quote
-       (("register" "ledger ")
-       ("bal" "ledger -f %(ledger-file) bal Assets Liabilities")
-       ("bigbal" "ledger -f %(ledger-file) bal")
-       ("reg" "ledger -f %(ledger-file) reg")
-       ("payee" "ledger -f %(ledger-file) reg @%(payee)")
-       ("account" "ledger -f %(ledger-file) reg %(account)"))))
-   '(newsticker-url-list-defaults
+   (setq ledger-reports
+         (quote
+          (("register" "ledger ")
+           ("bal" "ledger -f %(ledger-file) bal Assets Liabilities")
+           ("bigbal" "ledger -f %(ledger-file) bal")
+           ("reg" "ledger -f %(ledger-file) reg")
+           ("payee" "ledger -f %(ledger-file) reg @%(payee)")
+           ("account" "ledger -f %(ledger-file) reg %(account)"))))
+   #+END_SRC
+** Newsticker List
+   Set up RSS feeds
+
+   #+BEGIN_SRC emacs-lisp
+   (setq newsticker-url-list-defaults
    (quote
        (("NY Times" "http://partners.userland.com/nytRss/nytHomepage.xml")
        ("The Register" "http://www.theregister.co.uk/tonys/slashdot.rdf")
        ("slashdot" "http://slashdot.org/index.rss" nil 3600))))
-   '(send-mail-function (quote smtpmail-send-it))
-   '(twittering-use-master-password t))
-   (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   )
    #+END_SRC
-   
+** Mail Processing
+
+   Set up the mail sending function
+
+   #+BEGIN_SRC emacs-lisp
+   (setq send-mail-function 'smtpmail-send-it)
+   #+END_SRC
+** Twittering Mode Settings
+   We want to encrypt the Oauth credentials for =twittering-mode=
+
+   #+BEGIN_SRC emacs-lisp
+   ;(setq twittering-use-master-password nil)
+   #+END_SRC
+** Customizations file
+   Move the customizations file out from init.el so we don't break the Git repo.
+  
+   #+BEGIN_SRC emacs-lisp
+   (setq custom-file "~/.emacs.d/emacs-custom.el")
+   (load custom-file)
+   #+END_SRC
 ** Disable blinking and flashing
    Disable the annoying bell
    
@@ -828,7 +886,6 @@
    #+END_SRC
    
 ** M-s s to SSH to a host.
-   
    
    I wanted to by able to easily SSH from Emacs, so I wrote some elisp.
    
@@ -1029,7 +1086,32 @@
    #+BEGIN_SRC emacs-lisp
    (evil-set-initial-state 'term-mode 'emacs)
    #+END_SRC
-   
+** Fix govc-mode
+   Govc shouldn't have evil bindings.
+
+   #+BEGIN_SRC emacs-lisp
+   (evil-set-initial-state 'govc-mode 'emacs)
+   (evil-set-initial-state 'govc-mode-major-mode 'emacs)
+   #+END_SRC
+** Fix twittering-mode
+   Twittering should have some evil bindings.
+
+   #+BEGIN_SRC emacs-lisp
+   (eval-after-load 'twittering-mode
+     '(progn
+        (evil-define-key 'motion twittering-mode-map
+                                     "g" nil
+                                     "g g" 'twittering-goto-first-status
+                                     "c" 'twittering-current-timeline
+                                     "C-u" 'twittering-scroll-down
+                                     "/" 'evil-search-forward
+                                     "?" 'evil-search-backward
+                                     "n" 'evil-search-next
+                                     "N" 'evil-search-previous
+                                     [escape] 'twittering-edit-cancel-status
+                                     "<tab>" 'twittering-goto-next-uri)
+        (evil-set-initial-state 'twittering-mode 'motion)))
+   #+END_SRC
    #+latex: \newpage
 * Disabled Configs
   :PROPERTIES: 
