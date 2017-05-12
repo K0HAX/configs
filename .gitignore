@@ -1,2 +1,5 @@
 vim/.vim/bundle/*
 emacs/private/gnus.el
+emacs/#*
+emacs/session*
+emacs/network-security.data
