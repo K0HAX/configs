@@ -704,18 +704,6 @@
    #+BEGIN_SRC emacs-lisp
    (require 'ob-dot)
    #+END_SRC
-** =calfw=
-   
-   Let's use a pretty calendar while we're at it.
-   
-   #+BEGIN_SRC emacs-lisp
-   (use-package calfw
-     :init
-     (require 'calfw)
-     (require 'calfw-org)
-     (require 'calfw-ical))
-   #+END_SRC
-   
 ** =ox-twbs=
    
    
