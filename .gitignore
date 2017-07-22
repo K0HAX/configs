@@ -1,5 +1,7 @@
 vim/.vim/bundle/*
 emacs/private/gnus.el
+emacs/git-load/*
 emacs/#*
+emacs/.#*
 emacs/session*
 emacs/network-security.data

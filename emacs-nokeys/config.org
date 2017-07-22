@@ -1,11 +1,6 @@
 #+TITLE: Michael's Emacs Config
 #+AUTHOR: Michael Englehorn
 #+EMAIL: michael@englehorn.com
-#+HTML_HEAD: <style type="text/css">pre.src {background-color: #303030; color: #e5e5e5;}</style>
-#+HTML_HEAD: <link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-#+HTML_HEAD: <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-#+HTML_HEAD: <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
 
 * Preamble
   This is my Emacs config, which is almost a single file thanks to [[http://orgmode.org/worg/org-contrib/babel/intro.html][org-babel]].
@@ -107,7 +102,6 @@
    #+END_SRC
    
 ** Theme
-   
 *** Colors
     
     I really like the having a colorized theme.
@@ -344,14 +338,10 @@
 
    #+BEGIN_SRC emacs-lisp
    (defvar browse-url-generic-program)
-   (if (eq system-type 'darwin)
-       (setq browse-url-browser-function 'browse-url-generic
-             browse-url-generic-program "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"))
-   (if (eq system-type 'gnu/linux)
-       (setq browse-url-browser-function 'browse-url-generic
-             browse-url-generic-program "google-chrome"))
+   (setq browse-url-browser-function 'browse-url-generic
+         browse-url-generic-program "google-chrome")
    #+END_SRC
-   
+
    #+latex: \newpage
 * Install and Set Up packages
 ** BBDB
@@ -536,17 +526,6 @@
        (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
        (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode)))
    #+END_SRC
-** =exec-path-from-shell=
-   This is used to grab envirtonment variables from the shell.
-
-   #+BEGIN_SRC emacs-lisp
-   (use-package exec-path-from-shell
-     :init
-     (require 'exec-path-from-shell)
-     (exec-path-from-shell-copy-env "SSH_AGENT_PID")
-     (exec-path-from-shell-copy-env "PATH")
-     (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
-   #+END_SRC
 ** =Company-mode=
    Company is a text completion framework for Emacs.
    The name stands for "complete anything". It uses pluggable back-ends and front-ends to retrieve and display completion candidates.
@@ -554,28 +533,6 @@
    (use-package company
      :init
      (add-hook 'after-init-hook 'global-company-mode))
-   #+END_SRC
-** =nnreddit=
-   A Reddit backend for the Gnus newsreader.
-
-   #+BEGIN_SRC emacs-lisp
-   ;(el-get-bundle nnredit
-   ;  :url "https://github.com/paul-issartel/nnreddit.git"
-   ;  (add-to-list 'gnus-secondary-select-methods '(nnreddit "")))
-   #+END_SRC
-** Matrix Integration
-   A Matrix Chat client.
-
-   #+BEGIN_SRC emacs-lisp
-   ;(use-package matrix-client)
-   ;(require 'matrix-client)
-   ;(setq matrix-homeserver-base-url "https://matrix.productionservers.net")
-   #+END_SRC
-** =govc= VMware Integration
-   A VMware integration script
-
-   #+BEGIN_SRC emacs-lisp
-   (use-package govc)
    #+END_SRC
 ** =helm-spotify-plus=
    I enjoy listening to spotify, bonus points for emacs integration.
@@ -587,17 +544,6 @@
      (global-set-key (kbd "C-c s p") 'helm-spotify-plus-play)
      (global-set-key (kbd "C-c s g") 'helm-spotify-plus-pause))
    #+END_SRC
-** =homeassistant-mode=
-   A bit of elisp to allow me to control my home lighting from inside emacs.
-
-   #+BEGIN_SRC emacs-lisp
-   (el-get-bundle homeassistant-mode
-     :url "https://github.com/K0HAX/homeassistant-mode.git"
-     (load-file "~/.emacs.d/el-get/homeassistant-mode/homeassistant-mode.elc")
-     (setq mje/homeassistant-url "http://home-assistant.lan.productionservers.net:8123")
-     (global-set-key (kbd "C-c s h") 'helm-homeassistant))
-   #+END_SRC
-#+latex: \newpage
 * =Org-mode=
 ** Install org-mode
    
@@ -659,6 +605,10 @@
 
    (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
    #+END_SRC
+** Agenda Files
+   #+BEGIN_SRC emacs-lisp
+   (setq org-agenda-files (quote ("~/ownCloud/clientsync/org-mode")))
+   #+END_SRC
 ** Refile captured
    Any file in =org-agenda-files= are valid refile targets.
 
@@ -699,25 +649,23 @@
    =Org-mode= is great for project management, and I use it quite a bit for that.
    
    #+BEGIN_SRC emacs-lisp
-   (setq org-default-notes-file "~/ownCloud/org-mode/work.org")
+   (setq org-default-notes-file "~/ownCloud/clientsync/org-mode/todo.org")
 
    ;; Org-Mode Capture Templates
    (defvar org-capture-templates)
    (setq org-capture-templates
-         '(("t" "Todo" entry (file+headline "~/ownCloud/org-mode/refile.org" "Tasks")
-            "* TODO %?\n%U\n%a\n" :clock-in nil :clock-resume nil)
-           ("r" "Respond" entry (file "~/ownCloud/org-mode/refile.org")
+         '(("t" "Todo" entry (file+headline "~/ownCloud/clientsync/org-mode/refile.org" "Tasks")
+            "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+           ("r" "Respond" entry (file "~/ownCloud/clientsync/org-mode/refile.org")
             "* NEXT Respond to %:from %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
-           ("j" "Journal" entry (file+datetree "~/ownCloud/org-mode/journal.org")
+           ("j" "Journal" entry (file+datetree "~/ownCloud/clientsync/org-mode/journal.org")
             "* %? %?\n%U\n" :clock-in t :clock-resume t)
-           ("m" "Meeting" entry (file "~/ownCloud/org-mode/refile.org")
+           ("m" "Meeting" entry (file "~/ownCloud/clientsync/org-mode/refile.org")
             "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-           ("p" "Phone call" entry (file "~/ownCloud/org-mode/calls.org")
+           ("p" "Phone call" entry (file "~/ownCloud/clientsync/org-mode/refile.org")
             "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)))
 
    (global-set-key (kbd "C-c c") 'org-capture)
-   (global-set-key (kbd "C-c a") 'org-agenda)
-   (global-set-key (kbd "C-c l") 'org-store-link)
    (setq org-log-done 'time)
    #+END_SRC
    
@@ -727,6 +675,18 @@
    #+BEGIN_SRC emacs-lisp
    (require 'ob-dot)
    #+END_SRC
+** =calfw=
+   
+   Let's use a pretty calendar while we're at it.
+   
+   #+BEGIN_SRC emacs-lisp
+   (use-package calfw
+     :init
+     (require 'calfw)
+     (require 'calfw-org)
+     (require 'calfw-ical))
+   #+END_SRC
+   
 ** =ox-twbs=
    
    
@@ -770,7 +730,7 @@
    (setq org-publish-project-alist
 	 '(
 	   ("org-notes"
-	    :base-directory "~/ownCloud/org/"
+	    :base-directory "~/ownCloud/clientsync/org/"
 	    :base-extension "org"
 	    :publishing-directory "/root@websites01.lan.productionservers.net:/var/www/michael.englehorn.com/public_html/"
 	    :recursive t
@@ -778,7 +738,7 @@
 	    :headline-levels 4
 	    :auto-preamble t)
 	   ("org-static"
-	    :base-directory "~/ownCloud/org/"
+	    :base-directory "~/ownCloud/clientsync/org/"
 	    :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|txt\\|asc"
 	    :publishing-directory "/root@websites01.lan.productionservers.net:/var/www/michael.englehorn.com/public_html/"
 	    :recursive t
@@ -803,17 +763,6 @@
    (powerline-default-theme)
    #+END_SRC
 
-** Load secrets
-   
-   I keep slightly more sensitive information in a separate file so that I can easily publish my main configuration.
-   
-   #+BEGIN_SRC emacs-lisp
-   (el-get-bundle menglehorn-emacs-secret
-     :url "git@github.com:K0HAX/menglehorn-emacs-secret.git"
-     :feature "menglehorn-emacs-secret"
-     (load-file "~/.emacs.d/el-get/menglehorn-emacs-secret/menglehorn-emacs-secret.elc"))
-   #+END_SRC
- 
 ** Restart Emacs
    
    It's useful to be able to restart emacs from inside emacs.
@@ -857,7 +806,7 @@
    We want to encrypt the Oauth credentials for =twittering-mode=
 
    #+BEGIN_SRC emacs-lisp
-   ;(setq twittering-use-master-password nil)
+   (setq twittering-use-master-password t)
    #+END_SRC
 ** Customizations file
    Move the customizations file out from init.el so we don't break the Git repo.
@@ -1106,6 +1055,50 @@
   :header-args: :tangle no
   :END:      
   
-  
   This section is where bad sections of this config can go if they break Emacs. It's only used for debugging purposes.
+** Install and Set Up Packages  
+*** =exec-path-from-shell=
+    This is used to grab envirtonment variables from the shell.
 
+    #+BEGIN_SRC emacs-lisp
+    (use-package exec-path-from-shell
+      :init
+      (require 'exec-path-from-shell)
+      (exec-path-from-shell-copy-env "SSH_AGENT_PID")
+      (exec-path-from-shell-copy-env "PATH")
+      (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
+    #+END_SRC
+*** Matrix Integration
+    A Matrix Chat client.
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package matrix-client
+      :init
+      (setq matrix-homeserver-base-url "https://matrix.productionservers.net"))
+    #+END_SRC
+*** =nnreddit=
+    A Reddit backend for the Gnus newsreader.
+
+    #+BEGIN_SRC emacs-lisp
+    ;(el-get-bundle nnredit
+    ;  :url "https://github.com/paul-issartel/nnreddit.git"
+    ;  (add-to-list 'gnus-secondary-select-methods '(nnreddit "")))
+    #+END_SRC
+*** =govc= VMware Integration
+    A VMware integration script
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package govc)
+    #+END_SRC
+** Customizations
+*** Load secrets
+   
+    I keep slightly more sensitive information in a separate file so that I can easily publish my main configuration.
+   
+    #+BEGIN_SRC emacs-lisp
+    (el-get-bundle menglehorn-emacs-secret
+      :url "git@github.com:K0HAX/menglehorn-emacs-secret.git"
+      :feature "menglehorn-emacs-secret"
+      (load-file "~/.emacs.d/el-get/menglehorn-emacs-secret/menglehorn-emacs-secret.elc"))
+    #+END_SRC
+ 
