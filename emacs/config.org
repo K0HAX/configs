@@ -397,6 +397,16 @@
    (use-package erc-social-graph)
    (use-package erc-youtube)
    (require 'tls)
+   (make-variable-buffer-local 'erc-fill-column)
+   (add-hook 'window-configuration-change-hook 
+	     '(lambda ()
+		(save-excursion
+		  (walk-windows
+		   (lambda (w)
+		     (let ((buffer (window-buffer w)))
+		       (set-buffer buffer)
+		       (when (eq major-mode 'erc-mode)
+			 (setq erc-fill-column (- (window-width w) 2)))))))))
    #+END_SRC
    
 ** Twitter Mode
@@ -727,18 +737,6 @@
    #+BEGIN_SRC emacs-lisp
    (require 'ob-dot)
    #+END_SRC
-** =calfw=
-   
-   Let's use a pretty calendar while we're at it.
-   
-   #+BEGIN_SRC emacs-lisp
-   (use-package calfw
-     :init
-     (require 'calfw)
-     (require 'calfw-org)
-     (require 'calfw-ical))
-   #+END_SRC
-   
 ** =ox-twbs=
    
    
