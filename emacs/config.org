@@ -601,6 +601,7 @@
    A bit of elisp to allow me to control my home lighting from inside emacs.
 
    #+BEGIN_SRC emacs-lisp
+   (use-package request)
    (el-get-bundle homeassistant-mode
      :url "https://github.com/K0HAX/homeassistant-mode.git"
      (load-file "~/.emacs.d/el-get/homeassistant-mode/homeassistant-mode.elc")
