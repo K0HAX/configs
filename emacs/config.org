@@ -592,9 +592,30 @@
    #+BEGIN_SRC emacs-lisp
    (use-package helm-spotify-plus
      :init
-     (global-set-key (kbd "C-c s s") 'helm-spotify-plus)
-     (global-set-key (kbd "C-c s p") 'helm-spotify-plus-play)
-     (global-set-key (kbd "C-c s g") 'helm-spotify-plus-pause))
+     (global-set-key (kbd "C-c s s") 'helm-spotify-plus))
+   #+END_SRC
+** =helm-emms=
+   This package makes using emms super easy!
+   #+BEGIN_SRC emacs-lisp
+   (use-package helm-emms
+     :init
+     (global-set-key (kbd "C-c s e") 'helm-emms))
+   #+END_SRC
+** =helm-bbdb=
+   Using helm to access and use the BBDB is nice too.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package helm-bbdb
+     :init
+     (global-set-key (kbd "C-c s b") 'helm-bbdb))
+   #+END_SRC
+** =helm-pass=
+   Pass is pretty nice password manager
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package helm-pass
+     :init
+     (global-set-key (kbd "C-c s p") 'helm-pass))
    #+END_SRC
 ** =homeassistant-mode=
    A bit of elisp to allow me to control my home lighting from inside emacs.
