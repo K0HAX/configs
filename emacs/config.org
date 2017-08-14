@@ -801,7 +801,7 @@
    (setq org-publish-project-alist
 	 '(
 	   ("org-notes"
-	    :base-directory "~/ownCloud/org/"
+	    :base-directory "~/Nextcloud/org/"
 	    :base-extension "org"
 	    :publishing-directory "/root@websites01.lan.productionservers.net:/mnt/sites/michael.englehorn.com/public_html/"
 	    :recursive t
@@ -809,7 +809,7 @@
 	    :headline-levels 4
 	    :auto-preamble t)
 	   ("org-static"
-	    :base-directory "~/ownCloud/org/"
+	    :base-directory "~/Nextcloud/org/"
 	    :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|txt\\|asc"
 	    :publishing-directory "/root@websites01.lan.productionservers.net:/mnt/sites/michael.englehorn.com/public_html/"
 	    :recursive t
