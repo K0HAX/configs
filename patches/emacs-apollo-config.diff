@@ -1,0 +1,30 @@
+diff -Naur ../emacs/config.org ../emacs-apollo/config.org
+--- ../emacs/config.org	2017-11-29 11:17:04.125143669 -0600
++++ ../emacs-apollo/config.org	2017-11-29 11:20:37.545005171 -0600
+@@ -730,20 +730,20 @@
+    =Org-mode= is great for project management, and I use it quite a bit for that.
+    
+    #+BEGIN_SRC emacs-lisp
+-   (setq org-default-notes-file "~/ownCloud/org-mode/work.org")
++   (setq org-default-notes-file "~/Documents/work.org")
+ 
+    ;; Org-Mode Capture Templates
+    (defvar org-capture-templates)
+    (setq org-capture-templates
+-         '(("t" "Todo" entry (file+headline "~/ownCloud/org-mode/refile.org" "Tasks")
++         '(("t" "Todo" entry (file+headline "~/Documents/work.org" "Tasks")
+             "* TODO %?\n%U\n%a\n" :clock-in nil :clock-resume nil)
+-           ("r" "Respond" entry (file "~/ownCloud/org-mode/refile.org")
++           ("r" "Respond" entry (file "~/Documents/work.org")
+             "* NEXT Respond to %:from %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+-           ("j" "Journal" entry (file+datetree "~/ownCloud/org-mode/journal.org")
++           ("j" "Journal" entry (file+datetree "~/Documents/journal.org")
+             "* %? %?\n%U\n" :clock-in t :clock-resume t)
+-           ("m" "Meeting" entry (file "~/ownCloud/org-mode/refile.org")
++           ("m" "Meeting" entry (file "~/Documents/Meetings.org")
+             "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
+-           ("p" "Phone call" entry (file "~/ownCloud/org-mode/calls.org")
++           ("p" "Phone call" entry (file "~/Documents/calls.org")
+             "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)))
+ 
+    (global-set-key (kbd "C-c c") 'org-capture)

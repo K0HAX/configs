@@ -1,0 +1,20 @@
+--- ../emacs/config.org	2017-11-29 11:17:04.125143669 -0600
++++ ../emacs-nokeys/config.org	2017-11-29 11:26:29.229060953 -0600
+@@ -834,17 +834,6 @@
+    (powerline-default-theme)
+    #+END_SRC
+ 
+-** Load secrets
+-   
+-   I keep slightly more sensitive information in a separate file so that I can easily publish my main configuration.
+-   
+-   #+BEGIN_SRC emacs-lisp
+-   (el-get-bundle menglehorn-emacs-secret
+-     :url "git@github.com:K0HAX/menglehorn-emacs-secret.git"
+-     :feature "menglehorn-emacs-secret"
+-     (load-file "~/.emacs.d/el-get/menglehorn-emacs-secret/menglehorn-emacs-secret.elc"))
+-   #+END_SRC
+- 
+ ** Restart Emacs
+    
+    It's useful to be able to restart emacs from inside emacs.
