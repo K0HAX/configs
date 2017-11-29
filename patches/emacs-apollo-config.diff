@@ -1,6 +1,6 @@
 diff -Naur ../emacs/config.org ../emacs-apollo/config.org
---- ../emacs/config.org	2017-11-29 11:17:04.125143669 -0600
-+++ ../emacs-apollo/config.org	2017-11-29 11:20:37.545005171 -0600
+--- ../emacs/config.org	2017-11-29 11:29:28.880622944 -0600
++++ ../emacs-apollo/config.org	2017-11-29 11:32:20.135113013 -0600
 @@ -730,20 +730,20 @@
     =Org-mode= is great for project management, and I use it quite a bit for that.
     
