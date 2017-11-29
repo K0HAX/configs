@@ -730,20 +730,20 @@
    =Org-mode= is great for project management, and I use it quite a bit for that.
    
    #+BEGIN_SRC emacs-lisp
-   (setq org-default-notes-file "~/ownCloud/org-mode/work.org")
+   (setq org-default-notes-file "~/Nextcloud/org-mode/work.org")
 
    ;; Org-Mode Capture Templates
    (defvar org-capture-templates)
    (setq org-capture-templates
-         '(("t" "Todo" entry (file+headline "~/ownCloud/org-mode/refile.org" "Tasks")
+         '(("t" "Todo" entry (file+headline "~/Nextcloud/org-mode/refile.org" "Tasks")
             "* TODO %?\n%U\n%a\n" :clock-in nil :clock-resume nil)
-           ("r" "Respond" entry (file "~/ownCloud/org-mode/refile.org")
+           ("r" "Respond" entry (file "~/Nextcloud/org-mode/refile.org")
             "* NEXT Respond to %:from %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
-           ("j" "Journal" entry (file+datetree "~/ownCloud/org-mode/journal.org")
+           ("j" "Journal" entry (file+datetree "~/Nextcloud/org-mode/journal.org")
             "* %? %?\n%U\n" :clock-in t :clock-resume t)
-           ("m" "Meeting" entry (file "~/ownCloud/org-mode/refile.org")
+           ("m" "Meeting" entry (file "~/Nextcloud/org-mode/refile.org")
             "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-           ("p" "Phone call" entry (file "~/ownCloud/org-mode/calls.org")
+           ("p" "Phone call" entry (file "~/Nextcloud/org-mode/calls.org")
             "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)))
 
    (global-set-key (kbd "C-c c") 'org-capture)
