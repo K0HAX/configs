@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (helm-bbdb helm-emms helm-pass evil-org evil-leader restart-emacs ox-twbs org-bullets helm-spotify-plus govc company exec-path-from-shell web-mode multi-term w3m emms-info-mediainfo emms json-mode smex ledger-mode magit powerline-evil powerline twittering-mode erc-youtube erc-social-graph erc-image erc-hl-nicks erc-crypt erc-colorize el-get git request bbdb dtrt-indent htmlize rainbow-delimiters color-theme s use-package))))
+    (exec-path-from-shell evil-org evil-leader restart-emacs ox-twbs org-bullets helm-pass helm-bbdb helm-emms helm-spotify-plus govc company web-mode multi-term emms-info-mediainfo emms json-mode smex ledger-mode magit powerline-evil powerline twittering-mode erc-youtube erc-social-graph erc-image erc-hl-nicks erc-crypt erc-colorize el-get git request bbdb dtrt-indent htmlize rainbow-delimiters color-theme s use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -350,7 +350,13 @@
    (if (eq system-type 'gnu/linux)
        (setq browse-url-browser-function 'w3m-browse-url))
    #+END_SRC
-   
+** Use plink on windows
+   Windows doesn't have the ssh command.
+
+   #+BEGIN_SRC emacs-lisp
+   (when (eq window-system 'w32)
+     (setq tramp-default-method "plink"))
+   #+END_SRC
    #+latex: \newpage
 * Install and Set Up packages
 ** BBDB
@@ -508,15 +514,21 @@
    Web browser for Emacs
    
    #+BEGIN_SRC emacs-lisp
-   (use-package w3m
-     :ensure t
-     :init
-     (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-     (setq exec-path (append exec-path '("/usr/local/bin")))
-     (autoload 'w3m-browse-url "w3m")
-     (global-set-key "\C-xm" 'browse-url-at-point)
-     (setq w3m-use-cookies t)
-     (setq w3m-default-display-inline-images t))
+   (cond
+    ((string-equal system-type "windows-nt")
+     (progn
+       ))
+    ((string-equal system-type "gnu/linux")
+     (progn
+       (use-package w3m
+         :ensure t
+         :init
+         (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+         (setq exec-path (append exec-path '("/usr/local/bin")))
+         (autoload 'w3m-browse-url "w3m")
+         (global-set-key "\C-xm" 'browse-url-at-point)
+         (setq w3m-use-cookies t)
+         (setq w3m-default-display-inline-images t)))))
    #+END_SRC
    
 ** multi-term
@@ -549,12 +561,13 @@
    This is used to grab envirtonment variables from the shell.
 
    #+BEGIN_SRC emacs-lisp
-   (use-package exec-path-from-shell
-     :init
-     (require 'exec-path-from-shell)
-     (exec-path-from-shell-copy-env "SSH_AGENT_PID")
-     (exec-path-from-shell-copy-env "PATH")
-     (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
+   (when (not (eq window-system 'w32))
+     (use-package exec-path-from-shell
+       :init
+       (require 'exec-path-from-shell)
+       (exec-path-from-shell-copy-env "SSH_AGENT_PID")
+       (exec-path-from-shell-copy-env "PATH")
+       (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")))
    #+END_SRC
 ** =Company-mode=
    Company is a text completion framework for Emacs.
@@ -622,11 +635,13 @@
 
    #+BEGIN_SRC emacs-lisp
    (use-package request)
-   (el-get-bundle homeassistant-mode
-     :url "https://github.com/K0HAX/homeassistant-mode.git"
-     (load-file "~/.emacs.d/el-get/homeassistant-mode/homeassistant-mode.elc")
-     (setq mje/homeassistant-url "http://home-assistant.lan.productionservers.net:8123")
-     (global-set-key (kbd "C-c s h") 'helm-homeassistant))
+   (when (not (eq window-system 'w32))
+     (el-get-bundle homeassistant-mode
+       :url "https://github.com/K0HAX/homeassistant-mode.git"
+       :submodule nil
+       (load-file "~/.emacs.d/el-get/homeassistant-mode/homeassistant-mode.elc")
+       (setq mje/homeassistant-url "http://home-assistant.lan.productionservers.net:8123")
+       (global-set-key (kbd "C-c s h") 'helm-homeassistant)))
    #+END_SRC
 ** Golang
    All the packages associated with golang.
@@ -739,20 +754,20 @@
    =Org-mode= is great for project management, and I use it quite a bit for that.
    
    #+BEGIN_SRC emacs-lisp
-   (setq org-default-notes-file "~/ownCloud/org-mode/work.org")
+   (setq org-default-notes-file "~/Nextcloud/org-mode/work.org")
 
    ;; Org-Mode Capture Templates
    (defvar org-capture-templates)
    (setq org-capture-templates
-         '(("t" "Todo" entry (file+headline "~/ownCloud/org-mode/refile.org" "Tasks")
+         '(("t" "Todo" entry (file+headline "~/Nextcloud/org-mode/refile.org" "Tasks")
             "* TODO %?\n%U\n%a\n" :clock-in nil :clock-resume nil)
-           ("r" "Respond" entry (file "~/ownCloud/org-mode/refile.org")
+           ("r" "Respond" entry (file "~/Nextcloud/org-mode/refile.org")
             "* NEXT Respond to %:from %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
-           ("j" "Journal" entry (file+datetree "~/ownCloud/org-mode/journal.org")
+           ("j" "Journal" entry (file+datetree "~/Nextcloud/org-mode/journal.org")
             "* %? %?\n%U\n" :clock-in t :clock-resume t)
-           ("m" "Meeting" entry (file "~/ownCloud/org-mode/refile.org")
+           ("m" "Meeting" entry (file "~/Nextcloud/org-mode/refile.org")
             "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-           ("p" "Phone call" entry (file "~/ownCloud/org-mode/calls.org")
+           ("p" "Phone call" entry (file "~/Nextcloud/org-mode/calls.org")
             "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)))
 
    (global-set-key (kbd "C-c c") 'org-capture)
@@ -851,6 +866,7 @@
    (el-get-bundle menglehorn-emacs-secret
      :url "git@github.com:K0HAX/menglehorn-emacs-secret.git"
      :feature "menglehorn-emacs-secret"
+     :submodule nil
      (load-file "~/.emacs.d/el-get/menglehorn-emacs-secret/menglehorn-emacs-secret.elc"))
    #+END_SRC
  
