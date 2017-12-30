@@ -628,6 +628,15 @@
      (setq mje/homeassistant-url "http://home-assistant.lan.productionservers.net:8123")
      (global-set-key (kbd "C-c s h") 'helm-homeassistant))
    #+END_SRC
+** Golang
+   All the packages associated with golang.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package go-mode)
+   (use-package go-stacktracer)
+   (use-package go-complete)
+   (use-package go-eldoc)
+   #+END_SRC
 #+latex: \newpage
 * =Org-mode=
 ** Install org-mode
