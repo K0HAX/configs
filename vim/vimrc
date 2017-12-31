@@ -135,3 +135,5 @@ let g:UltiSnipsJumpForwardTrigger="<C-b>"
 let g:UtiliSnipsJumpBackwardTrigger="<C-z>"
 
 let maplocalleader = ',,'
+
+hi Normal ctermbg=NONE

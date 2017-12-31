@@ -1,0 +1,64 @@
+*foreground: #d0d0d0
+*foreground_bold: #a8a19f
+*cursor: [30]#d0d0d0
+*background:       [30]#101010
+!!*background: rgba(0, 0, 0, .7)
+
+!! black
+*color0: #101010
+*color8: #303030
+!! red
+*color1: #960050
+*color9: #ff0090
+!! green
+*color2: #66aa11
+*color10: #80ff00
+!! yellow
+*color3: #c47f2c
+*color11: #ffba68
+!! blue
+*color4: #30309b
+*color12: #5f5fee
+!! magenta
+*color5: #7e40a5
+*color13: #bb88dd
+!! cyan
+*color6: #3579a8
+*color14: #4eb4fa
+!! white
+*color7: #9999aa
+*color15: #d0d0d0
+
+URxvt.transparent:   true
+URxvt.tintColor:     white
+URxvt.shading:       20
+
+urxvt*fading:           50
+urxvt*fadeColor:        #000000
+
+URxvt.intensityStyles:	false
+URxvt.background:       [10]#101010
+URxvt.depth:		32
+!!URxvt.font: 		noto:monospace:size=11
+URxvt.scrollBar:	false
+URxvt.cursorColor:	white
+!!URxvt.perl-ext-common:	default,matcher,resize-font
+URxvt.perl-lib:		$HOME/.config/Scripts
+URxvt.url-launcher:	/usr/bin/xdg-open
+URxvt.matcher.button:	1
+URxvt.resize-font.smaller:	C-Down
+URxvt.resize-font.bigger:	C-Up
+
+URxvt.colorUL:		#4682B4
+rofi.color-enabled:	true
+rofi.color-window:	#000, #000, #000
+rofi.color-normal:	#111, #819396, #222, #008ed4, #ffffff
+rofi.color-active:	#002b37, #008ed4, #003643, #008ed4, #66c6ff
+rofi.color-urgent:	#002b37, #da4281, #003643, #008ed4, #890661
+
+!!rofi.fake-transparency:	true
+rofi.lines:		3
+rofi.bw:		0
+rofi.opacity:		"10"
+rofi.hide-scrollbar:	true
+rofi.width: 30
