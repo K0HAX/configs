@@ -1,7 +1,9 @@
 *foreground: #d0d0d0
 *foreground_bold: #a8a19f
-*cursor: [30]#d0d0d0
-*background:       [30]#101010
+URxvt*cursor: [30]#d0d0d0
+URxvt*background:       [30]#101010
+*cursor: #d0d0d0
+*background:       #101010
 !!*background: rgba(0, 0, 0, .7)
 
 !! black
