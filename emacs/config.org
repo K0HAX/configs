@@ -607,13 +607,6 @@
      :init
      (global-set-key (kbd "C-c s s") 'helm-spotify-plus))
    #+END_SRC
-** =helm-emms=
-   This package makes using emms super easy!
-   #+BEGIN_SRC emacs-lisp
-   (use-package helm-emms
-     :init
-     (global-set-key (kbd "C-c s e") 'helm-emms))
-   #+END_SRC
 ** =helm-bbdb=
    Using helm to access and use the BBDB is nice too.
 
@@ -630,18 +623,12 @@
      :init
      (global-set-key (kbd "C-c s p") 'helm-pass))
    #+END_SRC
-** =homeassistant-mode=
-   A bit of elisp to allow me to control my home lighting from inside emacs.
-
+** =helm-emms=
+   This package makes using emms super easy!
    #+BEGIN_SRC emacs-lisp
-   (use-package request)
-   (when (not (eq window-system 'w32))
-     (el-get-bundle homeassistant-mode
-       :url "https://github.com/K0HAX/homeassistant-mode.git"
-       :submodule nil
-       (load-file "~/.emacs.d/el-get/homeassistant-mode/homeassistant-mode.elc")
-       (setq mje/homeassistant-url "http://home-assistant.lan.productionservers.net:8123")
-       (global-set-key (kbd "C-c s h") 'helm-homeassistant)))
+   (use-package helm-emms
+     :init
+     (global-set-key (kbd "C-c s e") 'helm-emms))
    #+END_SRC
 ** Golang
    All the packages associated with golang.
@@ -1164,4 +1151,16 @@
   
   
   This section is where bad sections of this config can go if they break Emacs. It's only used for debugging purposes.
+** =homeassistant-mode=
+   A bit of elisp to allow me to control my home lighting from inside emacs.
 
+   #+BEGIN_SRC emacs-lisp
+   (use-package request)
+   (when (not (eq window-system 'w32))
+     (el-get-bundle homeassistant-mode
+       :url "https://github.com/K0HAX/homeassistant-mode.git"
+       :submodule nil
+       (load-file "~/.emacs.d/el-get/homeassistant-mode/homeassistant-mode.elc")
+       (setq mje/homeassistant-url "http://home-assistant.lan.productionservers.net:8123")
+       (global-set-key (kbd "C-c s h") 'helm-homeassistant)))
+   #+END_SRC
