@@ -817,7 +817,23 @@
      (require 'sql))
    (require 'ob-sql)
    #+END_SRC
+** =org-trello=
+   Gotta connect to Trello!
 
+   #+BEGIN_SRC emacs-lisp
+   (use-package org-trello
+     :init
+     (require 'org-trello)
+     (add-to-list 'auto-mode-alist '("\\.trello$" . org-mode))
+     (add-hook 'org-mode-hook
+               (lambda ()
+                 (let ((filename (buffer-file-name (current-buffer))))
+                   (when (and filename (string= "trello" (file-name-extension filename)))
+                     (org-trello-mode)))))
+     (defun my-trello-mode-setup ()
+       (setq browse-url-browser-function 'browse-url-firefox))
+     (add-hook 'org-trello-mode-hook 'my-trello-mode-setup))
+   #+END_SRC
 ** org-publish
    I have a website to publish!
 
