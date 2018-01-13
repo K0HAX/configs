@@ -5,3 +5,6 @@ emacs/#*
 emacs/.#*
 emacs/session*
 emacs/network-security.data
+emacs/emacs-custom.el
+emacs/emms-playlist
+
