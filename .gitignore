@@ -7,4 +7,6 @@ emacs/session*
 emacs/network-security.data
 emacs/emacs-custom.el
 emacs/emms-playlist
+emacs/.trello/*
+emacs/request/*
 
