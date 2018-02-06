@@ -804,6 +804,20 @@
      (require 'sql))
    (require 'ob-sql)
    #+END_SRC
+** =ob-blockdiag=
+   Create diagrams in org-mode.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package ob-blockdiag
+     :init
+     (require 'ob-blockdiag))
+   #+END_SRC
+** =ob-ledger=
+   Call ledger from org-mode
+
+   #+BEGIN_SRC emacs-lisp
+   (require 'ob-ledger)
+   #+END_SRC
 ** =org-trello=
    Gotta connect to Trello!
 
