@@ -639,6 +639,12 @@
    (use-package go-complete)
    (use-package go-eldoc)
    #+END_SRC
+** blockdiag
+   I need blockdiag-mode for ob-blockdiag
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package blockdiag-mode)
+   #+END_SRC
 #+latex: \newpage
 * =Org-mode=
 ** Install org-mode
