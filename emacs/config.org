@@ -639,6 +639,32 @@
    (use-package go-complete)
    (use-package go-eldoc)
    #+END_SRC
+** =markdown-mode=
+   Package for editing markdown.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package markdown-mode
+     :ensure t
+     :commands (markdown-mode gfm-mode)
+     :mode (("README\\.md\\'" . gfm-mode)
+            ("\\.md\\'" . markdown-mode)
+            ("\\.markdown\\'" . markdown-mode))
+     :init (setq markdown-command "multimarkdown"))
+   #+END_SRC
+** =calfw=
+   Package for org-mode calendar
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package calfw
+     :custom-face
+     (cfw:face-toolbar ((t (:background "midnight blue" :foreground "Steelblue4"))))
+     (cfw:face-toolbar-button-off ((t (:foreground "gray30" :weight bold))))
+     (trailing-whitespace ((t (:background "dim gray"))))
+     )
+   (use-package calfw-org)
+   (use-package calfw-ical)
+   (use-package calfw-cal)
+   #+END_SRC
 #+latex: \newpage
 * =Org-mode=
 ** Install org-mode
