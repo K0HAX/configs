@@ -494,7 +494,7 @@
    (use-package emms-info-mediainfo)
 
    (require 'emms-setup)
-   (emms-standard)
+   (emms-all)
    (emms-default-players)
 
    ;; After loaded
