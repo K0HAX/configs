@@ -658,9 +658,7 @@
    (use-package calfw
      :custom-face
      (cfw:face-toolbar ((t (:background "midnight blue" :foreground "Steelblue4"))))
-     (cfw:face-toolbar-button-off ((t (:foreground "gray30" :weight bold))))
-     (trailing-whitespace ((t (:background "dim gray"))))
-     )
+     (cfw:face-toolbar-button-off ((t (:foreground "gray30" :weight bold)))))
    (use-package calfw-org)
    (use-package calfw-ical)
    (use-package calfw-cal)
