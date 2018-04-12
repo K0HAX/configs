@@ -788,13 +788,6 @@
    (global-set-key (kbd "C-c l") 'org-store-link)
    (setq org-log-done 'time)
    #+END_SRC
-   
-** =ob-dot=
-   Let's set up capacity to create pretty diagrams
-
-   #+BEGIN_SRC emacs-lisp
-   (require 'ob-dot)
-   #+END_SRC
 ** =ox-twbs=
    
    
@@ -820,7 +813,19 @@
    (setq org-latex-pdf-process
 	 '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
    #+END_SRC
+   
+** =ob-dot=
+   Let's set up capacity to create pretty diagrams
 
+   #+BEGIN_SRC emacs-lisp
+   (require 'ob-dot)
+   #+END_SRC
+** =ob-ledger=
+   Org Babel Ledger Blocks!
+
+   #+BEGIN_SRC emacs-lisp
+   (require 'ob-ledger)
+   #+END_SRC
 ** =ob-sql=
    =ob-sql= allows me to add MySQL queries to org-mode and execute them.
 
