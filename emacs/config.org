@@ -673,7 +673,7 @@
    (use-package org)
    #+END_SRC
 
-** Todo Keywords  
+** Todo Keywords
    Here are my =TODO= states and color settings.
 
    #+BEGIN_SRC emacs-lisp
