@@ -108,20 +108,8 @@
    
 ** Theme
    
-*** Colors
-    
-    I really like the having a colorized theme.
-    
-    #+BEGIN_SRC emacs-lisp
-    (use-package color-theme
-    :init
-    :config
-    )
-    #+END_SRC
-    
 *** Hook =make-frame= to detect if we're in a TTY or GUI
     #+BEGIN_SRC emacs-lisp
-    (color-theme-initialize)
     (load-theme 'wheatgrass t)
     (enable-theme 'wheatgrass)
     #+END_SRC
@@ -662,7 +650,8 @@
    (use-package calfw-org)
    (use-package calfw-ical)
    (use-package calfw-cal)
-** blockdiag
+   #+END_SRC
+** =blockdiag-mode=
    I need blockdiag-mode for ob-blockdiag
 
    #+BEGIN_SRC emacs-lisp
