@@ -183,6 +183,7 @@
    =config.el= when =config.org= changes. (see [[file:init.el::%3B%3B%20`org-babel-load-file`%20increases%20startup%20time,%20so%20only%20do%20it%20if%20necessary.][init.el]])
    
    #+BEGIN_SRC emacs-lisp
+   (require 's)
    (defun my/delete-config-el ()
        "Delete ~/.emacs.d/config.el when the current buffer is ~/.emacs.d/config.org"
        (defvar my-configel)
@@ -353,9 +354,9 @@
    
    #+BEGIN_SRC emacs-lisp
    (use-package bbdb
-     :init
-     (require 'bbdb)
+     :config
      (bbdb-initialize 'gnus 'message))
+   (require 'bbdb)
    #+END_SRC
 ** =request.el=
    This is an HTTP library for emacs.
@@ -527,6 +528,7 @@
    (use-package multi-term
      :init
      (setq multi-term-program "/bin/bash"))
+   (require 'multi-term)
    #+END_SRC
 ** web-mode
    
@@ -549,13 +551,8 @@
    This is used to grab envirtonment variables from the shell.
 
    #+BEGIN_SRC emacs-lisp
-   (when (not (eq window-system 'w32))
-     (use-package exec-path-from-shell
-       :init
-       (require 'exec-path-from-shell)
-       (exec-path-from-shell-copy-env "SSH_AGENT_PID")
-       (exec-path-from-shell-copy-env "PATH")
-       (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")))
+   (use-package exec-path-from-shell)
+   (require 'exec-path-from-shell)
    #+END_SRC
 ** =Company-mode=
    Company is a text completion framework for Emacs.
@@ -663,6 +660,7 @@
    
    #+BEGIN_SRC emacs-lisp
    (use-package org)
+   (require 'org)
    #+END_SRC
 
 ** Todo Keywords
@@ -845,18 +843,17 @@
    Gotta connect to Trello!
 
    #+BEGIN_SRC emacs-lisp
-   (use-package org-trello
-     :init
-     (require 'org-trello)
-     (add-to-list 'auto-mode-alist '("\\.trello$" . org-mode))
-     (add-hook 'org-mode-hook
-               (lambda ()
-                 (let ((filename (buffer-file-name (current-buffer))))
-                   (when (and filename (string= "trello" (file-name-extension filename)))
-                     (org-trello-mode)))))
-     (defun my-trello-mode-setup ()
-       (setq browse-url-browser-function 'browse-url-firefox))
-     (add-hook 'org-trello-mode-hook 'my-trello-mode-setup))
+   (use-package org-trello)
+   (require 'org-trello)
+   (add-to-list 'auto-mode-alist '("\\.trello$" . org-mode))
+   (add-hook 'org-mode-hook
+             (lambda ()
+               (let ((filename (buffer-file-name (current-buffer))))
+                 (when (and filename (string= "trello" (file-name-extension filename)))
+                   (org-trello-mode)))))
+   (defun my-trello-mode-setup ()
+     (setq browse-url-browser-function 'browse-url-firefox))
+   (add-hook 'org-trello-mode-hook 'my-trello-mode-setup)
    #+END_SRC
 ** org-publish
    I have a website to publish!
@@ -882,6 +879,13 @@
    #+END_SRC
    #+latex: \newpage
 * Customizations
+** Load SSH Agent from environment
+   #+BEGIN_SRC emacs-lisp
+   (when (not (eq window-system 'w32))
+       (exec-path-from-shell-copy-env "SSH_AGENT_PID")
+       (exec-path-from-shell-copy-env "PATH")
+       (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
+   #+END_SRC
 ** Powerline
    
    Initialize the Powerline.
