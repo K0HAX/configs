@@ -615,6 +615,10 @@
      :init
      (global-set-key (kbd "C-c s e") 'helm-emms))
    #+END_SRC
+** =vagrant=
+   #+BEGIN_SRC emacs-lisp
+   (use-package vagrant)
+   #+END_SRC
 ** Golang
    All the packages associated with golang.
 
