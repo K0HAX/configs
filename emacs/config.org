@@ -961,7 +961,13 @@
    We want to encrypt the Oauth credentials for =twittering-mode=
 
    #+BEGIN_SRC emacs-lisp
-   ;(setq twittering-use-master-password nil)
+   (setq twittering-use-master-password t)
+   (require 'twittering-mode)
+   (eval-after-load "twittering-mode"
+     '(defun twit
+          (interactive)
+        (let ((browse-url-browser-function 'browse-url-firefox))
+          (twittering-mode))))
    #+END_SRC
 ** Customizations file
    Move the customizations file out from init.el so we don't break the Git repo.
