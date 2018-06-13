@@ -610,6 +610,7 @@
    #+END_SRC
 ** =helm-emms=
    This package makes using emms super easy!
+
    #+BEGIN_SRC emacs-lisp
    (use-package helm-emms
      :init
@@ -783,8 +784,7 @@
    (setq org-log-done 'time)
    #+END_SRC
 ** =ox-twbs=
-   
-   
+
    =Twitter Bootstrap= or just =Bootstrap= is prettier than out of the box =Org-mode=.
    Let's get it installed!
    
@@ -807,7 +807,15 @@
    (setq org-latex-pdf-process
 	 '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
    #+END_SRC
-   
+** =ox-mediawiki=
+
+   =ox-mediawiki= allows exporting org-mode documents to Mediawiki
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package ox-mediawiki
+     :init
+     (require 'ox-mediawiki))
+   #+END_SRC
 ** =ob-dot=
    Let's set up capacity to create pretty diagrams
 
@@ -864,22 +872,51 @@
 
    #+BEGIN_SRC emacs-lisp
    (setq org-publish-project-alist
-	 '(
-	   ("org-notes"
-	    :base-directory "~/Nextcloud/org/"
-	    :base-extension "org"
-	    :publishing-directory "/root@websites01.lan.productionservers.net:/mnt/sites/michael.englehorn.com/public_html/"
-	    :recursive t
-	    :publishing-function org-twbs-publish-to-html
-	    :headline-levels 4
-	    :auto-preamble t)
-	   ("org-static"
-	    :base-directory "~/Nextcloud/org/"
-	    :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|txt\\|asc"
-	    :publishing-directory "/root@websites01.lan.productionservers.net:/mnt/sites/michael.englehorn.com/public_html/"
-	    :recursive t
-	    :publishing-function org-publish-attachment)
-	   ("org" :components ("org-notes" "org-static"))))
+         '(
+           ("org-notes"
+            :base-directory "~/Nextcloud/org/"
+            :base-extension "org"
+            :publishing-directory "/root@websites01.lan.productionservers.net:/mnt/sites/michael.englehorn.com/public_html/"
+            :recursive t
+            :publishing-function org-twbs-publish-to-html
+            :headline-levels 4
+            :auto-preamble t)
+           ("org-static"
+            :base-directory "~/Nextcloud/org/"
+            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|txt\\|asc"
+            :publishing-directory "/root@websites01.lan.productionservers.net:/mnt/sites/michael.englehorn.com/public_html/"
+            :recursive t
+            :publishing-function org-publish-attachment)
+           ("org-work"
+            :base-directory "~/Nextcloud/org-mode/work/"
+            :base-extension "org"
+            :publishing-directory "/menglehorn@apollo:~/public_html/"
+            :recursive t
+            :with-timestamps t
+            :publishing-function org-twbs-publish-to-html
+            :headline-levels 4
+            :auto-preamble t)
+           ("org-work-static"
+            :base-directory "~/Nextcloud/org-mode/work/"
+            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|txt\\|asc"
+            :publishing-directory "/menglehorn@apollo:~/public_html/"
+            :recursive t
+            :publishing-function org-publish-attachment)
+           ("org" :components ("org-notes" "org-static"))))
+
+   (require 's)
+   (defun my/publish-work ()
+     "Publish ~/Nextcloud/org-mode/work/ whenever work.org is saved."
+     (if (equal "~/Nextcloud/org-mode/work/work.org" buffer-file-truename)
+         (progn (setq org-confirm-babel-evaluate nil)
+                (setq org-export-babel-evaluate t)
+                (org-publish "org-work")
+                (org-publish "org-work-static")
+                (setq org-confirm-babel-evaluate t))))
+
+   (add-hook 'org-mode-hook
+             (lambda ()
+               (add-hook 'after-save-hook 'my/publish-work nil nil)))
    #+END_SRC
    #+latex: \newpage
 * Customizations
@@ -963,11 +1000,10 @@
    #+BEGIN_SRC emacs-lisp
    (setq twittering-use-master-password t)
    (require 'twittering-mode)
-   (eval-after-load "twittering-mode"
-     '(defun twit
-          (interactive)
-        (let ((browse-url-browser-function 'browse-url-firefox))
-          (twittering-mode))))
+   (defun twit ()
+     (interactive)
+     (let ((browse-url-browser-function 'browse-url-firefox))
+       (twittering-mode)))
    #+END_SRC
 ** Customizations file
    Move the customizations file out from init.el so we don't break the Git repo.
