@@ -200,7 +200,7 @@
    We need to allow SH scripts to be executed by org-babel.
    
    #+BEGIN_SRC emacs-lisp
-   (require 'ob-sh)
+   ;(require 'ob-sh)
    #+END_SRC
    
 ** Start server if it isn't started
